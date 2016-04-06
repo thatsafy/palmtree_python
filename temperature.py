@@ -10,36 +10,15 @@ def calcTemp(tr){
 	global tempDict
 	# Get values from tempDict
 
-	if (tr >= 1613) and (tr < 1754):
-		v = tempDict.get(1613)
-	elif (tr >= 1754) and (tr < 1903):
-		v = tempDict.get(1754)
-	elif (tr >= 1903) and (tr < 1980):
-		v = tempDict.get(1903)
-	elif (tr >= 1980) and (tr < 2059):
-		v = tempDict.get(1980)
+	value = ""
+	for key in tempDict:
+		if tr > key:
+			keyval = tempDict[key]
 
-	i = v.split("x")
-
+			
+	value = value.split("x")		
 	
-
-	"""
-	# roskiin(?)
-	# Temp 0 - 10
-	if tr >= 1613 and tr < 1754:
-		tempFinal = (tr - 1613) / (1754 - 1613) * 10 + 0
-	# Temp 10 - 20
-	elif tr >= 1754 and tr < 1903:
-		tempFinal = (tr - 1754) / (1903 - 1754) * 10 + 10
-	# Temp 20 - 25
-	elif tr >= 1903 and tr < 1980:
-		tempFinal = (tr - 1903) / (1980 - 1903) * 5 + 20
-	# Temp 25 - 30
-	elif tr >= 1980 and tr < 2059:
-		tempFinal = (tr - 1980) / (2059 - 1980) * 5 + 25
-	return tempFinal
-	"""
-	
+	return value
 }
 
 while True:
