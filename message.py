@@ -8,20 +8,20 @@ tempDict = {1613:'1613x0x1754x10',1754:'1754x10x1903x10',1903:'1903x20x1980x5'
         ,1980:'1980x25x2059x5'}
 
 def message():
-	m = ""
-	m += measureTemp()
-	m += ":"
-	m += measureLight()
-	m += ":"
-	m += motorAngle()
-	m += ":"
-	m += numpad()
-	return m
+    m = ""
+    m += measureTemp()
+    m += ":"
+    m += measureLight()
+    m += ":"
+    m += motorAngle()
+    m += ":"
+    m += numpad()
+    return m
 
 def measureTemp():
-	global tempDict
+    global tempDict
 
-	# x1U = port x1 U (voltage)
+    # x1U = port x1 U (voltage)
     x1u = adc.read()/4095 * 3.3
 
     # front resistor R1 1780 ohm
@@ -32,9 +32,9 @@ def measureTemp():
 
     # Temperature resistor KTY81/210 resistance
     tr = x1u * r1 / (mpu - x1u)
-	
+    
     # Get values from tempDict
-	
+    
     value = ""
     for key in tempDict:
         if tr > key:
@@ -42,7 +42,7 @@ def measureTemp():
 
 
     values = value.split("x")
-	
+    
     step = int(values[3]) / (int(values[2]) - int(values[0]))
 
     steps = tr - int(values[0])
@@ -53,20 +53,18 @@ def measureTemp():
     return temperature
 
 def measureLight():
-	return str(450)
+    return str(450)
 
 def motorAngle():
-	return str(360)
+    return str(360)
 
 def numpad():
-	return str(1)
+    return str(1)
 
 def send():
-	global uart
-	uart.write(bytes(message().encode("ascii")))
-	print("send:",message())
+    global uart
+    uart.write(bytes(message().encode("ascii")))
+    print("send:",message())
 
 while True:
-	i = uart.readline().decode("ascii")
-	print ("Read:",i)
-	#send()	
+    send()  
