@@ -1,4 +1,3 @@
-
 from pyb import Pin, ADC
 
 adc = ADC(Pin('X1'))
@@ -36,8 +35,9 @@ def getTemperature():
     steps = tr - int(values[0])
 
     temperature = int(values[1]) + steps * step
-	
-	return "%.2f" % round(temperature, 2)
+    
+    
+    return temperature
 
 
 while True:
@@ -47,3 +47,4 @@ while True:
     print(getTemperature())
 
     pyb.delay(500)
+
