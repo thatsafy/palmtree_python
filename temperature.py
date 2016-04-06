@@ -13,12 +13,12 @@ def getValues(tr):
 	value = ""
 	for key in tempDict:
 		if tr > key:
-			keyval = tempDict[key]
+			value = tempDict[key]
 
 			
-	value = value.split("x")		
+	values = value.split("x")
 
-	return value
+	return values
 
 
 while True:
