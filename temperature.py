@@ -1,5 +1,5 @@
 
-from pyb import Pin, ADCi
+from pyb import Pin, ADC
 
 adc = ADC(Pin('X1'))
 
