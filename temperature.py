@@ -6,7 +6,7 @@ adc = ADC(Pin('X1'))
 tempDict = {1613:'1613x0x1754x10',1754:'1754x10x1903x10',1903:'1903x20x1980x5'
 		,1980:'1980x25x2059x5'}
 
-def calcTemp(tr){
+def calcTemp(tr):
 	global tempDict
 	# Get values from tempDict
 
@@ -19,7 +19,7 @@ def calcTemp(tr){
 	value = value.split("x")		
 
 	return value
-}
+
 
 while True:
 
