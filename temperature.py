@@ -37,11 +37,11 @@ while True:
 
 	value = getValues(tr)
 
-	step = value[3] / (value[2] - value[0])
+	step = int(value[3]) / int((value[2]) - int(value[0]))
 
-	steps = tr - value[0]
+	steps = tr - int(value[0])
 
-	temperature = value[1] + steps * step
+	temperature = int(value[1]) + steps * step
 
 	print(temperature)
 
