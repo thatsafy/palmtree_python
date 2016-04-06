@@ -37,7 +37,7 @@ while True:
 
 	value = getValues(tr)
 
-	step = int(value[3]) / int((value[2]) - int(value[0]))
+	step = int(value[3]) / (int(value[2]) - int(value[0]))
 
 	steps = tr - int(value[0])
 
