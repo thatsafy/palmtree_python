@@ -6,7 +6,7 @@ adc = ADC(Pin('X1'))
 tempDict = {1613:'1613x0x1754x10',1754:'1754x10x1903x10',1903:'1903x20x1980x5'
 		,1980:'1980x25x2059x5'}
 
-def calcTemp(tr):
+def getValues(tr):
 	global tempDict
 	# Get values from tempDict
 
@@ -35,7 +35,7 @@ while True:
 	# Temperature resistor KTY81/210 resistance
 	tr = x1u * r1 / (mpu - x1u)
 
-	value = calcTemp(tr)
+	value = getValues(tr)
 
 	step = value[3] / (value[2] - value[0])
 
