@@ -1,6 +1,12 @@
-import serial
+import serial, sys
 
-ser = serial.Serial('/dev/ttyACM0', 9600, timeout = 0.5)
+ser = serial.Serial('/dev/ttyACM0', 9600, timeout = 0)
 
-reading = ser.readline()
-print(reading)
+try:
+	while True:
+		reading = ser.readline()
+		print(reading)
+		ser.write('hello, from rasp')
+except KeyboardInterrupt:
+	ser.close()
+	sys.exit()
