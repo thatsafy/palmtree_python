@@ -24,14 +24,14 @@ def read(message):
 
 def listen():
 	global ser
-	message = ser.readline().decode("ascii")
+	message = ser.readline().decode('ascii')
 	
 	return message
 
 while True:
 	print("sending info")
 	
-	ser.write(bytes("info\r".encode("ascii")))
+	ser.write(bytes("info\r".encode('ascii')))
 	print("listening")
 	print(listen())
 	try:
