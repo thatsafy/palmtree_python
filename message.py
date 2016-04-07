@@ -43,14 +43,14 @@ def measureTemp():
 
     values = value.split("x")
     
-    step = int(values[3]) / (int(values[2]) - int(values[0]))
+    step = int(values[3]) / (int(values[1]) - int(values[0]))
 
     steps = tr - int(values[0])
 
-    temperature = int(values[1]) + steps * step
+    temperature = int(values[2]) + steps * step
     
     
-    return temperature
+    return str(temperature)
 
 def measureLight():
     return str(450)
@@ -67,4 +67,5 @@ def send():
     print("send:",message())
 
 while True:
-    send()  
+    send()
+    pyb.delay(500)
