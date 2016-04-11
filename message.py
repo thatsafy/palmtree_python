@@ -48,8 +48,7 @@ def measureTemp():
     steps = tr - int(values[0])
 
     temperature = int(values[2]) + steps * step
-    
-    
+        
     return str(temperature)
 
 def measureLight():
@@ -63,9 +62,10 @@ def numpad():
 
 def send():
     global uart
-    uart.write(bytes(message().encode("ascii")))
+    uart.write(bytes(message().encode('ascii')))
+
     print("send:",message())
 
 while True:
-    send()
+    send()  
     pyb.delay(500)

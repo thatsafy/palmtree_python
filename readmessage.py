@@ -1,6 +1,6 @@
 import serial, string, sys
 
-ser = serial.Serial('/dev/ttyACM0', 115200, timeout = 0.5)
+ser = serial.Serial('/dev/ttyACM0', 115200, timeout = 1)
 
 def read(message):
 	"""
@@ -29,20 +29,17 @@ def listen():
 	return message
 
 while True:
-	print("sending info")
+	# print("sending info")
 	
-	ser.write(bytes("info\r".encode('ascii')))
-	print("listening")
-	print(listen())
+	# ser.write(bytes("info\r".encode('ascii')))
+	# print("listening")
+	#print (listen())
 	try:
-		
-		"""
 		while True:
 			x = read(listen())
 			if x:
 				print(x)
 				break
-		"""
 	except KeyboardInterrupt:
 		ser.close()
 		sys.exit()
