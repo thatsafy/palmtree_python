@@ -1,4 +1,4 @@
-import random, time
+import random, time, pymysql
 
 def generateTemp():
         num = random.uniform(10,30)
