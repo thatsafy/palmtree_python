@@ -8,7 +8,7 @@ adc = ADC(Pin('X1'))
 tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
         ,2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
 
-# i2c = I2C(1)
+i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
 
 def message():
@@ -59,22 +59,11 @@ def measureTemp():
     return str(temperature)
 
 def measureLight():
-    """
-    i2c.init(I2C.MASTER, baudrate=115200)
-    i2c.init(I2C.SLAVE, addr=0x43)
-
-    i2c.send(0x43)
-    data1 = i2c.recv(7)
-
-    i2c.send(0x83)
-    data2 = i2c.recv(7)
-
-    i2c.deinit()
-
-    tuloste = str(data1) + ":" + str(data2)
-    return tuloste
-    """
-    return str(2)
+    i2c.send(0x43, 0x39)
+    data1 = i2c.recv(1, addr=0x39)
+    i2c.send(0x83, 0x39)
+    data2 = i2c.recv(1, addr=0x39)
+    return str(data1) + "-" + str(data2)
 def motorAngle():
     return str(360)
 
