@@ -13,11 +13,11 @@ tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
 
-def message():
+def message(temp, light):
     m = ""
-    m += measureTemp()
+    m += str(temp)
     m += ":"
-    m += measureLight()
+    m += str(light)
     """
     m += ":"
     m += motorAngle()
@@ -58,7 +58,7 @@ def measureTemp():
 
     temperature = int(values[2]) + steps * step
         
-    return str(temperature)
+    return temperature
 
 def measureLight():
     # Visible & Infrared
@@ -88,7 +88,7 @@ def measureLight():
     r = adccv2 / adccv
     light = adccv * 0.46 * (math.e**(-3.13*r))
 
-    return str(adccv)
+    return light
     
 def motorAngle():
     return str(360)
@@ -96,13 +96,32 @@ def motorAngle():
 def numpad():
     return str(1)
 
-def send():
+def send(x, y):
     global uart
-    m = message()
+    m = message(x, y)
     uart.write(bytes(m.encode('ascii')))
 
     print("send:", m)
 
+def getAverage(z):
+    sum = 0
+    for item in z:
+        sum += item
+    return sum / len(z)
+
+tempList = []
+lightList = []
 while True:
-    send()  
-    pyb.delay(500)
+    tempList.append(measureTemp())
+    lightList.append(measureLight())
+    
+    if len(tempList) > 6:
+        tempList.pop(0)
+    if len(lightList) > 6:
+        lightList.pop(0)
+    if len(tempList) == 6 and len(lightList) == 6:
+        tempA = str(getAverage(tempList))
+        lightA = str(getAverage(lightList))
+        send(tempA, lightA)
+
+    pyb.delay(10000)

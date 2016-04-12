@@ -1,4 +1,4 @@
-import serial, string, sys, pymysql
+import serial, string, sys, pymysql, time
 
 ser = serial.Serial('/dev/ttyAMA0', 115200, timeout = 1)
 conn = pymysql.connect(host='palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com', user='palm', passwd='palmbeach192', db='data')
@@ -52,6 +52,7 @@ while True:
                 print(x)
                 writeToDataSql(x)
                 break
+        time.sleep(60)
     except KeyboardInterrupt:
         cur.close()
         conn.close()
