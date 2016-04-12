@@ -21,7 +21,7 @@
 			die("Connection failed: " . $conn->connect_error);
 		} 
 
-		$sql = "SELECT id, temperature, brightness, date FROM data ORDEr BY id desc LIMIT 5";
+		$sql = "SELECT id, temperature, brightness, date FROM data ORDEr BY id desc LIMIT 6";
 		$result = $conn->query($sql);
 
 		if ($result->num_rows > 0) {
