@@ -12,7 +12,7 @@ def read(message):
         temp = message.split(":")
         temperature = temp[0]
         light = temp[1]
-        light = light.substring(0, light.indexOf("\n"))
+        light = light[0:light.index("\n")]
         readings = (temperature, light)
         return readings
     else:
