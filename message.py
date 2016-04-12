@@ -68,16 +68,26 @@ def measureLight():
     i2c.send(0x83, 0x39)
     data2 = i2c.recv(1, addr=0x39)[0]
 
-    step  = data1 & 0x07
+    step  = data1 & 0x0f
     chordnr = (data1 >> 4) & 0x07
     
-    adccv = (int(16.5 * ((2**chordnr)-1)) + int(2**chordnr) x step)
+    step2 = data2 & 0x0f
+    chordnr2 = (data2 >> 4) & 0x07
     
-    """
-    # convert to light level (lux)
-    r = data2 / data1
-    light = data1 * 0.46 * (math.e**(-3.13*r))
-    """
+    chordv = int(16.5 * ((2**chordnr)-1))
+    stepv = 2**chordnr
+    
+    chordv2 = int(16.5 * ((2**chordnr2)-1))
+    stepv2 = 2**chordnr2
+    
+    adccv = chordv + stepv * step
+    adccv2 = chordv2 + stepv2 * step2
+    
+    
+    # Convert to light level (lux)
+    r = adccv2 / adccv
+    light = adccv * 0.46 * (math.e**(-3.13*r))
+
     return str(adccv)
     
 def motorAngle():
