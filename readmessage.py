@@ -37,7 +37,7 @@ def writeToDataSql(stri):
        conn.commit()
 
 def readFromSql():
-        cur.execute("SELECT id, value from test order by id desc limit 5;")
+        cur.execute("SELECT id, (temperature, brightness) from data order by id desc limit 5;")
         for r in cur:
             print(r)
         
