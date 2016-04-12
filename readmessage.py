@@ -1,4 +1,4 @@
-import  string, sys, pymysql
+import serial, string, sys, pymysql
 
 ser = serial.Serial('/dev/ttyACM0', 115200, timeout = 1)
 conn = pymysql.connect(host='palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com', user='palm', passwd='palmbeach192', db='data')
@@ -37,7 +37,7 @@ def writeToDataSql(stri):
        conn.commit()
 
 def readFromSql():
-        cur.execute("SELECT id, (temperature, brightness) from data order by id desc limit 5;")
+        cur.execute("SELECT id,temperature,brightness from data order by id desc limit 5;")
         for r in cur:
             print(r)
         
@@ -45,7 +45,7 @@ def readFromSql():
 while True:
     try:
         while True:
-            writeToSql("makkaraa")
+            writeToDataSql(12222, 1221)
             readFromSql()
             x = read(listen())
             if x:
