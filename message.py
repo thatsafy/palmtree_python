@@ -61,33 +61,36 @@ def measureTemp():
 
 # Measure light level (lux)
 def measureLight():
-    # Visible & Infrared
-    i2c.send(0x43, 0x39)
-    data1 = i2c.recv(1, addr=0x39)[0]
-    # Primarly infrared
-    i2c.send(0x83, 0x39)
-    data2 = i2c.recv(1, addr=0x39)[0]
+    while True:
+        # Visible & Infrared
+        i2c.send(0x43, 0x39)
+        data1 = i2c.recv(1, addr=0x39)[0]
+        # Primarly infrared
+        i2c.send(0x83, 0x39)
+        data2 = i2c.recv(1, addr=0x39)[0]
 
-    step  = data1 & 0x0f
-    chordnr = (data1 >> 4) & 0x07
+        step  = data1 & 0x0f
+        chordnr = (data1 >> 4) & 0x07
     
-    step2 = data2 & 0x0f
-    chordnr2 = (data2 >> 4) & 0x07
+        step2 = data2 & 0x0f
+        chordnr2 = (data2 >> 4) & 0x07
     
-    chordv = int(16.5 * ((2**chordnr)-1))
-    stepv = 2**chordnr
+        chordv = int(16.5 * ((2**chordnr)-1))
+        stepv = 2**chordnr
     
-    chordv2 = int(16.5 * ((2**chordnr2)-1))
-    stepv2 = 2**chordnr2
+        chordv2 = int(16.5 * ((2**chordnr2)-1))
+        stepv2 = 2**chordnr2
     
-    adccv = chordv + stepv * step
-    adccv2 = chordv2 + stepv2 * step2
+        adccv = chordv + stepv * step
+        adccv2 = chordv2 + stepv2 * step2
     
-    # Convert to light level (lux)
-    r = adccv2 / adccv
-    light = adccv * 0.46 * (math.e**(-3.13*r))
-
-    return light
+        # Convert to light level (lux)
+        try:
+            r = adccv2 / adccv
+            light = adccv * 0.46 * (math.e**(-3.13*r))
+        except ZeroDivisionError:
+            continue
+        return light
     
 def motorAngle():
     return str(360)
