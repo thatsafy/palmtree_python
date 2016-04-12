@@ -70,13 +70,16 @@ def measureLight():
 
     step  = data1 & 0x07
     chordnr = (data1 >> 4) & 0x07
+    
+    adccv = (int(16.5 * ((2**chordnr)-1)) + int(2**chordnr) x step)
+    
     """
     # convert to light level (lux)
     r = data2 / data1
     light = data1 * 0.46 * (math.e**(-3.13*r))
     """
-    return str(step) + " " + str(chordnr)
-
+    return str(adccv)
+    
 def motorAngle():
     return str(360)
 
