@@ -1,18 +1,18 @@
 import serial, string, sys, pymysql
 
-ser = serial.Serial('/dev/ttyACM0', 115200, timeout = 1)
+ser = serial.Serial('/dev/ttyAMA0', 115200, timeout = 1)
 conn = pymysql.connect(host='palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com', user='palm', passwd='palmbeach192', db='data')
 cur = conn.cursor()
 
 def read(message):
-
+    print(message)
     print("before if")
-    if message.find(":") >= 0:
+    if message.count(":") > 0:
         print("Working!!")  
         temp = message.split(":")
         temperature = temp[0]
         light = temp[1]
-        
+        light = light.substring(0, light.indexOf("\n"))
         readings = (temperature, light)
         return readings
     else:
@@ -29,9 +29,9 @@ def listen():
 def writeToDataSql(stri):
        global cur
        s = 'INSERT INTO data (temperature, brightness) VALUES ("'
-       s += stri[0]
+       s += str(stri[0])
        s += '","'
-       s += stri[1]
+       s += str(stri[1])
        s += '")'
        cur.execute(s)
        conn.commit()
@@ -45,11 +45,12 @@ def readFromSql():
 while True:
     try:
         while True:
-            writeToDataSql(12222, 1221)
+            
             readFromSql()
             x = read(listen())
             if x:
                 print(x)
+                writeToDataSql(x)
                 break
     except KeyboardInterrupt:
         cur.close()
