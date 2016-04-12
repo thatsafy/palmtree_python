@@ -30,8 +30,8 @@ def writeToDataSql(stri):
        global cur
        s = 'INSERT INTO data (temperature, brightness) VALUES ("'
        s += stri[0]
-	   s += '","'
-	   s += stri[1]
+       s += '","'
+       s += stri[1]
        s += '")'
        cur.execute(s)
        conn.commit()
