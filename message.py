@@ -63,19 +63,19 @@ def measureTemp():
 def measureLight():
     # Visible & Infrared
     i2c.send(0x43, 0x39)
-    data1 = i2c.recv(1, addr=0x39)
+    data1 = i2c.recv(1, addr=0x39)[0]
     # Primarly infrared
     i2c.send(0x83, 0x39)
-    data2 = i2c.recv(1, addr=0x39)
+    data2 = i2c.recv(1, addr=0x39)[0]
 
     step  = data1 & 0x07
-	chordnr = (data1 >> 4) & 0x07
-	"""
+    chordnr = (data1 >> 4) & 0x07
+    """
     # convert to light level (lux)
     r = data2 / data1
     light = data1 * 0.46 * (math.e**(-3.13*r))
-	"""
-    return str(step + " " + chordnr)
+    """
+    return str(step) + " " + str(chordnr)
 
 def motorAngle():
     return str(360)
