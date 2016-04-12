@@ -1,4 +1,6 @@
 from pyb import UART, delay, Pin, ADC, I2C
+from binascii import hexlify
+import math
 
 uart = UART(6, 115200)
 
@@ -7,7 +9,7 @@ adc = ADC(Pin('X1'))
 
 tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
         ,2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
-
+# Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
 
@@ -59,11 +61,24 @@ def measureTemp():
     return str(temperature)
 
 def measureLight():
+    # Visible & Infrared
     i2c.send(0x43, 0x39)
     data1 = i2c.recv(1, addr=0x39)
+    # Primarly infrared
     i2c.send(0x83, 0x39)
     data2 = i2c.recv(1, addr=0x39)
-    return str(data1) + "-" + str(data2)
+
+    data1 = hexlify(data1).decode('ascii')
+    data2 = hexlify(data2).decode('ascii')
+
+    data1 = int(data1, 16)
+    data2 = int(data2, 16)
+
+    # convert to light level (lux)
+    r = data2 / data1
+    light = data1 * 0.46 * (math.e**(-3.13*r))
+    return str(light)
+
 def motorAngle():
     return str(360)
 
