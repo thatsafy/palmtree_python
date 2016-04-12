@@ -12,7 +12,7 @@ tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
 # Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
-
+# Construct and return message
 def message(temp, light):
     m = ""
     m += str(temp)
@@ -27,6 +27,7 @@ def message(temp, light):
     m += "\n"
     return m
 
+# measure temperature
 def measureTemp():
     global tempDict
 
@@ -42,13 +43,11 @@ def measureTemp():
     # Temperature resistor KTY81/210 resistance
     tr = x1u * r1 / (mpu - x1u)
     
-    # Get values from tempDict
-    
+    # Return value from tempDict
     value = ""
     for key in tempDict:
         if tr > key:
             value = tempDict[key]
-
 
     values = value.split("x")
     
@@ -60,6 +59,7 @@ def measureTemp():
         
     return temperature
 
+# Measure light level (lux)
 def measureLight():
     # Visible & Infrared
     i2c.send(0x43, 0x39)
@@ -83,7 +83,6 @@ def measureLight():
     adccv = chordv + stepv * step
     adccv2 = chordv2 + stepv2 * step2
     
-    
     # Convert to light level (lux)
     r = adccv2 / adccv
     light = adccv * 0.46 * (math.e**(-3.13*r))
@@ -96,6 +95,7 @@ def motorAngle():
 def numpad():
     return str(1)
 
+# Send message through serial
 def send(x, y):
     global uart
     m = message(x, y)
@@ -103,6 +103,7 @@ def send(x, y):
 
     print("send:", m)
 
+# calculate average
 def getAverage(z):
     sum = 0
     for item in z:
@@ -111,6 +112,7 @@ def getAverage(z):
 
 tempList = []
 lightList = []
+
 while True:
     tempList.append(measureTemp())
     lightList.append(measureLight())

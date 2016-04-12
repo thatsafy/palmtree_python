@@ -4,6 +4,7 @@ ser = serial.Serial('/dev/ttyAMA0', 115200, timeout = 1)
 conn = pymysql.connect(host='palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com', user='palm', passwd='palmbeach192', db='data')
 cur = conn.cursor()
 
+# Compile the message from data given
 def read(message):
     print(message)
     print("before if")
@@ -18,14 +19,14 @@ def read(message):
     else:
         print("Not working!")
         return ""
-    
 
+# get data from serial
 def listen():
     global ser
-    message = ser.readline().decode('ascii')
-    
+    message = ser.readline().decode('ascii')    
     return message
 
+# write to SQL database
 def writeToDataSql(stri):
        global cur
        s = 'INSERT INTO data (temperature, brightness) VALUES ("'
@@ -36,16 +37,15 @@ def writeToDataSql(stri):
        cur.execute(s)
        conn.commit()
 
+# Read from SQL database
 def readFromSql():
         cur.execute("SELECT id,temperature,brightness from data order by id desc limit 5;")
         for r in cur:
             print(r)
-        
 
 while True:
     try:
-        while True:
-            
+        while True:            
             readFromSql()
             x = read(listen())
             if x:
