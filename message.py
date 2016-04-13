@@ -125,9 +125,9 @@ while True:
         tempA = str(sum(tempList) / len(tempList))
         lightA = str(sum(lightList) / len(lightList))
         lcd_screen.set_line(0)
-        lcd_screen.set_string(tempA)
+        lcd_screen.set_string("C:" + tempA)
         lcd_screen.set_line(1)
-        lcd_screen.set_string(lightA)
+        lcd_screen.set_string("lx:" + lightA)
         send(tempA, lightA)
 
     pyb.delay(10000)
