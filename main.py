@@ -13,9 +13,6 @@ tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
 # Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
-#Keypad
-i2cKEY =I2C(3, I2C.MASTER, baudrate=20000)
-
 # LCD
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
@@ -29,9 +26,9 @@ def message(temp, light):
     """
     m += ":"
     m += motorAngle()
-    """
     m += ":"
     m += numpad()
+    """
     m += "\n"
     return m
 
@@ -101,9 +98,6 @@ def motorAngle():
     return str(360)
 
 def numpad():
-    i2cKEY.send(00, 32)
-    key = i2cKEY.recv(3, addr=00)[0]
-    print(key)
     return str(1)
 
 # Send message through serial
