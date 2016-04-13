@@ -1,7 +1,8 @@
 from pyb import UART, delay, Pin, ADC, I2C
-from binascii import hexlify
+# from binascii import hexlify
 import math
 
+# Serial port
 uart = UART(6, 115200)
 
 # Temperature
@@ -116,6 +117,8 @@ def getAverage(z):
 tempList = []
 lightList = []
 
+# Collect data every 10 seconds to lists
+# When lists' lengths are 6, calculate averages and send data through serial port
 while True:
     tempList.append(measureTemp())
     lightList.append(measureLight())
