@@ -54,7 +54,7 @@ while True:
                 writeToDataSql(x)
                 readFromSql()
                 break
-        time.sleep(60)
+        # time.sleep(60)
     except KeyboardInterrupt:
         cur.close()
         conn.close()

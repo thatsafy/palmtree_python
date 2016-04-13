@@ -107,7 +107,6 @@ def send(x, y):
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
 
-# calculate average
 tempList = []
 lightList = []
 
@@ -119,7 +118,6 @@ while True:
     if (time.time() - sTime) >= 10:
         tempList.append(measureTemp())
         lightList.append(measureLight())
-        
         if len(tempList) > 6:
             tempList.pop(0)
         if len(lightList) > 6:
@@ -132,6 +130,8 @@ while True:
             lcd_screen.set_line(1)
             lcd_screen.set_string("lx:" + lightA)
             send(tempA, lightA)
+            tempList[:] = []
+            lightList[:] = []
     else:
         continue
     sTime = time.time()
