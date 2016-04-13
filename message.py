@@ -51,13 +51,10 @@ def measureTemp():
             value = tempDict[key]
 
     values = value.split("x")
-    
     step = int(values[3]) / (int(values[1]) - int(values[0]))
-
     steps = tr - int(values[0])
 
     temperature = int(values[2]) + steps * step
-        
     return temperature
 
 # Measure light level (lux)
@@ -104,16 +101,9 @@ def send(x, y):
     global uart
     m = message(x, y)
     uart.write(bytes(m.encode('ascii')))
-
     print("send:", m)
 
 # calculate average
-def getAverage(z):
-    sum = 0
-    for item in z:
-        sum += item
-    return sum / len(z)
-
 tempList = []
 lightList = []
 
@@ -128,8 +118,8 @@ while True:
     if len(lightList) > 6:
         lightList.pop(0)
     if len(tempList) == 6 and len(lightList) == 6:
-        tempA = str(getAverage(tempList))
-        lightA = str(getAverage(lightList))
+        tempA = str(sum(tempList) / len(tempList))
+        lightA = str(sum(lightList) / len(lightList))
         send(tempA, lightA)
 
     pyb.delay(10000)
