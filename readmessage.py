@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import serial, string, sys, pymysql, time
 
 ser = serial.Serial('/dev/ttyAMA0', 115200, timeout = 1)

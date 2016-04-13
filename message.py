@@ -1,6 +1,6 @@
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
-import math, char_lcd
+import math, char_lcd, time
 
 # Serial port
 uart = UART(6, 115200)
@@ -111,23 +111,28 @@ def send(x, y):
 tempList = []
 lightList = []
 
+sTime = time.time()
+
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
 while True:
-    tempList.append(measureTemp())
-    lightList.append(measureLight())
-    
-    if len(tempList) > 6:
-        tempList.pop(0)
-    if len(lightList) > 6:
-        lightList.pop(0)
-    if len(tempList) == 6 and len(lightList) == 6:
-        tempA = str(sum(tempList) / len(tempList))
-        lightA = str(sum(lightList) / len(lightList))
-        lcd_screen.set_line(0)
-        lcd_screen.set_string("C:" + tempA)
-        lcd_screen.set_line(1)
-        lcd_screen.set_string("lx:" + lightA)
-        send(tempA, lightA)
-
-    pyb.delay(10000)
+    if (time.time() - sTime) >= 10:
+        tempList.append(measureTemp())
+        lightList.append(measureLight())
+        
+        if len(tempList) > 6:
+            tempList.pop(0)
+        if len(lightList) > 6:
+            lightList.pop(0)
+        if len(tempList) == 6 and len(lightList) == 6:
+            tempA = str(sum(tempList) / len(tempList))
+            lightA = str(sum(lightList) / len(lightList))
+            lcd_screen.set_line(0)
+            lcd_screen.set_string("C:" + tempA)
+            lcd_screen.set_line(1)
+            lcd_screen.set_string("lx:" + lightA)
+            send(tempA, lightA)
+    else:
+        continue
+    sTime = time.time()
+    # pyb.delay(10000)
