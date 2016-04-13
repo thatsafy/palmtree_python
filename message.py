@@ -1,6 +1,6 @@
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
-import math
+import math, char_lcd
 
 # Serial port
 uart = UART(6, 115200)
@@ -12,6 +12,10 @@ tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
         ,2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
 # Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
+
+# LCD
+i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
+lcd_screen = char_lcd.HD44780(i2cLCD)
 
 # Construct and return message
 def message(temp, light):
@@ -120,6 +124,10 @@ while True:
     if len(tempList) == 6 and len(lightList) == 6:
         tempA = str(sum(tempList) / len(tempList))
         lightA = str(sum(lightList) / len(lightList))
+        lcd_screen.set_line(0)
+        lcd_screen.set_string(tempA)
+        lcd_screen.set_line(1)
+        lcd_screen.set_string(lightA)
         send(tempA, lightA)
 
     pyb.delay(10000)
