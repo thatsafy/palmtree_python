@@ -45,12 +45,13 @@ def readFromSql():
 
 while True:
     try:
-        while True:            
-            readFromSql()
+        while True:
+            # readFromSql()
             x = read(listen())
             if x:
                 print(x)
                 writeToDataSql(x)
+                readFromSql()
                 break
         time.sleep(60)
     except KeyboardInterrupt:
