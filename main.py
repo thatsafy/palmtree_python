@@ -17,6 +17,14 @@ i2c = I2C(1, I2C.MASTER, baudrate=20000)
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
 
+# LCD write
+def lcdWrite(row1, row2):
+    lcd_screen.set_line(0)
+    lcd_screen.set_string(row1)
+    lcd_screen.set_line(1)
+    lcd_screen.set_string(row2)
+
+
 # Construct and return message
 def message(temp, light):
     m = ""
@@ -91,14 +99,14 @@ def measureLight():
             r = adccv2 / adccv
             light = adccv * 0.46 * (math.e**(-3.13*r))
         except ZeroDivisionError:
-            continue
+            return 0
         return light
     
 def motorAngle():
     return str(360)
 
 def numpad():
-    return str(1)
+    return "1"
 
 # Send message through serial
 def send(x, y):
@@ -116,20 +124,26 @@ sTime = time.time()
 # When lists' lengths are 6, calculate averages and send data through serial port
 while True:
     if (time.time() - sTime) >= 10:
-        tempList.append(measureTemp())
-        lightList.append(measureLight())
+        curTemp = measureTemp()
+        curLight = measureLight()
+
+        # Write LCD every time sample is taken
+        row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
+        row2 = "Weiting for key"
+        lcdWrite(row1,row2)        
+
+        # Add Samples to lists
+        tempList.append(curTemp)
+        lightList.append(curLight)
+
         if len(tempList) > 6:
             tempList.pop(0)
         if len(lightList) > 6:
             lightList.pop(0)
         if len(tempList) == 6 and len(lightList) == 6:
-            tempA = str(sum(tempList) / len(tempList))
-            lightA = str(sum(lightList) / len(lightList))
-            lcd_screen.set_line(0)
-            lcd_screen.set_string("C:" + tempA)
-            lcd_screen.set_line(1)
-            lcd_screen.set_string("lx:" + lightA)
-            send(tempA, lightA)
+            tempA = sum(tempList) / len(tempList)
+            lightA = sum(lightList) / len(lightList)
+            send(str(tempA), str(lightA))
             tempList[:] = []
             lightList[:] = []
     else:

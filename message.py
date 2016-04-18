@@ -1,6 +1,6 @@
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
-import math, char_lcd, time
+import math, char_lcd, time, keyboard.py
 
 # Serial port
 uart = UART(6, 115200)
@@ -13,12 +13,11 @@ tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
 # Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
-#Keypad
-i2cKEY =I2C(3, I2C.MASTER, baudrate=20000)
-
 # LCD
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
+
+keyboard = keyboard(0x20,1,0)
 
 # Construct and return message
 def message(temp, light):
@@ -29,9 +28,9 @@ def message(temp, light):
     """
     m += ":"
     m += motorAngle()
-    """
     m += ":"
     m += numpad()
+    """
     m += "\n"
     return m
 
@@ -100,11 +99,9 @@ def measureLight():
 def motorAngle():
     return str(360)
 
-def numpad():
-    i2cKEY.send(00, 32)
-    key = i2cKEY.recv(3, addr=00)[0]
-    print(key)
-    return str(1)
+def numpad():    
+    global keyboard
+    return keyboard.getch()
 
 # Send message through serial
 def send(x, y):
@@ -132,7 +129,8 @@ while True:
             tempA = str(sum(tempList) / len(tempList))
             lightA = str(sum(lightList) / len(lightList))
             lcd_screen.set_line(0)
-            lcd_screen.set_string("C:" + tempA)
+            lcd_screen.set_string(numpad())
+#            lcd_screen.set_string("C:" + tempA)
             lcd_screen.set_line(1)
             lcd_screen.set_string("lx:" + lightA)
             send(tempA, lightA)
