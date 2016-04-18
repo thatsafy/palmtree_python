@@ -18,12 +18,9 @@ i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
 
 # LCD write
-def lcdWrite(row1, row2):
-    lcd_screen.set_line(0)
-    lcd_screen.set_string(row1)
-    lcd_screen.set_line(1)
-    lcd_screen.set_string(row2)
-
+def lcdWrite(row, stri):
+    lcd_screen.set_line(row)
+    lcd_screen.set_string(stri)
 
 # Construct and return message
 def message(temp, light):
@@ -122,6 +119,7 @@ sTime = time.time()
 
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
+lcdWrite(1, "Weiting for key")
 while True:
     if (time.time() - sTime) >= 10:
         curTemp = measureTemp()
@@ -129,8 +127,7 @@ while True:
 
         # Write LCD every time sample is taken
         row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
-        row2 = "Weiting for key"
-        lcdWrite(row1,row2)        
+        lcdWrite(0,row1)        
 
         # Add Samples to lists
         tempList.append(curTemp)
