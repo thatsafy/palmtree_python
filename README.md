@@ -7,3 +7,8 @@
 * save data to mySQL database
 * project data to LCD screen
 
+### Planned features
+* Keyboard input
+* Rotating platform
+  * Rotate platform when camera flash detected (light level over threshold)
+* 2nd light sensor for detecting camera flash
