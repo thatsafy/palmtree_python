@@ -20,12 +20,12 @@
 #
 # should also work unchanged with 4x3 keypad
 #
-
-import smbus
 import time
+from pyb import I2C
 
 class keypad_module:
 
+  i2c
   I2CADDR    = 0x20   	# valid range is 0x20 - 0x27
   UPSIDEDOWN = 1      	# direction keypad is facing in
   PORT       = 0      	# 0 for GPIOA, 1 for GPIOB
@@ -47,19 +47,16 @@ class keypad_module:
   # Decide the row
   DECODE = [0,0,0,0, 0,0,0,0, 0,0,0,1, 0,2,3,0]
 
-  # initialize I2C comm, 1 = rev2 Pi, 0 for Rev1 Pi
-  i2c = smbus.SMBus(1) 
-
   # get a keystroke from the keypad
   def getch(self):
     while 1:
       for col in range(0,4):
         time.sleep(0.01)
-        self.i2c.write_byte_data(self.I2CADDR, self.OLATA+self.port, self.KEYCOL[col]) # write 0 to lowest four bits
-        key = self.i2c.read_byte_data(self.I2CADDR, self.GPIOA+self.port) >> 4
+        self.i2c.mem_write(self.I2CADDR, self.OLATA+self.port, self.KEYCOL[col]) # write 0 to lowest four bits
+        key = self.i2c.mem_read(1, self.I2CADDR, self.GPIOA+self.port) >> 4
         if (key) != 0b1111:
           row = self.DECODE[key]
-          while (self.i2c.read_byte_data(self.I2CADDR, self.GPIOA+self.port) >> 4) != 15:
+          while (self.i2c.mem_read(self.I2CADDR, self.GPIOA+self.port) >> 4) != 15:
             time.sleep(0.01)
           if self.UPSIDEDOWN == 0:
             return self.KEYCODE[col][row] # keypad right side up
@@ -67,16 +64,19 @@ class keypad_module:
             return self.KEYCODE[3-row][3-col] # keypad upside down
 
   # initialize the keypad class
-  def __init__(self,addr,ioport,upside):
+  def __init__(i2c,addr,ioport,upside):
+    self.i2c = i2c
     self.I2CADDR = addr
     self.UPSIDEDOWN = upside
     self.port = ioport
-    self.i2c.write_byte_data(self.I2CADDR,self.IODIRA+self.port,0xF0) # upper 4 bits are inputs
-    self.i2c.write_byte_data(self.I2CADDR,self.PULUPA+self.port,0xF0) # enable upper 4 bits pullups
-"""
+    self.i2c.mem_write(0xF0,self.I2CADDR,self.IODIRA+self.port) # upper 4 bits are inputs
+    self.i2c.mem_write(0xF0,self.I2CADDR,self.PULUPA+self.port) # enable upper 4 bits pullups
+
+i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
+
 # test code
 def main(): 
-  keypad = keypad_module(0x27,1,0)  
+  keypad = keypad_module(i2cLCD,0x20,0,0)  
   while 1:
     ch = keypad.getch()
     print ch
@@ -87,4 +87,4 @@ def main():
 # don't runt test code if we are imported
 if __name__ == '__main__':
   main()
-"""
+
