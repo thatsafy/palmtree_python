@@ -49,7 +49,7 @@ sTime = time.time()
 
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
-lcdWrite(1, "Waiting for key")
+lcdWrite(1, "Waiting for key!")
 i2cLCD.mem_write(0xFF, 0x20, 0x0C)
 i2cLCD.mem_write(0xFF, 0x20, 0x00)
 i2cLCD.mem_write(0x00, 0x20, 0x14)
@@ -62,7 +62,7 @@ while True:
 
         # Write LCD every time sample is taken
         row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
-        lcdWrite(0,row1)        
+        lcdWrite(0,row1)
 
         # Add Samples to lists
         tempList.append(curTemp)
@@ -97,6 +97,9 @@ while True:
               tuloste += taulukko[i]
             lcdWrite(1, tuloste)
             last = ch
+        elif ch == "*":
+            taulukko = ["", "", "", ""]
+            lcdWrite(1, "Waiting for key!")
         else:
           last = ""
         continue
