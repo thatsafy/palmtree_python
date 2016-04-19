@@ -30,7 +30,7 @@ def getch():
            return keys[str(cola)]
         else:
            return ""
-
+"""
 i2c.mem_write(0xFF, 0x20, 0x0C)
 i2c.mem_write(0xFF, 0x20, 0x00)
 i2c.mem_write(0x00, 0x20, 0x14)
@@ -45,3 +45,4 @@ while 1:
       last = ch
   else:
     last = ""
+"""

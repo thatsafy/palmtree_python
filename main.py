@@ -1,6 +1,6 @@
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
-import math, char_lcd, time, temperature, light
+import math, char_lcd, time, temperature, light, keyboard
 
 # Serial port
 uart = UART(6, 115200)
@@ -74,6 +74,18 @@ while True:
             tempList[:] = []
             lightList[:] = []
     else:
-        continue
+        i2c.mem_write(0xFF, 0x20, 0x0C)
+        i2c.mem_write(0xFF, 0x20, 0x00)
+        i2c.mem_write(0x00, 0x20, 0x14)
+
+        last = ""
+
+        ch = keyboard.getch()
+        if ch != "":
+        if last != ch:
+          lcdWrite(1, ch)
+          last = ch
+        else:
+          last = ""
     sTime = time.time()
     # pyb.delay(10000)
