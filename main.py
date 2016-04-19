@@ -97,7 +97,7 @@ while True:
               tuloste += taulukko[i]
             lcdWrite(1, tuloste)
             last = ch
-        elif ch == "*":
+        elif ch == '*':
             taulukko = ["", "", "", ""]
             lcdWrite(1, "Waiting for key!")
         else:
