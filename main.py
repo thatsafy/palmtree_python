@@ -92,7 +92,7 @@ while True:
               taulukko[1] = taulukko[2]
               taulukko[2] = taulukko[3]
               taulukko[3] = ch
-            for i in taulukko:
+            for i in range(0,4):
               tuloste += taulukko[i]
             lcdWrite(1, tuloste)
             last = ch
