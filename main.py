@@ -95,5 +95,6 @@ while True:
             last = ch
         else:
           last = ""
+		continue
     sTime = time.time()
     # pyb.delay(10000)
