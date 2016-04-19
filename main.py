@@ -82,19 +82,19 @@ while True:
         ch = keyboard.getch()
         if ch != "":
           if last != ch:
-		    if "" in taulukko:
-		      for i in range(0,4):
-			    if taulukko[i] == "":
-			      taulukko[i] = ch
-			else:
-			  taulukko[0] = taulukko[1]
-			  taulukko[1] = taulukko[2]
-			  taulukko[2] = taulukko[3]
-			  taulukko[3] = ch
+            if "" in taulukko:
+              for i in range(0,4):
+                if taulukko[i] == "":
+                  taulukko[i] = ch
+            else:
+              taulukko[0] = taulukko[1]
+              taulukko[1] = taulukko[2]
+              taulukko[2] = taulukko[3]
+              taulukko[3] = ch
             lcdWrite(1, str(taulukko))
             last = ch
         else:
           last = ""
-		continue
+        continue
     sTime = time.time()
     # pyb.delay(10000)
