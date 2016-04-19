@@ -7,7 +7,7 @@ adc = ADC(Pin('X1'))
 
 tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5',2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
 
-def getTemperature():
+def measureTemp():
     global tempDict
 	
     # x1U = port x1 U (voltage)

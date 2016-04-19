@@ -8,9 +8,10 @@ uart = UART(6, 115200)
 # Temperature
 adc = ADC(Pin('X1'))
 
-#tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5',2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
+tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
+        ,2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
 # Light sensor
-#i2c = I2C(1, I2C.MASTER, baudrate=20000)
+i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
 # LCD
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
@@ -37,7 +38,6 @@ def message(temp, light):
     return m
 
 # measure temperature
-"""
 def measureTemp():
     global tempDict
 
@@ -65,8 +65,7 @@ def measureTemp():
 
     temperature = int(values[2]) + steps * step
     return temperature
-"""
-"""
+
 # Measure light level (lux)
 def measureLight():
     while True:
@@ -99,7 +98,7 @@ def measureLight():
         except ZeroDivisionError:
             return 0
         return light
-""" 
+    
 def motorAngle():
     return str(360)
 
@@ -120,11 +119,11 @@ sTime = time.time()
 
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
-lcdWrite(1, "Weiting for key")
+lcdWrite(1, "Waiting for key!")
 while True:
     if (time.time() - sTime) >= 10:
-        curTemp = temperature.measureTemp()
-        curLight = light.measureLight()
+        curTemp = measureTemp()
+        curLight = measureLight()
 
         # Write LCD every time sample is taken
         row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
