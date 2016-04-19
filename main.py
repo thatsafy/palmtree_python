@@ -79,7 +79,7 @@ while True:
             tempList[:] = []
             lightList[:] = []
     else:
-		tuloste = ""
+        tuloste = ""
         ch = keyboard.getch()
         if ch != "":
           if last != ch:
@@ -92,8 +92,8 @@ while True:
               taulukko[1] = taulukko[2]
               taulukko[2] = taulukko[3]
               taulukko[3] = ch
-			for i in taulukko:
-			  tuloste += str(taulukko[i])
+            for i in taulukko:
+              tuloste += taulukko[i]
             lcdWrite(1, tuloste)
             last = ch
         else:
