@@ -54,6 +54,7 @@ i2cLCD.mem_write(0xFF, 0x20, 0x0C)
 i2cLCD.mem_write(0xFF, 0x20, 0x00)
 i2cLCD.mem_write(0x00, 0x20, 0x14)
 last = ""
+taulukko = ["", "", "", ""]
 while True:
     if (time.time() - sTime) >= 10:
         curTemp = temperature.measureTemp()
@@ -81,7 +82,16 @@ while True:
         ch = keyboard.getch()
         if ch != "":
           if last != ch:
-            lcdWrite(1, ch)
+		    if "" in taulukko:
+		      for i in range(0,4):
+			    if taulukko[i] == "":
+			      taulukko[i] = ch
+			else:
+			  taulukko[0] = taulukko[1]
+			  taulukko[1] = taulukko[2]
+			  taulukko[2] = taulukko[3]
+			  taulukko[3] = ch
+            lcdWrite(1, str(taulukko))
             last = ch
         else:
           last = ""
