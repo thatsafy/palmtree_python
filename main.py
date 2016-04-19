@@ -50,9 +50,9 @@ sTime = time.time()
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
 lcdWrite(1, "Waiting for key")
-i2c.mem_write(0xFF, 0x20, 0x0C)
-i2c.mem_write(0xFF, 0x20, 0x00)
-i2c.mem_write(0x00, 0x20, 0x14)
+i2cLCD.mem_write(0xFF, 0x20, 0x0C)
+i2cLCD.mem_write(0xFF, 0x20, 0x00)
+i2cLCD.mem_write(0x00, 0x20, 0x14)
 last = ""
 while True:
     if (time.time() - sTime) >= 10:
