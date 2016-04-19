@@ -82,7 +82,10 @@ while True:
         tuloste = ""
         ch = keyboard.getch()
         if ch != "":
-          if last != ch:
+          if ch == '*':
+            taulukko = ["", "", "", ""]
+            lcdWrite(1, "Waiting for key!")
+          elif last != ch:
             if "" in taulukko:
               for i in range(0,4):
                 if taulukko[i] == "":
@@ -97,9 +100,6 @@ while True:
               tuloste += taulukko[i]
             lcdWrite(1, tuloste)
             last = ch
-        elif ch == '*':
-            taulukko = ["", "", "", ""]
-            lcdWrite(1, "Waiting for key!")
         else:
           last = ""
         continue
