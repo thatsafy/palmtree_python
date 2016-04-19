@@ -80,9 +80,9 @@ while True:
     else:
         ch = keyboard.getch()
         if ch != "":
-        if last != ch:
-          lcdWrite(1, ch)
-          last = ch
+          if last != ch:
+            lcdWrite(1, ch)
+            last = ch
         else:
           last = ""
     sTime = time.time()
