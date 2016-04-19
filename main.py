@@ -87,6 +87,7 @@ while True:
               for i in range(0,4):
                 if taulukko[i] == "":
                   taulukko[i] = ch
+                  break
             else:
               taulukko[0] = taulukko[1]
               taulukko[1] = taulukko[2]
