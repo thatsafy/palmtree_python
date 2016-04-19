@@ -3,21 +3,13 @@ from pyb import I2C
 
 class keypad_module:
 
-  
-    
-  # Keypad Column output values
-
-  # Keypad Keycode matrix
-
-
-  # get a keystroke from the keypad
   def getch(self):
+    i2c = I2C(2, I2C.MASTER, baudrate=20000)
     COLS = [0b11101111, 0b10111111, 0b11111011]
     ROWS = [0b11011111, 0b11110111, 0b11111101, 0b11111110]
     MASKS = [0b00100000, 0b00001000, 0b00000010, 0b00000001]
     keys = {0x30: '1', 0x60: '2', 0x24: '3', 0x18: '4', 0x48: '5', 0x0C: '6', 0x012: '7', 0x42: '8', 0x06: '9', 0x11: '*', 0x41: 0, 0x05: '#'}
     
-    i2c        = ""
     I2CADDR    = 0x20   	# valid range is 0x20 - 0x27    
    
     IODIR = 0x00
@@ -38,12 +30,10 @@ class keypad_module:
 
   # initialize the keypad class
   def __init__(self):
-    
-LCD = I2C(2, I2C.MASTER, baudrate=20000)
 
 # test code
 def main(): 
-  keypad = keypad_module(LCD,0x20)  
+  keypad = keypad_module()  
   while 1:
     ch = keypad.getch()
     print(ch)
