@@ -90,7 +90,7 @@ while True:
               if "" in taulukko:
                   message = "Invalid code!"
                   for s in taulukko:
-                      if s != "": message += " " + s
+                      if s != "": message += s
                   lcdWrite(1, message)
           elif last != ch:
             if "" in taulukko:
