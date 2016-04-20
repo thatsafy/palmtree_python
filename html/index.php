@@ -17,6 +17,10 @@
 		</style>
 </head>
 <body>
+	<header>
+		<h1>Palmbeach Kings - Datalog page</h1>
+		<p>This page is made to show "Palmbeach Kings" groups collected data </p>
+	</header>
 	<div class="container">
 		<div class="row">
 			<div class="large-6 columns">
