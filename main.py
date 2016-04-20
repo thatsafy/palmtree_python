@@ -41,7 +41,7 @@ def send(x, y):
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
 
-def send(h):
+def sendLog(h):
     global uart
     l = "L:" + str(h)
     uart.write(bytes(l.encode('ascii')))
@@ -121,7 +121,7 @@ while True:
               else:
                   for h in taulukko:
                       logMes += str(h)
-                  send(logMes)
+                  sendLog(logMes)
                   taulukko = ["","","",""]
                   lcdWrite(1, "Waiting for key!")
           # If pressed key is not same as last key pressed, * or #
