@@ -12,10 +12,12 @@ def read(message):
     if message.count(":") > 0:
         print("Working!!")  
         temp = message.split(":")
-        temperature = temp[0]
-        light = temp[1]
+        user = temp[0]
+        temperature = temp[1]
+        light = temp[2]
         light = light[0:light.index("\n")]
         readings = (temperature, light)
+        who(user)
         return readings
     else:
         print("Not working!")
