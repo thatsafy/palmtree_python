@@ -1,19 +1,11 @@
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
-import math, char_lcd, time
+import math, char_lcd, time, temperature, light, keyboard
 
-# Serial port
+# Serial port connection to raspberry pi
 uart = UART(6, 115200)
 
-# Temperature
-adc = ADC(Pin('X1'))
-
-tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
-        ,2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
-# Light sensor
-i2c = I2C(1, I2C.MASTER, baudrate=20000)
-
-# LCD
+# LCD I2C Init (keypad uses this too)
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
 
@@ -37,73 +29,8 @@ def message(temp, light):
     m += "\n"
     return m
 
-# measure temperature
-def measureTemp():
-    global tempDict
-
-    # x1U = port x1 U (voltage)
-    x1u = adc.read()/4095 * 3.3
-
-    # front resistor R1 1790 ohm
-    r1 = 1790
-
-    # MicroPython board output voltage
-    mpu = 3.3
-
-    # Temperature resistor KTY81/210 resistance
-    tr = x1u * r1 / (mpu - x1u)
-    
-    # Return value from tempDict
-    value = ""
-    for key in tempDict:
-        if tr > key:
-            value = tempDict[key]
-
-    values = value.split("x")
-    step = int(values[3]) / (int(values[1]) - int(values[0]))
-    steps = tr - int(values[0])
-
-    temperature = int(values[2]) + steps * step
-    return temperature
-
-# Measure light level (lux)
-def measureLight():
-    while True:
-        # Visible & Infrared
-        i2c.send(0x43, 0x39)
-        data1 = i2c.recv(1, addr=0x39)[0]
-        # Primarly infrared
-        i2c.send(0x83, 0x39)
-        data2 = i2c.recv(1, addr=0x39)[0]
-
-        step  = data1 & 0x0f
-        chordnr = (data1 >> 4) & 0x07
-    
-        step2 = data2 & 0x0f
-        chordnr2 = (data2 >> 4) & 0x07
-    
-        chordv = int(16.5 * ((2**chordnr)-1))
-        stepv = 2**chordnr
-    
-        chordv2 = int(16.5 * ((2**chordnr2)-1))
-        stepv2 = 2**chordnr2
-    
-        adccv = chordv + stepv * step
-        adccv2 = chordv2 + stepv2 * step2
-    
-        # Convert to light level (lux)
-        try:
-            r = adccv2 / adccv
-            light = adccv * 0.46 * (math.e**(-3.13*r))
-        except ZeroDivisionError:
-            return 0
-        return light
-    
 def motorAngle():
     return str(360)
-
-def numpad():
-    return "1"
 
 # Send message through serial
 def send(x, y):
@@ -112,22 +39,38 @@ def send(x, y):
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
 
+# Lists to calculate avarage temp and light
 tempList = []
 lightList = []
 
+# Timer help
 sTime = time.time()
 
+lcdWrite(1, "Waiting for key!")
+
+# Initialize keys
+i2cLCD.mem_write(0xFF, 0x20, 0x0C)
+i2cLCD.mem_write(0xFF, 0x20, 0x00)
+i2cLCD.mem_write(0x00, 0x20, 0x14)
+
+# Keypads last pressed key
+last = ""
+
+# Keypad input code
+taulukko = ["", "", "", ""]
+
+# Main loop
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
-lcdWrite(1, "Weiting for key")
 while True:
+    # Temperature loop
     if (time.time() - sTime) >= 10:
-        curTemp = measureTemp()
-        curLight = measureLight()
+        curTemp = temperature.measureTemp()
+        curLight = light.measureLight()
 
         # Write LCD every time sample is taken
         row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
-        lcdWrite(0,row1)        
+        lcdWrite(0,row1)
 
         # Add Samples to lists
         tempList.append(curTemp)
@@ -144,6 +87,51 @@ while True:
             tempList[:] = []
             lightList[:] = []
     else:
+        # Keypad loop
+        tuloste = ""
+        ch = keyboard.getch()
+        # When key has been pressed
+        if ch != "":
+          # If Pressed key is *
+          if ch == '*':
+            # Reset array and screen
+            taulukko = ["", "", "", ""]
+            lcdWrite(1, "Waiting for key!")
+          # If pressed key is #
+          elif ch == '#':
+              # If taulukko has space
+              if "" in taulukko:
+                  # Write error message to user
+                  mes = "Invalid code:"
+                  for s in taulukko:
+                      if s != "": mes += "" + s
+                  lcdWrite(1, mes)
+          # If pressed key is not same as last key pressed, * or #
+          elif last != ch:
+            # if taulukko has space
+            if "" in taulukko:
+              # Set pressed key to first empty space in taulukko
+              for i in range(0,4):
+                if taulukko[i] == "":
+                  taulukko[i] = ch
+                  break
+            # If taulukko has no space
+            else:
+              # Move all values one space down and add just pressed key to last space
+              taulukko[0] = taulukko[1]
+              taulukko[1] = taulukko[2]
+              taulukko[2] = taulukko[3]
+              taulukko[3] = ch
+            # After adjustment is done print info to user
+            for i in range(0,4):
+              tuloste += taulukko[i]
+            lcdWrite(1, tuloste)
+            last = ch
+        # When key is not pressed
+        else:
+          # Reset last key pressed
+          last = ""
         continue
+    # Reset timer
     sTime = time.time()
     # pyb.delay(10000)

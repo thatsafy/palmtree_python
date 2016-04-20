@@ -1,14 +1,19 @@
+#!/usr/bin/python3
+
 import time
 from pyb import I2C
 
 i2c = I2C(2, I2C.MASTER, baudrate=20000)
 
-def getch(self):
+def getch():
 	global i2c
 	COLS = [0b11101111, 0b10111111, 0b11111011]
 	ROWS = [0b11011111, 0b11110111, 0b11111101, 0b11111110]
-	MASKS = [0b00100000, 0b00001000, 0b00000010, 0b00000001]
-	keys = {0x30: '1', 0x60: '2', 0x24: '3', 0x18: '4', 0x48: '5', 0x0C: '6', 0x012: '7', 0x42: '8', 0x06: '9', 0x11: '*', 0x41: 0, 0x05: '#'}
+	MASKS = [0b00101011, 0b00001000, 0b00000010, 0b00000001]
+	keys = {"[207, 191, 251]": '1', "[239, 159, 251]": '2', "[239, 191, 219]": '3',
+                "[238, 191, 251]": '4', "[239, 190, 251]": '5', "[239, 191, 250]": '6',
+                "[237, 191, 251]": '7', "[239, 189, 251]": '8', "[239, 191, 249]": '9',
+                "[231, 191, 251]": '*', "[239, 183, 251]": '0', "[239, 191, 243]": '#'}
 
 	I2CADDR    = 0x20   	# valid range is 0x20 - 0x27    
 
@@ -16,23 +21,28 @@ def getch(self):
 	GPIO  = 0x12		# GPIO pin register base address
 	PULUP = 0x0C		# PullUp enable register base address
 
+        cola = [0,0,0]
 	for col in range(0,3):
 	  i2c.mem_write(COLS[col], I2CADDR, IODIR)
 	  time.sleep(0.01)
-	  key = i2c.mem_read(1, I2CADDR, GPIO)[0]
-	  for m in MASKS:
-		print("key: " + key)
-		print("mask: " + m)
-		print("end: " + (key & m))
-		if key & m != 0x00:
-		  return (str(keys[key & m]))
-
-
+	  cola[col] = i2c.mem_read(1, I2CADDR, GPIO)[0]
+	if str(cola) in keys:
+           return keys[str(cola)]
+        else:
+           return ""
+"""
 i2c.mem_write(0xFF, 0x20, 0x0C)
 i2c.mem_write(0xFF, 0x20, 0x00)
-i2c.mem_write(0x00, 0x20, 0,14)
+i2c.mem_write(0x00, 0x20, 0x14)
+
+last = ""
 
 while 1:
-  ch = keypad.getch()
-
-
+  ch = getch()
+  if ch != "":
+    if last != ch:
+      print(ch)
+      last = ch
+  else:
+    last = ""
+"""
