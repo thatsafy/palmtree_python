@@ -46,8 +46,6 @@ lightList = []
 # Timer help
 sTime = time.time()
 
-# Collect data every 10 seconds to lists
-# When lists' lengths are 6, calculate averages and send data through serial port
 lcdWrite(1, "Waiting for key!")
 
 # Initialize keys
@@ -62,6 +60,8 @@ last = ""
 taulukko = ["", "", "", ""]
 
 # Main loop
+# Collect data every 10 seconds to lists
+# When lists' lengths are 6, calculate averages and send data through serial port
 while True:
     # Temperature loop
     if (time.time() - sTime) >= 10:
