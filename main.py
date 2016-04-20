@@ -17,6 +17,8 @@ def lcdWrite(row, stri):
 # Construct and return message
 def message(user, temp, light):
     m = ""
+    m += "T"
+    m += ":"
     m += str(temp)
     m += ":"
     m += str(light)
@@ -41,7 +43,8 @@ def send(x, y):
 
 def send(h):
     global uart
-    uart.write(bytes(h.encode('ascii')))
+    l = "L:" + str(h)
+    uart.write(bytes(l.encode('ascii')))
     print("Login:",h)
 
 # Lists to calculate avarage temp and light
