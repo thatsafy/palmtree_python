@@ -15,7 +15,7 @@ def lcdWrite(row, stri):
     lcd_screen.set_string(stri)
 
 # Construct and return message
-def message(user, temp, light):
+def message(temp, light):
     m = ""
     m += "T"
     m += ":"
