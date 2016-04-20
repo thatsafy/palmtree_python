@@ -17,8 +17,6 @@ def lcdWrite(row, stri):
 # Construct and return message
 def message(user, temp, light):
     m = ""
-    m += str(user)
-    m += ":"
     m += str(temp)
     m += ":"
     m += str(light)
@@ -35,11 +33,16 @@ def motorAngle():
     return str(360)
 
 # Send message through serial
-def send(h, x, y):
+def send(x, y):
     global uart
     m = message(h, x, y)
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
+
+def send(h):
+    global uart
+    uart.write(bytes(h.encode('ascii')))
+    print("Login:",h)
 
 # Lists to calculate avarage temp and light
 tempList = []
@@ -71,7 +74,7 @@ while True:
     if len(tempList) >=  6 and len(lightList) >=  6:
         tempA = sum(tempList) / len(tempList)
         lightA = sum(lightList) / len(lightList)
-        send(logMes, str(tempA), str(lightA))
+        send(str(tempA), str(lightA))
         tempList[:] = []
         lightList[:] = []
     elif (time.time() - sTime) >= 10:
@@ -115,6 +118,9 @@ while True:
               else:
                   for h in taulukko:
                       logMes += str(h)
+                  send(logMes)
+                  taulukko = ["","","",""]
+                  lcdWrite(1, "Waiting for key!")
           # If pressed key is not same as last key pressed, * or #
           elif last != ch:
             # if taulukko has space
