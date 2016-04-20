@@ -37,7 +37,7 @@ def motorAngle():
 # Send message through serial
 def send(x, y):
     global uart
-    m = message(h, x, y)
+    m = message(x, y)
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
 
