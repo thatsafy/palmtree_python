@@ -86,7 +86,7 @@ while True:
           if ch == '*':
             taulukko = ["", "", "", ""]
             lcdWrite(1, "Waiting for key!")
-          if ch == '#':
+          elif ch == '#':
               if "" in taulukkko:
                   lcdWrite(1, "Invalid code!")
           elif last != ch:
