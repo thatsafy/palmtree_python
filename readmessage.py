@@ -50,13 +50,10 @@ def readFromSql():
             
 def who(code):
     cur.execute("SELECT name FROM users WHERE access_code = " + code + ";")
-    for r in cur:
-        print (str(r))
-    """
-        for r in cur:
-            cur.execute('INSERT INTO log (name) VALUES ("' + r[0] + '");')
-            cur.commit()
-    """
+    for r in cur: 
+        cur.execute('INSERT INTO log (name) VALUES ("' + str(r) + '");')
+        cur.commit()
+    
 while True:
     try:
         x = read(listen())
