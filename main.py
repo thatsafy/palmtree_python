@@ -88,7 +88,7 @@ while True:
             lcdWrite(1, "Waiting for key!")
           elif ch == '#':
               if "" in taulukko:
-                  message = "Invalid code!"
+                  message = "Invalid code:"
                   for s in taulukko:
                       if s != "": message += s
                   lcdWrite(1, message)
