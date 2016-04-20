@@ -17,6 +17,11 @@
 		</style>
 </head>
 <body>
+<header>
+	<h1>Palmbeach Kings - Datalog page</h1>
+	<p>This page is made to show "Palmbeach Kings" groups collected data</p>
+</header>
+
 	<div class="container">
 		<div class="row">
 			<div class="large-6 columns">
@@ -59,7 +64,11 @@
 				$dates = array();
 				$brightnesses = array();
 				$avgTemperatures = array();
+				$avgHourlyTemperatures = array();
+				$avgHourlyTemperatureDates = array();
 				$avgBrightnesses = array();
+				$avgHourlyBrightnesses = array();
+				$avgHourlyBrightnessDates = array();
 				$avgTemperatureDates = array();
 				$avgBrightnessDates = array();
 
@@ -102,11 +111,13 @@
 				$sql = "";
 
 				for($i = 0; $i < 24; $i++) {
+					// Add a leading zero if needed.
+					$iterator = sprintf('%02d', $i);
 					if($i < 23) {
-						$sql .= "select avg(temperature), cast(date as date) from data where date like \"2016-04-" .$i . "%\" UNION ";
+						$sql .= "select avg(temperature), cast(date as date) from data where date like \"2016-04-" .$iterator . "%\" UNION ";
 					}
 					else {
-						$sql .= "select avg(temperature), cast(date as date) from data where date like \"2016-04-" .$i . "%\"";
+						$sql .= "select avg(temperature), cast(date as date) from data where date like \"2016-04-" .$iterator . "%\"";
 					}
 				}
 
@@ -136,7 +147,7 @@
 				$dbname = 'data';
 				$conn = new mysqli($servername, $username, $password, $dbname);
 
-				// Get average temperature for each day.
+				// Get average brightness for each day.
 
 				if ($conn->connect_error) {
 					die("Connection failed: " . $conn->connect_error);
@@ -144,11 +155,13 @@
 				$sql = "";
 
 				for($i = 0; $i < 24; $i++) {
+					// Add a leading zero if needed.
+					$iterator = sprintf('%02d', $i);
 					if($i < 23) {
-						$sql .= "select avg(brightness), cast(date as date) from data where date like \"2016-04-" .$i . "%\" UNION ";
+						$sql .= "select avg(brightness), cast(date as date) from data where date like \"2016-04-" .$iterator . "%\" UNION ";
 					}
 					else {
-						$sql .= "select avg(brightness), cast(date as date) from data where date like \"2016-04-" .$i . "%\"";
+						$sql .= "select avg(brightness), cast(date as date) from data where date like \"2016-04-" .$iterator . "%\"";
 					}
 				}
 
@@ -160,6 +173,58 @@
 						if(isset($row["avg(brightness)"]) && $row["avg(brightness)"] !== "") {
 							$avgBrightnesses[] = $row["avg(brightness)"];
 							$avgBrightnessDates[] = $row["cast(date as date)"];
+						}
+					}
+				} else {
+					echo "0 results";
+					echo $sql;
+				}
+				$conn->close();
+
+				// Reverse the order of the arrays because they are in wrong order.
+				$temperatures = array_reverse($temperatures);
+				$dates = array_reverse($dates);
+				$brightnesses = array_reverse($brightnesses);
+
+				?>
+
+				<?php
+
+				$servername = 'palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com';
+				$username = 'palm';
+				$password = 'palmbeach192';
+				$dbname = 'data';
+				$conn = new mysqli($servername, $username, $password, $dbname);
+
+				// Get average temperature for each hour.
+
+				$dayNumber = date("d");
+				$monthNumber = date("m");
+
+				if ($conn->connect_error) {
+					die("Connection failed: " . $conn->connect_error);
+				}
+				$sql = "";
+
+				for($i = 0; $i < 24; $i++) {
+					// Add a leading zero if needed.
+					$iterator = sprintf('%02d', $i);
+					if($i < 23) {
+						$sql .= "select avg(temperature), cast(date as time) from data where date like \"2016-" . $monthNumber . "-" . $dayNumber . " " . $iterator . "%\" UNION ";
+					}
+					else {
+						$sql .= "select avg(temperature), cast(date as time) from data where date like \"2016-" . $monthNumber . "-" . $dayNumber . " " . $iterator . "%\"";
+					}
+				}
+
+				$result = $conn->query($sql);
+				if ($result->num_rows > 0) {
+
+					while($row = $result->fetch_assoc()) {
+						// Add each value to the array. These arrays are used by the JS charts. Only add non-null values.
+						if(isset($row["avg(temperature)"]) && $row["avg(temperature)"] !== "") {
+							$avgHourlyTemperatures[] = $row["avg(temperature)"];
+							$avgHourlyTemperatureDates[] = $row["cast(date as time)"];
 						}
 					}
 				} else {
@@ -205,6 +270,14 @@
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<div>
+					<p><strong>Hourly Temperature History</strong></p>
+					<canvas id="avg-hourly-temperature-canvas"></canvas>
+				</div>
+			</div>
+		</div>
 	</div>
 
 <script src="https://cdn.jsdelivr.net/foundation/6.2.1/foundation.min.js"></script>
@@ -215,8 +288,12 @@
 	var brightnesses = [];
 	var avgTemperatures = [];
 	var avgTemperatureDates = [];
+	var avgHourlyTemperatures = [];
+	var avgHourlyTemperatureDates = [];
 	var avgBrightnesses = [];
 	var avgBrightnessDates = [];
+	var avgHourlyBrightnesses = [];
+	var avgHourlyBrightnessDates = [];
 
 	<?php
 		foreach($dates as $date) {
@@ -239,6 +316,12 @@
 		}
 		foreach($avgBrightnessDates as $avgBrightnessDate) {
 			echo 'avgBrightnessDates.push("' . $avgBrightnessDate . '");';
+		}
+		foreach($avgHourlyTemperatures as $avgHourlyTemperature) {
+			echo 'avgHourlyTemperatures.push("' . $avgHourlyTemperature . '");';
+		}
+		foreach($avgHourlyTemperatureDates as $avgHourlyTemperatureDate) {
+			echo 'avgHourlyTemperatureDates.push("' . $avgHourlyTemperatureDate . '");';
 		}
 	?>
 
@@ -274,6 +357,24 @@
 				pointHighlightFill : "#fff",
 				pointHighlightStroke : "rgba(220,220,220,1)",
 				data : avgTemperatures,
+				scaleOverride: true,
+				scaleSteps: 10,
+				scaleStepsWidth: 1
+			}
+		]
+	};
+	var avgHourlyTemperatureChartData = {
+		labels : avgHourlyTemperatureDates,
+		datasets : [
+			{
+				label: "Hourly Temperature History",
+				fillColor : "transparent",
+				strokeColor : "rgba(61,166,82,1)",
+				pointColor : "rgba(0,0,0,1)",
+				pointStrokeColor : "#fff",
+				pointHighlightFill : "#fff",
+				pointHighlightStroke : "rgba(220,220,220,1)",
+				data : avgHourlyTemperatures,
 				scaleOverride: true,
 				scaleSteps: 10,
 				scaleStepsWidth: 1
@@ -331,6 +432,10 @@
 		});
 		var avgBrightnessChartContext = document.getElementById("avg-brightness-canvas").getContext("2d");
 		window.myLine3 = new Chart(avgBrightnessChartContext).Line(avgBrightnessChartData, {
+			responsive: true
+		});
+		var avgHourlyTemperatureChartContext = document.getElementById("avg-hourly-temperature-canvas").getContext("2d");
+		window.myLine3 = new Chart(avgHourlyTemperatureChartContext).Line(avgHourlyTemperatureChartData, {
 			responsive: true
 		});
 	};
