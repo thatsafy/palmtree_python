@@ -52,7 +52,7 @@ def who(code):
     cur.execute("SELECT name FROM users WHERE access_code = " + code + ";")
     for r in cur: 
         cur.execute('INSERT INTO log (name) VALUES ("' + str(r) + '");')
-        cur.commit()
+        conn.commit()
     
 while True:
     try:
