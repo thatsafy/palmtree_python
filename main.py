@@ -15,8 +15,10 @@ def lcdWrite(row, stri):
     lcd_screen.set_string(stri)
 
 # Construct and return message
-def message(temp, light):
+def message(user, temp, light):
     m = ""
+    m += str(user)
+    m += ":"
     m += str(temp)
     m += ":"
     m += str(light)
@@ -59,12 +61,20 @@ last = ""
 # Keypad input code
 taulukko = ["", "", "", ""]
 
+logMes = ""
+
 # Main loop
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
 while True:
     # Temperature loop
-    if (time.time() - sTime) >= 10:
+    if len(tempList) > 6 and len(lightList) > 5:
+        tempA = sum(tempList) / len(tempList)
+        lightA = sum(lightList) / len(lightList)
+        send(logMes, tr(tempA), str(lightA))
+        tempList[:] = []
+        lightList[:] = []
+    elif (time.time() - sTime) >= 10:
         curTemp = temperature.measureTemp()
         curLight = light.measureLight()
 
@@ -80,12 +90,7 @@ while True:
             tempList.pop(0)
         if len(lightList) > 6:
             lightList.pop(0)
-        if len(tempList) == 6 and len(lightList) == 6:
-            tempA = sum(tempList) / len(tempList)
-            lightA = sum(lightList) / len(lightList)
-            send(str(tempA), str(lightA))
-            tempList[:] = []
-            lightList[:] = []
+
     else:
         # Keypad loop
         tuloste = ""
@@ -99,6 +104,7 @@ while True:
             lcdWrite(1, "Waiting for key!")
           # If pressed key is #
           elif ch == '#':
+              logMes = ""
               # If taulukko has space
               if "" in taulukko:
                   # Write error message to user
@@ -106,6 +112,9 @@ while True:
                   for s in taulukko:
                       if s != "": mes += "" + s
                   lcdWrite(1, mes)
+              else:
+                  for h in taulukko:
+                      logMes += str(h)
           # If pressed key is not same as last key pressed, * or #
           elif last != ch:
             # if taulukko has space
