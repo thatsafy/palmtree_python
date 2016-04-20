@@ -47,9 +47,9 @@ def readFromSql():
             print(r)
             
 def who(code):
-    cur.execute("SELECT name FROM users WHERE access_code = %code;")
+    cur.execute("SELECT name FROM users WHERE access_code = " + code + ";")
     if cur:
-        cur.execute('INSERT INTO log (name) VALUES ("%cur[0]")')
+        cur.execute('INSERT INTO log (name) VALUES ("' + cur[0] + '");')
         cur.commit()
 
 while True:
