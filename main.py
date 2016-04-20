@@ -35,9 +35,9 @@ def motorAngle():
     return str(360)
 
 # Send message through serial
-def send(x, y):
+def send(h, x, y):
     global uart
-    m = message(x, y)
+    m = message(h, x, y)
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
 
@@ -68,10 +68,10 @@ logMes = ""
 # When lists' lengths are 6, calculate averages and send data through serial port
 while True:
     # Temperature loop
-    if len(tempList) > 6 and len(lightList) > 5:
+    if len(tempList) >=  6 and len(lightList) >=  6:
         tempA = sum(tempList) / len(tempList)
         lightA = sum(lightList) / len(lightList)
-        send(logMes, tr(tempA), str(lightA))
+        send(logMes, str(tempA), str(lightA))
         tempList[:] = []
         lightList[:] = []
     elif (time.time() - sTime) >= 10:
