@@ -43,6 +43,12 @@ def readFromSql():
         cur.execute("SELECT id,temperature,brightness from data order by id desc limit 5;")
         for r in cur:
             print(r)
+            
+def who(code):
+    cur.execute("SELECT name FROM users WHERE access_code = %code;")
+    if cur:
+        cur.execute('INSERT INTO log (name) VALUES ("%cur[0]")')
+        cur.commit()
 
 while True:
     try:
