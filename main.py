@@ -87,7 +87,7 @@ while True:
             taulukko = ["", "", "", ""]
             lcdWrite(1, "Waiting for key!")
           elif ch == '#':
-              if "" in taulukkko:
+              if "" in taulukko:
                   lcdWrite(1, "Invalid code!")
           elif last != ch:
             if "" in taulukko:
