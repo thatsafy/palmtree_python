@@ -2,10 +2,10 @@ from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
 import math, char_lcd, time, temperature, light, keyboard
 
-# Serial port
+# Serial port connection to raspberry pi
 uart = UART(6, 115200)
 
-# LCD
+# LCD I2C Init (keypad uses this too)
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
 
@@ -32,9 +32,6 @@ def message(temp, light):
 def motorAngle():
     return str(360)
 
-def numpad():
-    return "1"
-
 # Send message through serial
 def send(x, y):
     global uart
@@ -42,21 +39,31 @@ def send(x, y):
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
 
+# Lists to calculate avarage temp and light
 tempList = []
 lightList = []
 
+# Timer help
 sTime = time.time()
 
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
 lcdWrite(1, "Waiting for key!")
+
 # Initialize keys
 i2cLCD.mem_write(0xFF, 0x20, 0x0C)
 i2cLCD.mem_write(0xFF, 0x20, 0x00)
 i2cLCD.mem_write(0x00, 0x20, 0x14)
+
+# Keypads last pressed key
 last = ""
+
+# Keypad input code
 taulukko = ["", "", "", ""]
+
+# Main loop
 while True:
+    # Temperature loop
     if (time.time() - sTime) >= 10:
         curTemp = temperature.measureTemp()
         curLight = light.measureLight()
@@ -80,35 +87,51 @@ while True:
             tempList[:] = []
             lightList[:] = []
     else:
+        # Keypad loop
         tuloste = ""
         ch = keyboard.getch()
+        # When key has been pressed
         if ch != "":
+          # If Pressed key is *
           if ch == '*':
+            # Reset array and screen
             taulukko = ["", "", "", ""]
             lcdWrite(1, "Waiting for key!")
+          # If pressed key is #
           elif ch == '#':
+              # If taulukko has space
               if "" in taulukko:
+                  # Write error message to user
                   mes = "Invalid code:"
                   for s in taulukko:
                       if s != "": mes += "" + s
                   lcdWrite(1, mes)
+          # If pressed key is not same as last key pressed, * or #
           elif last != ch:
+            # if taulukko has space
             if "" in taulukko:
+              # Set pressed key to first empty space in taulukko
               for i in range(0,4):
                 if taulukko[i] == "":
                   taulukko[i] = ch
                   break
+            # If taulukko has no space
             else:
+              # Move all values one space down and add just pressed key to last space
               taulukko[0] = taulukko[1]
               taulukko[1] = taulukko[2]
               taulukko[2] = taulukko[3]
               taulukko[3] = ch
+            # After adjustment is done print info to user
             for i in range(0,4):
               tuloste += taulukko[i]
             lcdWrite(1, tuloste)
             last = ch
+        # When key is not pressed
         else:
+          # Reset last key pressed
           last = ""
         continue
+    # Reset timer
     sTime = time.time()
     # pyb.delay(10000)
