@@ -42,4 +42,4 @@ while True:
             sum += lights[i]
         x1u = sum/50
         lcdWrite(1, str(x1u))
-    print(lights)
+    print(lights.count(0))
