@@ -22,7 +22,7 @@ for i in range(0, 51):
 
 while True:
     x1u = adc.read()
-    if "" in lights:
+    if 0 in lights:
         for i in range(0,51):
             if lights[i] == "":
                 lights[i] = x1u
