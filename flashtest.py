@@ -24,16 +24,16 @@ print(lights)
 while True:
     x1u = adc.read()
     if 0 in lights:
-        for i in range(0,51):
+        for i in range(0,50):
             if lights[i] == 0:
                 lights[i] = x1u
                 break
     else:
-        for i in range (0,50):
+        for i in range (0,49):
             lights[i] = lights[i+1]
         lights[50] = x1u
         sum = 0
-        for i in range(0,51):
+        for i in range(0,50):
             sum += lights[i]
         x1u = sum/50
         lcdWrite(1, str(x1u))
