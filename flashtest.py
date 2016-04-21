@@ -36,9 +36,14 @@ lightMiddle = False
 lightUnder = False
 
 averages = []
-
+av = 0
 while True:
     x1u = adc.read()
+    if av != 0 and x1u > av + 100:
+        middleLED.on()
+        overLED.on()
+        underLED.on()
+        pyb.delay(200)
     if 0 in lights:
         for i in range(0,50):
             if lights[i] == 0:
@@ -52,6 +57,7 @@ while True:
         for i in range(0,50):
             sum += lights[i]
         x1u = sum/50
+        av = x1u
         averages.append(x1u)
         if len(averages) == 10:
             for a in averages:
