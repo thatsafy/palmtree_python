@@ -31,7 +31,7 @@ while True:
     else:
         for i in range (0,49):
             lights[i] = lights[i+1]
-        lights[50] = x1u
+        lights[49] = x1u
         sum = 0
         for i in range(0,50):
             sum += lights[i]
