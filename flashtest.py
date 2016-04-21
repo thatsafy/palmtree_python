@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import char_lcd
+from statistics import mean
 from pyb import ADC, Pin, I2C
 
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
@@ -14,6 +15,21 @@ adc = ADC(Pin('X7'))
 
 # x1u = adc.read()
 lcdWrite(0, "makkara!!!")
+
+lights = []
+
+for i in range(0, 51):
+    lights[i] = 0
+
 while True:
     x1u = adc.read()
+    if "" in lights:
+        for i in range(0,51):
+            if lights[i] == ""
+                lights[i] = x1u
+    else:
+        for i in range (0,50):
+            lights[i] = lights[i+1]
+        lights[50] = x1u
+    x1u = mean(lights)
     lcdWrite(1, str(x1u))
