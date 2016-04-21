@@ -20,7 +20,23 @@ lights = [0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0]
+
 print(lights)
+
+# LED lights
+# 1 = Red
+# 2 = Green
+# 3 = Yellow
+overLED = pyb.LED(1)
+middleLED = pyb.LED(2)
+underLED = pyb.LED(3)
+
+lightOver = False
+lightMiddle = False
+lightUnder = False
+
+averages = []
+
 while True:
     x1u = adc.read()
     if 0 in lights:
@@ -36,5 +52,38 @@ while True:
         for i in range(0,50):
             sum += lights[i]
         x1u = sum/50
+        averages.append(x1u)
+        if len(averages) == 10:
+            for a in averages:
+                if a > 1000:
+                    lightMiddle = False
+                    lightOver = True
+                    lightUnder = False
+                elif a < 900:
+                    lightMiddle = False
+                    lightOver = False
+                    lightUnder = True
+                else:
+                    lightMiddle = True
+                    lightOver = False
+                    lightUnder = False
+            if  lightMiddle:
+                middleLED.on()
+                overLED.off()
+                underLED.off()
+            elif lightOver:
+                middleLED.off()
+                overLED.on()
+                underLED.off()
+            elif lightUnder:
+                middleLED.off()
+                overLED.off()
+                underLED.on()
+            else:
+                middleLED.off()
+                overLED.off()
+                underLED.off()
+            lcdWrite(0, "Ready")
+            averages[:] = []
         lcdWrite(1, str(x1u))
     print(lights.count(0))
