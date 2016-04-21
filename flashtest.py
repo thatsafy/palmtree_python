@@ -9,7 +9,7 @@ lcd_screen = char_lcd.HD44780(i2cLCD)
 def lcdWrite(row, stri):
     lcd_screen.set_line(row)
     lcd_screen.set_string(stri)
-    
+
 adc = ADC(Pin('X7'))
 
 # x1u = adc.read()
@@ -32,6 +32,7 @@ while True:
         for i in range(0,51):
             if lights[i] == "":
                 lights[i] = x1u
+                break
     else:
         for i in range (0,50):
             lights[i] = lights[i+1]
@@ -42,3 +43,4 @@ while True:
         x1u = sum/50
         lcdWrite(1, str(x1u))
     print(lights)
+    
