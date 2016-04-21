@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 import char_lcd
-from statistics import mean
 from pyb import ADC, Pin, I2C
 
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
@@ -31,5 +30,8 @@ while True:
         for i in range (0,50):
             lights[i] = lights[i+1]
         lights[50] = x1u
-    x1u = mean(lights)
+    sum = 0
+    for i in lights:
+        sum += i
+    x1u = sum/50
     lcdWrite(1, str(x1u))
