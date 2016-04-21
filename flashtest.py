@@ -30,8 +30,8 @@ while True:
         for i in range (0,50):
             lights[i] = lights[i+1]
         lights[50] = x1u
-    sum = 0
-    for i in lights:
-        sum += i
-    x1u = sum/50
-    lcdWrite(1, str(x1u))
+        sum = 0
+        for i in lights:
+            sum += i
+        x1u = sum/50
+        lcdWrite(1, str(x1u))
