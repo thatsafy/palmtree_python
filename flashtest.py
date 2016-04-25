@@ -19,6 +19,21 @@ lights = [0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
+          0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0]
 
 print(lights)
@@ -49,21 +64,21 @@ while True:
         underLED.off()
         continue
     if 0 in lights:
-        for i in range(0,50):
+        for i in range(0,200):
             if lights[i] == 0:
                 lights[i] = x1u
                 break
     else:
-        for i in range (0,49):
+        for i in range (0,199):
             lights[i] = lights[i+1]
-        lights[49] = x1u
+        lights[199] = x1u
         sum = 0
-        for i in range(0,50):
+        for i in range(0,200):
             sum += lights[i]
-        x1u = sum/50
+        x1u = sum/200
         av = x1u
         averages.append(x1u)
-        if len(averages) == 10:
+        if len(averages) == 100:
             lcdWrite(0, "Ready")
             averages[:] = []
         lcdWrite(1, str(x1u))
