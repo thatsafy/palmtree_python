@@ -1,7 +1,10 @@
 #!/usr/bin/python3
+
 import serial, string, sys, pymysql, time
 
+# serial port from which data is read 
 ser = serial.Serial('/dev/ttyAMA0', 115200, timeout = 1)
+# SQL connection
 conn = pymysql.connect(host='palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com', user='palm', passwd='palmbeach192', db='data')
 cur = conn.cursor()
 
@@ -12,8 +15,10 @@ def read(message):
     if message.count(":") > 0:
         print("Working!!")  
         temp = message.split(":")
+        # Login data
         if temp[0] == "L":
             who(temp[1])
+        # Temperature and Light data
         elif temp[0] == "T":
             temperature = temp[1]
             light = temp[2]
@@ -47,7 +52,8 @@ def readFromSql():
         cur.execute("SELECT id,temperature,brightness from data order by id desc limit 5;")
         for r in cur:
             print(r)
-            
+
+# Send login data to SQL            
 def who(code):
     cur.execute("SELECT name FROM users WHERE access_code = " + code + ";")
     for r in cur: 
