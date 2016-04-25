@@ -81,5 +81,5 @@ while True:
         if len(averages) == 100:
             lcdWrite(0, "Ready")
             averages[:] = []
-        lcdWrite(1, str(x1u))
+        lcdWrite(1, str(av))
     print(lights.count(0))
