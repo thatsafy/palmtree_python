@@ -10,10 +10,14 @@
   * input detected and projected to LCD
   * '*' clears, '#' sends
     * if input < 4 error message
+    * otherwise send 4 digit input to raspi and over to SQL as login data
+* Flash detection
+  * leds turn on/off depending light level
+  * when light level over threshold (camera flash) all leds turn on 
 
 ### Planned features
 * Keyboard input
-  * do something depending on 4 digit input
+  * manual configuration for the rotating platform, adjust flash threshold?
 * Rotating platform
   * Rotate platform when camera flash detected (light level over threshold)
-* 2nd light sensor for detecting camera flash
+* Integrate all the features to the main functionality
