@@ -44,6 +44,10 @@ while True:
         overLED.on()
         underLED.on()
         pyb.delay(200)
+        middleLED.off()
+        overLED.off()
+        underLED.off()
+        continue
     if 0 in lights:
         for i in range(0,50):
             if lights[i] == 0:
@@ -60,35 +64,6 @@ while True:
         av = x1u
         averages.append(x1u)
         if len(averages) == 10:
-            for a in averages:
-                if a > 1000:
-                    lightMiddle = False
-                    lightOver = True
-                    lightUnder = False
-                elif a < 900:
-                    lightMiddle = False
-                    lightOver = False
-                    lightUnder = True
-                else:
-                    lightMiddle = True
-                    lightOver = False
-                    lightUnder = False
-            if  lightMiddle:
-                middleLED.on()
-                overLED.off()
-                underLED.off()
-            elif lightOver:
-                middleLED.off()
-                overLED.on()
-                underLED.off()
-            elif lightUnder:
-                middleLED.off()
-                overLED.off()
-                underLED.on()
-            else:
-                middleLED.off()
-                overLED.off()
-                underLED.off()
             lcdWrite(0, "Ready")
             averages[:] = []
         lcdWrite(1, str(x1u))
