@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from pyb import Pin
+from pyb import Pin,Switch
 print("start")
 Y8 = Pin('Y8',Pin.OUT_PP)
 Y7 = Pin('Y7',Pin.OUT_PP)
@@ -9,6 +9,8 @@ Y5 = Pin('Y5',Pin.OUT_PP)
 Y4 = Pin('Y4',Pin.OUT_PP)
 Y3 = Pin('Y3',Pin.OUT_PP)
 print("pins")
+
+nappi = Switch()
 
 motorTuple = [(1,0,1,0),(1,0,0,1),(0,1,0,1),(0,1,1,0)]
 
@@ -42,5 +44,8 @@ def rotatemotor(angle):
             else:
                 Y4.low()
             pyb.delay(5)
-
+"""
 while True:
+    if nappi():
+        rotatemotor(45)
+"""
