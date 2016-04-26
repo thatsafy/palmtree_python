@@ -1,7 +1,7 @@
 #!/usr/bin/python3
+
 import math
 from pyb import I2C
-
 
 # Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
@@ -27,7 +27,7 @@ def measureLight():
 
     adccv = chordv + stepv * step
     adccv2 = chordv2 + stepv2 * step2
-        
+
     # Convert to light level (lux)
     try:
         r = adccv2 / adccv
