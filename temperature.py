@@ -4,7 +4,7 @@ from pyb import Pin, ADC
 
 # Temperature pin
 adc = ADC(Pin('X1'))
-
+# Values used to calculate temperature
 tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5',2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
 
 def measureTemp():
@@ -27,13 +27,13 @@ def measureTemp():
     for key in tempDict:
         if tr > key:
             value = tempDict[key]
-
+    # Split and make list of the values
     values = value.split("x")
-	
+    # step = steps / max - min
     step = int(values[3]) / (int(values[1]) - int(values[0]))
-
+    # steps = temp resistance - min
     steps = tr - int(values[0])
-
+    # Temp (Celsius) = min degree (celsius) + steps * step
     temperature = int(values[2]) + steps * step
-        
+    # Return temperature in celsius
     return temperature
