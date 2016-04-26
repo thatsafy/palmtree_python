@@ -126,6 +126,33 @@ def read_keypad(last, taulukko):
         return (last, taulukko)
 
 
+def get_averages(tempList, lightList):
+    tempA = sum(tempList) / len(tempList)
+    lightA = sum(lightList) / len(lightList)
+    send(str(tempA), str(lightA))
+    tempList[:] = []
+    lightList[:] = []
+    return (tempList, lightList)
+
+def add_values():
+    curTemp = temperature.measureTemp()
+    curLight = light.measureLight()
+
+    # Write LCD every time sample is taken
+    row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
+    lcdWrite(0,row1)
+
+    # Add Samples to lists
+    tempList.append(curTemp)
+    lightList.append(curLight)
+
+    if len(tempList) > 6:
+        tempList.pop(0)
+    if len(lightList) > 6:
+        lightList.pop(0)
+        
+    return (tempList, lightList)
+
 # Main loop
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
@@ -134,27 +161,14 @@ while True:
     flash.flashDetection()
     # Temperature loop
     if len(tempList) >= 6 and len(lightList) >= 6:
-        tempA = sum(tempList) / len(tempList)
-        lightA = sum(lightList) / len(lightList)
-        send(str(tempA), str(lightA))
-        tempList[:] = []
-        lightList[:] = []
+        temp = get_averages(tempList, lightList)
+        tempList = temp[0]
+        lightList = temp[1]
+
     elif (time.time() - sTime) >= 10:
-        curTemp = temperature.measureTemp()
-        curLight = light.measureLight()
-
-        # Write LCD every time sample is taken
-        row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
-        lcdWrite(0,row1)
-
-        # Add Samples to lists
-        tempList.append(curTemp)
-        lightList.append(curLight)
-
-        if len(tempList) > 6:
-            tempList.pop(0)
-        if len(lightList) > 6:
-            lightList.pop(0)
+        temp = add_values(sTime, tempList, lightList)
+        tempList = temp[0]
+        lightList = temp[1]
 
     else:
         temp = read_keypad(last, taulukko)
