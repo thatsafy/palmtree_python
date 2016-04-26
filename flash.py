@@ -64,7 +64,7 @@ def flashDetection():
     global underLED
     x1u = adc.read()
     if av != 0 and x1u > av + 50:
-        motor.rotatemotor(45)
+        motor.rotatemotor(90)
         # lights = lightCopy
         middleLED.on()
         overLED.on()
