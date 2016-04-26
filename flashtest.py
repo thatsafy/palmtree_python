@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import char_lcd
+import char_lcd,motor
 from pyb import ADC, Pin, I2C
 
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
@@ -36,6 +36,8 @@ lights = [0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0]
 
+lightCopy = lights
+
 print(lights)
 
 # LED lights
@@ -52,9 +54,14 @@ lightUnder = False
 
 averages = []
 av = 0
+
+motor.rotatemotor(45)
+
 while True:
     x1u = adc.read()
-    if av != 0 and x1u > av + 100:
+    if av != 0 and x1u > av + 40:
+        motor.rotatemotor(45)
+        lights = lightCopy
         middleLED.on()
         overLED.on()
         underLED.on()
