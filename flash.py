@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import pyb
 import char_lcd,motor
 from pyb import ADC, Pin, I2C
 
@@ -13,7 +13,7 @@ def lcdWrite(row, stri):
 adc = ADC(Pin('X7'))
 
 # x1u = adc.read()
-lcdWrite(0, "makkara!!!")
+# lcdWrite(0, "makkara!!!")
 
 lights = [0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
@@ -58,6 +58,10 @@ av = 0
 # motor.rotatemotor(45)
 
 def flashDetection():
+    global av
+    global middleLED
+    global overLED
+    global underLED
     x1u = adc.read()
     if av != 0 and x1u > av + 50:
         motor.rotatemotor(45)
@@ -69,7 +73,7 @@ def flashDetection():
         middleLED.off()
         overLED.off()
         underLED.off()
-        continue
+        #continue
     if 0 in lights:
         for i in range(0,200):
             if lights[i] == 0:
@@ -86,9 +90,9 @@ def flashDetection():
         av = x1u
         averages.append(x1u)
         if len(averages) == 100:
-            lcdWrite(0, "Ready")
+            # lcdWrite(0, "Ready")
             averages[:] = []
-        lcdWrite(1, str(av))
+        # lcdWrite(1, str(av))
     print(lights.count(0))
 
 
