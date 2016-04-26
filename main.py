@@ -71,38 +71,8 @@ taulukko = ["", "", "", ""]
 
 logMes = ""
 
-# Main loop
-# Collect data every 10 seconds to lists
-# When lists' lengths are 6, calculate averages and send data through serial port
-while True:
-    # Flash detection
-    flash.flashDetection()
-    # Temperature loop
-    if len(tempList) >=  6 and len(lightList) >=  6:
-        tempA = sum(tempList) / len(tempList)
-        lightA = sum(lightList) / len(lightList)
-        send(str(tempA), str(lightA))
-        tempList[:] = []
-        lightList[:] = []
-    elif (time.time() - sTime) >= 10:
-        curTemp = temperature.measureTemp()
-        curLight = light.measureLight()
-
-        # Write LCD every time sample is taken
-        row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
-        lcdWrite(0,row1)
-
-        # Add Samples to lists
-        tempList.append(curTemp)
-        lightList.append(curLight)
-
-        if len(tempList) > 6:
-            tempList.pop(0)
-        if len(lightList) > 6:
-            lightList.pop(0)
-
-    else:
-        # Keypad loop
+def read_keypad(last, taulukko):
+    # Keypad loop
         tuloste = ""
         ch = keyboard.getch()
         # When key has been pressed
@@ -153,6 +123,43 @@ while True:
         else:
             # Reset last key pressed
             last = ""
+        return (last, taulukko)
+
+
+# Main loop
+# Collect data every 10 seconds to lists
+# When lists' lengths are 6, calculate averages and send data through serial port
+while True:
+    # Flash detection
+    flash.flashDetection()
+    # Temperature loop
+    if len(tempList) >= 6 and len(lightList) >= 6:
+        tempA = sum(tempList) / len(tempList)
+        lightA = sum(lightList) / len(lightList)
+        send(str(tempA), str(lightA))
+        tempList[:] = []
+        lightList[:] = []
+    elif (time.time() - sTime) >= 10:
+        curTemp = temperature.measureTemp()
+        curLight = light.measureLight()
+
+        # Write LCD every time sample is taken
+        row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
+        lcdWrite(0,row1)
+
+        # Add Samples to lists
+        tempList.append(curTemp)
+        lightList.append(curLight)
+
+        if len(tempList) > 6:
+            tempList.pop(0)
+        if len(lightList) > 6:
+            lightList.pop(0)
+
+    else:
+        temp = read_keypad(last, taulukko)
+        last = temp[0]
+        taulukko = temp[1]
         continue
     # Reset timer
     sTime = time.time()
