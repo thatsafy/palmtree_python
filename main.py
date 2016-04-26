@@ -134,7 +134,7 @@ def get_averages(tempList, lightList):
     lightList[:] = []
     return (tempList, lightList)
 
-def add_values():
+def add_values(sTime, tempList, lightList):
     curTemp = temperature.measureTemp()
     curLight = light.measureLight()
 
@@ -150,7 +150,7 @@ def add_values():
         tempList.pop(0)
     if len(lightList) > 6:
         lightList.pop(0)
-        
+
     return (tempList, lightList)
 
 # Main loop
