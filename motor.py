@@ -46,3 +46,6 @@ def rotatemotor(angle):
             else:
                 Y4.low()
             pyb.delay(5)
+    pyb.delay(50)
+    Y8.low()
+    Y3.low()
