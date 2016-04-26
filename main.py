@@ -162,7 +162,7 @@ menuItem = 0
 while True:
     lcdWrite(0, "2=Up, 0=Down, #=select")
     lcdWrite(1, menu[menuItem])
-    ch = = keyboard.getch()
+    ch = keyboard.getch()
     if ch == "2":
         menuItem += 1
     if ch == "0":
