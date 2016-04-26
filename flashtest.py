@@ -59,9 +59,9 @@ motor.rotatemotor(45)
 
 while True:
     x1u = adc.read()
-    if av != 0 and x1u > av + 40:
+    if av != 0 and x1u > av + 50:
         motor.rotatemotor(45)
-        lights = lightCopy
+        # lights = lightCopy
         middleLED.on()
         overLED.on()
         underLED.on()
