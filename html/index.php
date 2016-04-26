@@ -14,16 +14,23 @@
 			.container {
 				margin-top: 50px;
 			}
+			header h1 {
+				font-size: 24px;
+			}
 		</style>
 </head>
 <body>
-<header>
-	<h1>Palmbeach Kings - Datalog page</h1>
-	<p>This page is made to show "Palmbeach Kings" groups collected data</p>
-</header>
 
-	<div class="container">
-		<div class="row">
+<div class="container">
+	<div class="row">
+		<div class="large-12 columns">
+			<header class="primary callout">
+				<h1>Palmbeach Kings - Data Log Page</h1>
+				<p>This page shows data collected by the Palmbeach Kings group.</p>
+			</header>
+		</div>
+	</div>
+	<div class="row">
 			<div class="large-6 columns">
 				<?php
 				$servername = 'palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com';
@@ -438,6 +445,10 @@
 		window.myLine3 = new Chart(avgHourlyTemperatureChartContext).Line(avgHourlyTemperatureChartData, {
 			responsive: true
 		});
+
+		if(avgHourlyTemperatureDates.length <= 0) {
+			document.getElementById("avg-hourly-temperature-canvas").innerHTML = "<p>No temperature data available for the last 24 hours.<p>";
+		}
 	};
 </script>
 </body>
