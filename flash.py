@@ -36,8 +36,6 @@ lights = [0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0,
           0,0,0,0,0,0,0,0,0,0]
 
-lightCopy = lights
-
 print(lights)
 
 # LED lights
@@ -47,10 +45,6 @@ print(lights)
 overLED = pyb.LED(1)
 middleLED = pyb.LED(2)
 underLED = pyb.LED(3)
-
-lightOver = False
-lightMiddle = False
-lightUnder = False
 
 averages = []
 av = 0
@@ -63,9 +57,9 @@ def flashDetection():
     global overLED
     global underLED
     x1u = adc.read()
+    # If detected light is over average and average is not 0
     if av != 0 and x1u > av + 50:
         motor.rotatemotor(90)
-        # lights = lightCopy
         middleLED.on()
         overLED.on()
         underLED.on()
@@ -73,7 +67,7 @@ def flashDetection():
         middleLED.off()
         overLED.off()
         underLED.off()
-        #continue
+    # Adding light data to list
     if 0 in lights:
         for i in range(0,200):
             if lights[i] == 0:
@@ -94,41 +88,3 @@ def flashDetection():
             averages[:] = []
         # lcdWrite(1, str(av))
     print(lights.count(0))
-
-
-
-"""
-while True:
-    x1u = adc.read()
-    if av != 0 and x1u > av + 50:
-        motor.rotatemotor(45)
-        # lights = lightCopy
-        middleLED.on()
-        overLED.on()
-        underLED.on()
-        pyb.delay(200)
-        middleLED.off()
-        overLED.off()
-        underLED.off()
-        continue
-    if 0 in lights:
-        for i in range(0,200):
-            if lights[i] == 0:
-                lights[i] = x1u
-                break
-    else:
-        for i in range (0,199):
-            lights[i] = lights[i+1]
-        lights[199] = x1u
-        sum = 0
-        for i in range(0,200):
-            sum += lights[i]
-        x1u = sum/200
-        av = x1u
-        averages.append(x1u)
-        if len(averages) == 100:
-            lcdWrite(0, "Ready")
-            averages[:] = []
-        lcdWrite(1, str(av))
-    print(lights.count(0))
-"""

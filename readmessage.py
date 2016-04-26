@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import serial, string, sys, pymysql, time
+import serial, string, sys, pymysql
 
 # serial port from which data is read 
 ser = serial.Serial('/dev/ttyAMA0', 115200, timeout = 1)
@@ -10,9 +10,9 @@ cur = conn.cursor()
 
 # Compile the message from data given
 def read(message):
-    print(message)
     print("before if")
     if message.count(":") > 0:
+        print(message)
         print("Working!!")  
         temp = message.split(":")
         # Login data
@@ -72,4 +72,3 @@ while True:
         conn.close()
         ser.close()
         sys.exit()
-
