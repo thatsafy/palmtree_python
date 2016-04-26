@@ -2,7 +2,7 @@
 
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
-import math, char_lcd, time, temperature, light, keyboard
+import math, char_lcd, time, temperature, light, keyboard, flash
 
 # Serial port connection to raspberry pi
 uart = UART(6, 115200)
@@ -75,6 +75,8 @@ logMes = ""
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
 while True:
+    # Flash detection
+    flash.flashDetection()
     # Temperature loop
     if len(tempList) >=  6 and len(lightList) >=  6:
         tempA = sum(tempList) / len(tempList)

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
 import math, char_lcd, time, temperature, light, keyboard
