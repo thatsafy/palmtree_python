@@ -33,17 +33,24 @@
 	<div class="row">
 			<div class="large-6 columns">
 				<?php
+
+				// MySQL database connection details.
 				$servername = 'palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com';
 				$username = 'palm';
 				$password = 'palmbeach192';
 				$dbname = 'data';
 				$conn = new mysqli($servername, $username, $password, $dbname);
 
+				// If database connection fails.
 				if ($conn->connect_error) {
 					die("Connection failed: " . $conn->connect_error);
 				}
+
+				// Select all required data from the database.
 				$sql = "SELECT id, name, time FROM log ORDEr BY id desc LIMIT 5";
 				$result = $conn->query($sql);
+
+
 				if ($result->num_rows > 0) {
 
 					echo "<table class='table'><tr><th>LOGIN HISTORY</th></tr><tr><th>ID</th><th>Name</th><th>Time</th></tr>";
@@ -56,17 +63,20 @@
 					echo "0 results";
 				}
 				$conn->close();
+
 				?>
 			</div>
 			<div class="large-6 columns">
 				<?php
 
+				// MySQL database connection details.
 				$servername = 'palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com';
 				$username = 'palm';
 				$password = 'palmbeach192';
 				$dbname = 'data';
 				$conn = new mysqli($servername, $username, $password, $dbname);
 
+				// Create an empty for each data container.
 				$temperatures = array();
 				$dates = array();
 				$brightnesses = array();
@@ -79,11 +89,15 @@
 				$avgTemperatureDates = array();
 				$avgBrightnessDates = array();
 
+				// If database connection fails.
 				if ($conn->connect_error) {
 					die("Connection failed: " . $conn->connect_error);
 				}
+
+				// Select all required data from the database.
 				$sql = "SELECT id, temperature, brightness, date FROM data ORDEr BY id desc LIMIT 5";
 				$result = $conn->query($sql);
+
 				if ($result->num_rows > 0) {
 
 					echo "<table class='table'><tr><th>DATA LOGS</th></tr><tr><th>ID</th><th>Temperature</th><th>Brightness</th><th>Date</th></tr>";
@@ -103,7 +117,7 @@
 				?>
 
 				<?php
-
+				// MySQL database connection details.
 				$servername = 'palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com';
 				$username = 'palm';
 				$password = 'palmbeach192';
@@ -112,14 +126,17 @@
 
 				// Get average temperature for each day.
 
+				// If database connection fails.
 				if ($conn->connect_error) {
 					die("Connection failed: " . $conn->connect_error);
 				}
 				$sql = "";
 
 				for($i = 0; $i < 24; $i++) {
-					// Add a leading zero if needed.
+					// Add a leading zero to all day numbers if needed (e.g. 1 --> 01).
 					$iterator = sprintf('%02d', $i);
+
+					// Select the average temperature for each hour and construct the full SQL query.
 					if($i < 23) {
 						$sql .= "select avg(temperature), cast(date as date) from data where date like \"2016-04-" .$iterator . "%\" UNION ";
 					}
@@ -148,21 +165,23 @@
 
 				<?php
 
+				// Get average brightness for each day.
+
+				// MySQL database connection details.
 				$servername = 'palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com';
 				$username = 'palm';
 				$password = 'palmbeach192';
 				$dbname = 'data';
 				$conn = new mysqli($servername, $username, $password, $dbname);
 
-				// Get average brightness for each day.
-
+				// If database connection fails.
 				if ($conn->connect_error) {
 					die("Connection failed: " . $conn->connect_error);
 				}
 				$sql = "";
 
 				for($i = 0; $i < 24; $i++) {
-					// Add a leading zero if needed.
+					// Add a leading zero to all day numbers if needed (e.g. 1 --> 01).
 					$iterator = sprintf('%02d', $i);
 					if($i < 23) {
 						$sql .= "select avg(brightness), cast(date as date) from data where date like \"2016-04-" .$iterator . "%\" UNION ";
@@ -197,25 +216,30 @@
 
 				<?php
 
+				// Get average temperature for each hour.
+
+				// MySQL database connection details.
 				$servername = 'palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com';
 				$username = 'palm';
 				$password = 'palmbeach192';
 				$dbname = 'data';
 				$conn = new mysqli($servername, $username, $password, $dbname);
 
-				// Get average temperature for each hour.
-
+				// Get the current day and month in a number format.
 				$dayNumber = date("d");
 				$monthNumber = date("m");
 
+				// If database connection fails.
 				if ($conn->connect_error) {
 					die("Connection failed: " . $conn->connect_error);
 				}
 				$sql = "";
 
 				for($i = 0; $i < 24; $i++) {
-					// Add a leading zero if needed.
+					// Add a leading zero to all day numbers if needed (e.g. 1 --> 01).
 					$iterator = sprintf('%02d', $i);
+
+					// Select the average temperature for each hour and construct the full SQL query.
 					if($i < 23) {
 						$sql .= "select avg(temperature), cast(date as time) from data where date like \"2016-" . $monthNumber . "-" . $dayNumber . " " . $iterator . "%\" UNION ";
 					}
@@ -239,11 +263,6 @@
 					echo $sql;
 				}
 				$conn->close();
-
-				// Reverse the order of the arrays because they are in wrong order.
-				$temperatures = array_reverse($temperatures);
-				$dates = array_reverse($dates);
-				$brightnesses = array_reverse($brightnesses);
 
 				?>
 
