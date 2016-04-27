@@ -136,9 +136,9 @@ def checkTemp():
     sTime = time.time()
     lastPressed = ""
     lcdWrite(0,"Waiting values...")
+    lcdWrite(1,"0000# to exit")
     while True:
         myTaulukko = taulukko
-        lcdWrite(1,"0000 to exit")
         keyInput = read_keypad(lastPressed,myTaulukko)
         myTaulukko = keyInput[1]
         lastPressed = keyInput[0]
