@@ -137,7 +137,12 @@ def checkTemp():
     sTime = time.time()
     lastPressed = ""
     while True:
-        if read_keypad(lastPressed,taulukko) == "0000":
+        exitter = read_keypad(lastPressed,taulukko)
+        mes = ""
+        lastPressed = exitter[0]
+        for o in exitter[1]:
+            mes += str(o)
+        if mes == "0000":
             break
         if len(tempList) == 6 and len(lightList) == 6:
             av_values = get_averages(tempList,lightList)
@@ -145,7 +150,7 @@ def checkTemp():
             lightAverage = av_values[1]
             tempList[:] = []
             lightList[:] = []
-        if time.time - sTime >= 10:
+        if time.time() - sTime >= 10:
             tl_values = add_values(tempList, lightList)
             tempList = tl_values[0]
             lightList = tl_values[1]
