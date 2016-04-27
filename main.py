@@ -160,9 +160,21 @@ menuItem = 0
 # Collect data every 10 seconds to lists
 # When lists' lengths are 6, calculate averages and send data through serial port
 while True:
-    lcdWrite(0, "2=Up, 0=Down, #=select")
+    lcdWrite(0, "<= 1, #=select, 3 =>")
     lcdWrite(1, menu[menuItem])
     ch = keyboard.getch()
+    if ch != "" AND ch != last:
+        if ch == "2":
+            menuItem += 1
+        if ch == "0":
+            menuItem -= 1
+        if menuItem >= len(menu):
+            menuItem = 0
+        if menuItem < 0:
+            menuItem = len(menu) - 1
+        last = ch
+    else:
+        last = ""
     if ch == "2":
         menuItem += 1
     if ch == "0":
