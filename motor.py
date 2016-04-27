@@ -22,7 +22,7 @@ motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1
 # stepDelay
 
 def rotatemotor(angle, stepDelay = 5):
-    angle = int(angle/1.8/len(motorTuple))
+    angle = int(angle/0.9/len(motorTuple))
 
     Y8.high()
     Y3.high()
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     nappi = pyb.Switch()
     while True:
         if nappi():
-            rotatemotor(45,25)
+            rotatemotor(360,35)
