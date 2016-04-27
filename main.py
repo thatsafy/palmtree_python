@@ -110,9 +110,9 @@ def read_keypad(last, taulukko):
             if "" in taulukko:
                 # Set pressed key to first empty space in taulukko
                 for i in range(0,4):
-                if taulukko[i] == "":
-                    taulukko[i] = ch
-                    break
+                    if taulukko[i] == "":
+                        taulukko[i] = ch
+                        break
             # If taulukko has no space
             else:
                 # Move all values one space down and add just pressed key to last space
