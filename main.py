@@ -164,9 +164,9 @@ while True:
     lcdWrite(1, menu[menuItem])
     ch = keyboard.getch()
     if ch != "" AND ch != last:
-        if ch == "2":
+        if ch == "1":
             menuItem += 1
-        if ch == "0":
+        if ch == "3":
             menuItem -= 1
         if menuItem >= len(menu):
             menuItem = 0
