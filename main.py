@@ -71,12 +71,13 @@ taulukko = ["", "", "", ""]
 
 logMes = ""
 
-def read_keypad(last, taulukko):
+def read_keypad(last, taulukko):    
     last = last
     taulukko = taulukko
     # Keypad loop
     tuloste = ""
     ch = keyboard.getch()
+    logMes = ""
     # When key has been pressed
     if ch != "":
         # If Pressed key is *
@@ -128,17 +129,20 @@ def read_keypad(last, taulukko):
     return (last, taulukko, logMes)
 
 def checkTemp():
+    pyb.delay(100)
     taulukko = ["", "", "", ""]
     tempList = []
     lightList = []
     sTime = time.time()
     lastPressed = ""
+    lcdWrite(0,"Waiting values...")
     while True:
         myTaulukko = taulukko
-        exitter = read_keypad(lastPressed,myTaulukko)
-        myTaulukko = exitter[1]
-        lastPressed = exitter[0]
-        mes = exitter[2]
+        lcdWrite(1,"0000 to exit")
+        keyInput = read_keypad(lastPressed,myTaulukko)
+        myTaulukko = keyInput[1]
+        lastPressed = keyInput[0]
+        mes = keyInput[2]
         if mes == "0000":
             break
         if len(tempList) == 6 and len(lightList) == 6:
