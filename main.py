@@ -33,6 +33,7 @@ def message(temp, light):
     m += "\n"
     return m
 
+# Currently not in use
 def motorAngle():
     return str(360)
 
@@ -43,20 +44,21 @@ def send(x, y):
     uart.write(bytes(m.encode('ascii')))
     print("send:", m)
 
+# send login data through serial
 def sendLog(h):
     global uart
     l = "L:" + str(h)
     uart.write(bytes(l.encode('ascii')))
     print("Login:",h)
 
-# Lists to calculate avarage temp and light
-#tempList = []
-#lightList = []
+# Lists to calculate average temp and light
+# tempList = []
+# lightList = []
 
 # Timer help
-#sTime = time.time()
+# sTime = time.time()
 
-lcdWrite(1, "Waiting for key!")
+# lcdWrite(1, "Waiting for key!")
 
 # Initialize keys
 i2cLCD.mem_write(0xFF, 0x20, 0x0C)
@@ -65,12 +67,11 @@ i2cLCD.mem_write(0x00, 0x20, 0x14)
 
 # Keypads last pressed key
 last = ""
-
 # Keypad input code
 taulukko = ["", "", "", ""]
-
 logMes = ""
 
+# Read keyboard input
 def read_keypad(last, taulukko):
     last = last
     taulukko = taulukko
@@ -128,6 +129,7 @@ def read_keypad(last, taulukko):
         last = ""
     return (last, taulukko, logMes)
 
+# temperature, brightness and login loop
 def checkTemp():
     pyb.delay(100)
     taulukko = ["", "", "", ""]
@@ -143,20 +145,24 @@ def checkTemp():
         myTaulukko = keyInput[1]
         lastPressed = keyInput[0]
         mes = keyInput[2]
+        # stop loop if '0000' given
         if mes == "0000":
             break
+        # when enough items in lists calculate averages
         if len(tempList) == 6 and len(lightList) == 6:
             av_values = get_averages(tempList,lightList)
             tempAverage = av_values[0]
             lightAverage = av_values[1]
             tempList[:] = []
             lightList[:] = []
+        # every 10 seconds check temperature and brightness
         if time.time() - sTime >= 10:
             tl_values = add_values(tempList, lightList)
             tempList = tl_values[0]
             lightList = tl_values[1]
             sTime = time.time()
 
+# calculate temperature and brightness averages from lists given
 def get_averages(tempList, lightList):
     tempList = tempList
     lightList = lightList
@@ -166,6 +172,7 @@ def get_averages(tempList, lightList):
     send(str(tempA), str(lightA))
     return average_values
 
+# check temperature and brightness, add to lists and return
 def add_values(tempList, lightList):
     tempList = tempList
     lightList = lightList
@@ -236,9 +243,13 @@ def motorFlash():
         # functionality
         flash.flashDetection()
 
+# Functions
 menuDo = [checkTemp,motorTime,motorFlash]
+# menu titles
 menu = ["temperature & light", "rotate/time", "rotate/flash"]
+# main menu info
 menu2 = ["<=1 #select 3=>"]
+# initial menu position
 menuItem = 0
 
 # Main loop
