@@ -125,7 +125,7 @@ def read_keypad(last, taulukko):
     else:
         # Reset last key pressed
         last = ""
-    return (last, taulukko)
+    return (last, taulukko, logMes)
 
 def checkTemp():
     taulukko = ["", "", "", ""]
@@ -136,11 +136,9 @@ def checkTemp():
     while True:
         myTaulukko = taulukko
         exitter = read_keypad(lastPressed,myTaulukko)
-        mes = ""
         myTaulukko = exitter[1]
         lastPressed = exitter[0]
-        for o in taulukko:
-            mes += str(o)
+        mes = exitter[2]
         if mes == "0000":
             break
         if len(tempList) == 6 and len(lightList) == 6:
