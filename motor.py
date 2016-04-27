@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
-import pyb
-from pyb import Pin,Switch
-
+from pyb import Pin
 print("start")
 Y8 = Pin('Y8',Pin.OUT_PP)
 Y7 = Pin('Y7',Pin.OUT_PP)
@@ -12,19 +10,20 @@ Y4 = Pin('Y4',Pin.OUT_PP)
 Y3 = Pin('Y3',Pin.OUT_PP)
 print("pins")
 
-nappi = Switch()
-
-motorTuple = [(1,0,1,0),(1,0,0,1),(0,1,0,1),(0,1,1,0)]
-
+# full steps
 # 1 step = 1.8 degrees
+# motorTuple = [(1,0,1,0),(1,0,0,1),(0,1,0,1),(0,1,1,0)]
 
-# angle = 45
-# angle = int(angle/1.8/4)
+# full steps
+# ½ step = 0.9 degrees
+motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1,0),(0,0,1,0)]
 
-def rotatemotor(angle):
-    print("flash!")
-    angle = int(angle/1.8/4)
-    
+# Delay between steps (min 5ms)
+# stepDelay
+
+def rotatemotor(angle, stepDelay = 5):
+    angle = int(angle/1.8/len(motorTuple))
+
     Y8.high()
     Y3.high()
     for i in range(0,angle):
@@ -46,7 +45,6 @@ def rotatemotor(angle):
                 Y4.high()
             else:
                 Y4.low()
-            pyb.delay(5)
-    pyb.delay(50)
-    Y8.low()
-    Y3.low()
+            pyb.delay(stepDelay)
+
+while True:
