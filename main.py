@@ -163,10 +163,10 @@ while True:
     lcdWrite(0, "<= 1, #=select, 3 =>")
     lcdWrite(1, menu[menuItem])
     ch = keyboard.getch()
-    if ch != "" AND ch != last:
+    if ch != "" and ch != last:
         if ch == "1":
             menuItem += 1
-        if ch == "3":
+        elif ch == "3":
             menuItem -= 1
         if menuItem >= len(menu):
             menuItem = 0
