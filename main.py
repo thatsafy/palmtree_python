@@ -138,6 +138,7 @@ def checkTemp():
     sTime = time.time()
     lastPressed = ""
     while True:
+        """
         myTaulukko = taulukko
         exitter = read_keypad(lastPressed,myTaulukko)
         mes = ""
@@ -147,6 +148,7 @@ def checkTemp():
             mes += str(o)
         if mes == "0000":
             break
+        """
         if len(tempList) == 6 and len(lightList) == 6:
             av_values = get_averages(tempList,lightList)
             tempAverage = av_values[0]
@@ -160,6 +162,8 @@ def checkTemp():
         sTime = time.time()
 
 def get_averages(tempList, lightList):
+    tempList = tempList
+    lightList = lightList
     tempA = sum(tempList) / len(tempList)
     lightA = sum(lightList) / len(lightList)
     average_values = [tempA,lightA]
@@ -167,6 +171,8 @@ def get_averages(tempList, lightList):
     return average_values
 
 def add_values(tempList, lightList):
+    tempList = tempList
+    lightList = lightList
     curTemp = temperature.measureTemp()
     curLight = light.measureLight()
 
