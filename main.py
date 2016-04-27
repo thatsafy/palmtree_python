@@ -194,7 +194,7 @@ while True:
             menuItem -= 1
         elif ch == "3":
             menuItem += 1
-        elif ch == '#'            
+        if ch == '#':          
             menuDo[menuItem]()
         if menuItem >= len(menu):
             menuItem = 0
