@@ -194,8 +194,7 @@ while True:
             menuItem -= 1
         elif ch == "3":
             menuItem += 1
-        elif ch == '#'
-            lcdWrite(0,menu2[1])
+        elif ch == '#'            
             menuDo[menuItem]
         if menuItem >= len(menu):
             menuItem = 0
