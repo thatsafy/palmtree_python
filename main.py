@@ -177,7 +177,7 @@ def add_values(tempList, lightList):
 
     return [tempList,lightList]
 
-#menuDo = [temp(),rotation(),flash()]
+menuDo = [checkTemp()]
 menu = ["temperature & light", "rotate/time", "rotate/flash"]
 menu2 = ["<=1 #select 3=>","0000# to exit"]
 menuItem = 0
