@@ -165,9 +165,9 @@ while True:
     ch = keyboard.getch()
     if ch != "":
         if ch == "1":
-            menuItem += 1
-        elif ch == "3":
             menuItem -= 1
+        elif ch == "3":
+            menuItem += 1
         if menuItem >= len(menu):
             menuItem = 0
         if menuItem < 0:
