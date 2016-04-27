@@ -47,4 +47,10 @@ def rotatemotor(angle, stepDelay = 5):
                 Y4.low()
             pyb.delay(stepDelay)
 
-while True:
+#while True:
+
+if __name__ == "__main__":
+    nappi = pyb.Switch()
+    while True:
+        if nappi():
+            rotatemotor(45,25)
