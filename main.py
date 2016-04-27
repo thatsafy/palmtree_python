@@ -97,10 +97,6 @@ def read_keypad(last, taulukko):
             else:
                 for h in taulukko:
                     logMes += str(h)
-                if logMes == "0000":
-                    taulukko = ["","","",""]
-                    lcdWrite(1, "Waiting for key!")
-                    return logMes
                 sendLog(logMes)
                 taulukko = ["","","",""]
                 lcdWrite(1, "Waiting for key!")
@@ -138,7 +134,6 @@ def checkTemp():
     sTime = time.time()
     lastPressed = ""
     while True:
-        """
         myTaulukko = taulukko
         exitter = read_keypad(lastPressed,myTaulukko)
         mes = ""
@@ -148,7 +143,6 @@ def checkTemp():
             mes += str(o)
         if mes == "0000":
             break
-        """
         if len(tempList) == 6 and len(lightList) == 6:
             av_values = get_averages(tempList,lightList)
             tempAverage = av_values[0]
@@ -159,7 +153,7 @@ def checkTemp():
             tl_values = add_values(tempList, lightList)
             tempList = tl_values[0]
             lightList = tl_values[1]
-        sTime = time.time()
+            sTime = time.time()
 
 def get_averages(tempList, lightList):
     tempList = tempList
