@@ -72,6 +72,8 @@ taulukko = ["", "", "", ""]
 logMes = ""
 
 def read_keypad(last, taulukko):
+    last = last
+    taulukko = taulukko
     # Keypad loop
     tuloste = ""
     ch = keyboard.getch()
