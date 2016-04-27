@@ -2,7 +2,7 @@
 
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
-import math, char_lcd, time, temperature, light, keyboard, flash
+import math, char_lcd, time, temperature, light, keyboard, flash, motor
 
 # Serial port connection to raspberry pi
 uart = UART(6, 115200)
@@ -71,7 +71,7 @@ taulukko = ["", "", "", ""]
 
 logMes = ""
 
-def read_keypad(last, taulukko):    
+def read_keypad(last, taulukko):
     last = last
     taulukko = taulukko
     # Keypad loop
@@ -171,30 +171,79 @@ def add_values(tempList, lightList):
     lightList = lightList
     curTemp = temperature.measureTemp()
     curLight = light.measureLight()
-
     # Write LCD every time sample is taken
     row1 = "C:%.1f lx:%.1f" %(curTemp, curLight)
     lcdWrite(0,row1)
-
     # Add Samples to lists
     tempList.append(curTemp)
     lightList.append(curLight)
-
     if len(tempList) > 6:
         tempList.pop(0)
     if len(lightList) > 6:
         lightList.pop(0)
-
     return [tempList,lightList]
 
-menuDo = [checkTemp]
+# rotate motor x rounds, set speed/time?
+# NOT TESTED
+def motorTime():
+    angle = 90
+    speed = 5
+    taulukko = ["", "", "", ""]
+    lastPressed = ""
+    lcdWrite(0,"PLACEHOLDER")
+    lcdWrite(1,"0000# to exit")
+    while True:
+        myTaulukko = taulukko
+        keyInput = read_keypad(lastPressed,myTaulukko)
+        myTaulukko = keyInput[1]
+        lastPressed = keyInput[0]
+        mes = keyInput[2]
+        if mes == "0000":
+            break
+        # functionality
+        if mes == "0001":
+            lcdWrite(0,"Set angle and press #")
+            keyInput = read_keypad(lastPressed,myTaulukko)
+            myTaulukko = keyInput[1]
+            lastPressed = keyInput[0]
+            mes = keyInput[2]
+            angle = int(mes)
+        elif mes == "0002":
+            lcdWrite(0,"set speed")
+            keyInput = read_keypad(lastPressed,myTaulukko)
+            myTaulukko = keyInput[1]
+            lastPressed = keyInput[0]
+            mes = keyInput[2]
+            speed = int(mes)
+        elif mes == "0003":
+           motor.rotatemotor(angle,speed)
+
+# Rotate motor on flash
+# NOT TESTED
+def motorFlash():
+    taulukko = ["", "", "", ""]
+    lastPressed = ""
+    lcdWrite(0,"PLACEHOLDER")
+    lcdWrite(1,"0000# to exit")
+    while True:
+        myTaulukko = taulukko
+        keyInput = read_keypad(lastPressed,myTaulukko)
+        myTaulukko = keyInput[1]
+        lastPressed = keyInput[0]
+        mes = keyInput[2]
+        if mes == "0000":
+            break
+        # functionality
+        flash.flashDetection()
+
+menuDo = [checkTemp,motorTime,motorFlash]
 menu = ["temperature & light", "rotate/time", "rotate/flash"]
-menu2 = ["<=1 #select 3=>","0000# to exit"]
+menu2 = ["<=1 #select 3=>"]
 menuItem = 0
 
 # Main loop
-# Collect data every 10 seconds to lists
-# When lists' lengths are 6, calculate averages and send data through serial port
+# 1 goes left, 3 goes right, # is select
+# rotates cycle if too far either direction
 while True:
     lcdWrite(0, menu2[0])
     lcdWrite(1, menu[menuItem])
@@ -204,7 +253,7 @@ while True:
             menuItem -= 1
         elif ch == "3":
             menuItem += 1
-        if ch == '#':          
+        if ch == '#':
             menuDo[menuItem]()
         if menuItem >= len(menu):
             menuItem = 0

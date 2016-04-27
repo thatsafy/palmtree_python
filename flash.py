@@ -51,7 +51,7 @@ av = 0
 
 # motor.rotatemotor(45)
 
-def flashDetection():
+def flashDetection(angle=90):
     global av
     global middleLED
     global overLED
@@ -59,7 +59,7 @@ def flashDetection():
     x1u = adc.read()
     # If detected light is over average and average is not 0
     if av != 0 and x1u > av + 50:
-        motor.rotatemotor(90)
+        motor.rotatemotor(angle)
         middleLED.on()
         overLED.on()
         underLED.on()

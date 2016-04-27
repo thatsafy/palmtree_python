@@ -21,7 +21,7 @@ motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1
 # Delay between steps (min 5ms)
 # stepDelay
 
-def rotatemotor(angle, stepDelay = 5):
+def rotatemotor(angle=90, stepDelay = 5):
     angle = int(angle/0.9/len(motorTuple))
 
     Y8.high()
