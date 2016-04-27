@@ -137,7 +137,7 @@ def checkTemp():
     sTime = time.time()
     lastPressed = ""
     while True:
-        if read_keypad(lastPressed,taulukko) == "0000"
+        if read_keypad(lastPressed,taulukko) == "0000":
             break
         if len(tempList) == 6 and len(lightList) == 6:
             av_values = get_averages(tempList,lightList)
