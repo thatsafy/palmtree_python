@@ -86,10 +86,12 @@ def read_keypad(last, taulukko):
             # Reset array and screen
             taulukko = ["", "", "", ""]
             logMes = ""
+            tuloste = ""
             lcdWrite(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
             logMes = ""
+            tuloste = ""
             # If taulukko has space
             if "" in taulukko:
                 # Write error message to user
@@ -143,11 +145,11 @@ def read_keypad_login(last, taulukko):
         if ch == '*':
             # Reset array and screen
             taulukko = ["", "", "", ""]
-            logMes = ""
+            tuloste = ""
             lcdWrite(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
-            logMes = ""
+            tuloste = ""
             # If taulukko has space
             if "" in taulukko:
                 # Write error message to user
