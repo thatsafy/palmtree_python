@@ -53,4 +53,4 @@ if __name__ == "__main__":
     nappi = pyb.Switch()
     while True:
         if nappi():
-            rotatemotor(360,35)
+            rotatemotor(360,5)
