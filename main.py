@@ -85,6 +85,65 @@ def read_keypad(last, taulukko):
         if ch == '*':
             # Reset array and screen
             taulukko = ["", "", "", ""]
+            logMes = ""
+            lcdWrite(1, "Waiting for key!")
+        # If pressed key is #
+        elif ch == '#':
+            logMes = ""
+            # If taulukko has space
+            if "" in taulukko:
+                # Write error message to user
+                mes = "Invalid code:"
+                for s in taulukko:
+                    if s != "": mes += "" + s
+                lcdWrite(1, mes)
+            else:
+                for h in taulukko:
+                    logMes += str(h)
+                taulukko = ["","","",""]
+                lcdWrite(1, "Waiting for key!")
+        # If pressed key is not same as last key pressed, * or #
+        elif last != ch:
+            # if taulukko has space
+            if "" in taulukko:
+                # Set pressed key to first empty space in taulukko
+                for i in range(0,4):
+                    if taulukko[i] == "":
+                        taulukko[i] = ch
+                        break
+            # If taulukko has no space
+            else:
+                # Move all values one space down and add just pressed key to last space
+                taulukko[0] = taulukko[1]
+                taulukko[1] = taulukko[2]
+                taulukko[2] = taulukko[3]
+                taulukko[3] = ch
+            # After adjustment is done print info to user
+            for i in range(0,4):
+                tuloste += taulukko[i]
+            lcdWrite(1, tuloste)
+            last = ch
+    # When key is not pressed
+    else:
+        # Reset last key pressed
+        last = ""
+    return (last, taulukko, logMes)
+    
+    # Read keyboard input
+def read_keypad_login(last, taulukko):
+    last = last
+    taulukko = taulukko
+    # Keypad loop
+    tuloste = ""
+    ch = keyboard.getch()
+    logMes = ""
+    # When key has been pressed
+    if ch != "":
+        # If Pressed key is *
+        if ch == '*':
+            # Reset array and screen
+            taulukko = ["", "", "", ""]
+            logMes = ""
             lcdWrite(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
@@ -141,7 +200,7 @@ def checkTemp():
     lcdWrite(1,"0000# to exit")
     while True:
         myTaulukko = taulukko
-        keyInput = read_keypad(lastPressed,myTaulukko)
+        keyInput = read_keypad_login(lastPressed,myTaulukko)
         myTaulukko = keyInput[1]
         lastPressed = keyInput[0]
         mes = keyInput[2]
