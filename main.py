@@ -24,12 +24,6 @@ def message(temp, light):
     m += str(temp)
     m += ":"
     m += str(light)
-    """
-    m += ":"
-    m += motorAngle()
-    m += ":"
-    m += numpad()
-    """
     m += "\n"
     return m
 
@@ -191,6 +185,7 @@ def read_keypad_login(last, taulukko):
     return (last, taulukko, logMes)
 
 # temperature, brightness and login loop
+# 0000 exits
 def checkTemp():
     pyb.delay(100)
     taulukko = ["", "", "", ""]
@@ -251,15 +246,15 @@ def add_values(tempList, lightList):
         lightList.pop(0)
     return [tempList,lightList]
 
-# rotate motor x rounds, set speed/time?
-# NOT TESTED
+# rotate motor x angles at y speed
+# 0000 exits
 def motorTime():
     pyb.delay(100)
     angle = 90
     speed = 5
     taulukko = ["", "", "", ""]
     lastPressed = ""
-    lcdWrite(0,"PLACEHOLDER")
+    lcdWrite(0,"A:1 S:2 R:3")
     lcdWrite(1,"0000# to exit")
     while True:
         myTaulukko = taulukko
@@ -271,7 +266,7 @@ def motorTime():
             break
         # functionality
         elif mes == "0001":
-            lcdWrite(0,"Set angle and press #")
+            lcdWrite(0,"Set angle")
             while True:
                 myTaulukko = taulukko
                 lastPressed = ""
@@ -281,7 +276,8 @@ def motorTime():
                 mes = keyInput[2]
                 if mes != "":
                     angle = int(mes)
-                    lcdWrite(0,"PLACEHOLDER")
+                    lcdWrite(0,"A:1 S:2 R:3")
+                    lcdWrite(1,"0000# to exit")
                     break
                     
         elif mes == "0002":
@@ -295,13 +291,15 @@ def motorTime():
                 mes = keyInput[2]
                 if mes != "":
                     speed = int(mes)
-                    lcdWrite(0,"PLACEHOLDER")
+                    lcdWrite(0,"A:1 S:2 R:3")
+                    lcdWrite(1,"0000# to exit")
                     break
         elif mes == "0003":
            motor.rotatemotor(angle,speed)
+           lcdWrite(1,"0000# to exit")
 
 # Rotate motor on flash
-# NOT TESTED
+# 0000 exits
 def motorFlash():
     pyb.delay(100)
     taulukko = ["", "", "", ""]
