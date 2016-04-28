@@ -21,9 +21,11 @@ motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1
 # Delay between steps (min 5ms)
 # stepDelay
 
-def rotatemotor(angle, stepDelay):
+def rotatemotor(angle, stepDelay = 5):
+    # Angle / step distance / steps
     angle = int(angle/0.9/len(motorTuple))
     stepDelay = stepDelay
+    # enable stepper motor jumppers in L298
     Y8.high()
     Y3.high()
     for i in range(0,angle):
@@ -46,7 +48,9 @@ def rotatemotor(angle, stepDelay):
             else:
                 Y4.low()
             pyb.delay(stepDelay)
-
+    # disable stepper motor jumppers in L298
+    Y8.low()
+    Y3.low()
 #while True:
 
 if __name__ == "__main__":
