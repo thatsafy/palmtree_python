@@ -81,6 +81,7 @@ def read_keypad(last, taulukko):
             taulukko = ["", "", "", ""]
             logMes = ""
             tuloste = ""
+            logMes = ""
             lcdWrite(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
@@ -140,6 +141,7 @@ def read_keypad_login(last, taulukko):
             # Reset array and screen
             taulukko = ["", "", "", ""]
             tuloste = ""
+            logMes = ""
             lcdWrite(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
