@@ -220,6 +220,7 @@ def motorTime():
                 mes = keyInput[2]
                 if mes != "":
                     angle = int(mes)
+                    lcdWrite(0,"PLACEHOLDER")
                     break
                     
         elif mes == "0002":
@@ -233,6 +234,7 @@ def motorTime():
                 mes = keyInput[2]
                 if mes != "":
                     speed = int(mes)
+                    lcdWrite(0,"PLACEHOLDER")
                     break
         elif mes == "0003":
            motor.rotatemotor(angle,speed)
@@ -243,7 +245,7 @@ def motorFlash():
     pyb.delay(100)
     taulukko = ["", "", "", ""]
     lastPressed = ""
-    lcdWrite(0,"PLACEHOLDER")
+    lcdWrite(0,"Waiting flash")
     lcdWrite(1,"0000# to exit")
     while True:
         myTaulukko = taulukko
