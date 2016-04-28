@@ -249,7 +249,7 @@ def add_values(tempList, lightList):
     return [tempList,lightList]
 
 # rotate motor x angles at y speed
-# 0000 exits
+# * exits, 1 to set angle, 2 set speed, 3 to start
 def motorTime():
     pyb.delay(100)
     angle = 90
@@ -258,19 +258,74 @@ def motorTime():
     lastPressed = ""
     lineText = "A:" + str(angle) + " - S:" + str(speed)
     lcdWrite(0,lineText)
-    lcdWrite(1,"0000# to exit")
+    lcdWrite(1,"* exits")
     while True:
-        myTaulukko = taulukko
-        keyInput = read_keypad(lastPressed,myTaulukko)
-        myTaulukko = keyInput[1]
-        lastPressed = keyInput[0]
-        mes = keyInput[2]
-        if mes == "0000":
-            break
+        #myTaulukko = taulukko
+        #keyInput = read_keypad(lastPressed,myTaulukko)
+        #myTaulukko = keyInput[1]
+        #lastPressed = keyInput[0]
+        #mes = keyInput[2]
+        #if mes == "0000":
+            #break
+        lineText = "A:" + str(angle) + " - S:" + str(speed)
+        ch = keyboard.getch()
+        if ch != "":
         # functionality
-        elif mes == "0001":
-            lcdWrite(0,"Set angle")
-            while True:
+            if ch == "*":
+                break
+            elif ch == "1":
+                lcdWrite(0,"Set angle")
+                while True:
+                    myTaulukko = taulukko
+                    lastPressed = ""
+                    keyInput = read_keypad(lastPressed,myTaulukko)
+                    myTaulukko = keyInput[1]
+                    lastPressed = keyInput[0]
+                    mes = keyInput[2]
+                    if mes != "":
+                        angle = int(mes)
+                        lcdWrite(0,lineText)
+                        lcdWrite(1,"* exits")
+                        break
+            elif ch == "2":
+                lcdWrite(0,"set speed")
+                while True:
+                    myTaulukko = taulukko
+                    lastPressed = ""
+                    keyInput = read_keypad(lastPressed,myTaulukko)
+                    myTaulukko = keyInput[1]
+                    lastPressed = keyInput[0]
+                    mes = keyInput[2]
+                    if mes != "":
+                        speed = int(mes)
+                        lcdWrite(0,lineText)
+                        lcdWrite(1,"* exits")
+                        break
+                lastPressed = ""
+            elif ch == "3":
+                motor.rotatemotor(angle,speed)
+                lcdWrite(1,"* exits")
+            lastPressed = ch
+        else:
+            lastPressed = ""
+
+# Rotate motor on flash
+# * exits, 1 set angle, 3 to start
+def motorFlash():
+    pyb.delay(100)
+    taulukko = ["", "", "", ""]
+    lastPressed = ""
+    angle = 90
+    lineText = "Angle:" + angle
+    lcdWrite(0,lineText)
+    lcdWrite(1,"* to exit")
+    while True:
+        lineText = "Angle:" + angle
+        ch = keyboard.getch()
+        if ch != "":
+            if ch == "*":
+                break
+            elif ch == "1":
                 myTaulukko = taulukko
                 lastPressed = ""
                 keyInput = read_keypad(lastPressed,myTaulukko)
@@ -280,45 +335,14 @@ def motorTime():
                 if mes != "":
                     angle = int(mes)
                     lcdWrite(0,lineText)
-                    lcdWrite(1,"0000# to exit")
+                    lcdWrite(1,"* exits")
                     break
-                    
-        elif mes == "0002":
-            lcdWrite(0,"set speed")
-            while True:
-                myTaulukko = taulukko
-                lastPressed = ""
-                keyInput = read_keypad(lastPressed,myTaulukko)
-                myTaulukko = keyInput[1]
-                lastPressed = keyInput[0]
-                mes = keyInput[2]
-                if mes != "":
-                    speed = int(mes)
-                    lcdWrite(0,lineText)
-                    lcdWrite(1,"0000# to exit")
-                    break
-        elif mes == "0003":
-           motor.rotatemotor(angle,speed)
-           lcdWrite(1,"0000# to exit")
-
-# Rotate motor on flash
-# 0000 exits
-def motorFlash():
-    pyb.delay(100)
-    taulukko = ["", "", "", ""]
-    lastPressed = ""
-    lcdWrite(0,"Waiting flash")
-    lcdWrite(1,"0000# to exit")
-    while True:
-        myTaulukko = taulukko
-        keyInput = read_keypad(lastPressed,myTaulukko)
-        myTaulukko = keyInput[1]
-        lastPressed = keyInput[0]
-        mes = keyInput[2]
-        if mes == "0000":
-            break
+            elif ch == "3":
+                flash.flashDetection(angle)
+        else:
+            lastPressed = ""
         # functionality
-        flash.flashDetection()
+        #flash.flashDetection()
 
 # Functions
 menuDo = [checkTemp,motorTime,motorFlash]
