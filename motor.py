@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-
+import pyb
 from pyb import Pin
 print("start")
 Y8 = Pin('Y8',Pin.OUT_PP)
@@ -21,9 +21,9 @@ motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1
 # Delay between steps (min 5ms)
 # stepDelay
 
-def rotatemotor(angle=90, stepDelay = 5):
+def rotatemotor(angle=90, stepDelay=5):
     angle = int(angle/0.9/len(motorTuple))
-
+    stepDelay = stepDelay
     Y8.high()
     Y3.high()
     for i in range(0,angle):
