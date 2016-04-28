@@ -256,8 +256,8 @@ def motorTime():
     speed = 5
     taulukko = ["", "", "", ""]
     lastPressed = ""
-    lineText = "A:",angle," - S:",speed)
-    lcdWrite(0,"A:1 S:2 R:3")
+    lineText = "A:" + angle + " - S:" + speed
+    lcdWrite(0,lineText)
     lcdWrite(1,"0000# to exit")
     while True:
         myTaulukko = taulukko
@@ -279,7 +279,7 @@ def motorTime():
                 mes = keyInput[2]
                 if mes != "":
                     angle = int(mes)
-                    lcdWrite(0,"A:1 S:2 R:3")
+                    lcdWrite(0,lineText)
                     lcdWrite(1,"0000# to exit")
                     break
                     
@@ -294,7 +294,7 @@ def motorTime():
                 mes = keyInput[2]
                 if mes != "":
                     speed = int(mes)
-                    lcdWrite(0,"A:1 S:2 R:3")
+                    lcdWrite(0,lineText)
                     lcdWrite(1,"0000# to exit")
                     break
         elif mes == "0003":
