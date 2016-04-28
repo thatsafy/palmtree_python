@@ -193,6 +193,7 @@ def add_values(tempList, lightList):
 # rotate motor x rounds, set speed/time?
 # NOT TESTED
 def motorTime():
+    pyb.delay(100)
     angle = 90
     speed = 5
     taulukko = ["", "", "", ""]
@@ -208,26 +209,38 @@ def motorTime():
         if mes == "0000":
             break
         # functionality
-        if mes == "0001":
+        elif mes == "0001":
             lcdWrite(0,"Set angle and press #")
-            keyInput = read_keypad(lastPressed,myTaulukko)
-            myTaulukko = keyInput[1]
-            lastPressed = keyInput[0]
-            mes = keyInput[2]
-            angle = int(mes)
+            while True:
+                myTaulukko = taulukko
+                lastPressed = ""
+                keyInput = read_keypad(lastPressed,myTaulukko)
+                myTaulukko = keyInput[1]
+                lastPressed = keyInput[0]
+                mes = keyInput[2]
+                if mes != "":
+                    angle = int(mes)
+                    break
+                    
         elif mes == "0002":
             lcdWrite(0,"set speed")
-            keyInput = read_keypad(lastPressed,myTaulukko)
-            myTaulukko = keyInput[1]
-            lastPressed = keyInput[0]
-            mes = keyInput[2]
-            speed = int(mes)
+            while True:
+                myTaulukko = taulukko
+                lastPressed = ""
+                keyInput = read_keypad(lastPressed,myTaulukko)
+                myTaulukko = keyInput[1]
+                lastPressed = keyInput[0]
+                mes = keyInput[2]
+                if mes != "":
+                    speed = int(mes)
+                    break
         elif mes == "0003":
            motor.rotatemotor(angle,speed)
 
 # Rotate motor on flash
 # NOT TESTED
 def motorFlash():
+    pyb.delay(100)
     taulukko = ["", "", "", ""]
     lastPressed = ""
     lcdWrite(0,"PLACEHOLDER")
