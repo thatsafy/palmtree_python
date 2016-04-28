@@ -256,6 +256,7 @@ def motorTime():
     speed = 5
     taulukko = ["", "", "", ""]
     lastPressed = ""
+    lineText = "A:",angle," - S:",speed)
     lcdWrite(0,"A:1 S:2 R:3")
     lcdWrite(1,"0000# to exit")
     while True:
