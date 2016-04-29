@@ -62,11 +62,13 @@ Keypad button '*' exits.
 | # | - | Select / Enter |  
   
 **Angle/Speed configuration**  
-| 1 | - | Set angle      |  
-| 2 | - | Set speed      |  
-| 3 | - | Start rotation |  
-| # | - | Select / Enter |  
-| * | - | Clear input    |  
+| Button | Selection |
+| ------ | --------- |
+| 1 | Set angle |
+| 2 | Set speed |
+| 3 | Start rotation |
+| # | Select / Enter |
+| * | Clear input |
   
 #### Flash rotation
 First row indicates current action, second row is used for additional information and keypad input.  
