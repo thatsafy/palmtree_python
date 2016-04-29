@@ -60,19 +60,18 @@ Keypad button '*' exits.
 
 | Button | Selection |
 | ------ | ----------- |
-| 1   | Cycle left |
-| 2 | Cycle right |
+| 1   | Set angle |
+| 2 | Set speed |
+| 3    | Start rotation |
 | #    | Select/Enter |
+| *    | Exit |
   
 **Angle/Speed configuration**  
 
 | Button | Selection |
 | ------ | ----------- |
-| 1   | Set angle |
-| 2 | Set speed |
-| 3    | Start rotation |
-| #    | Select/Enter |
-| *    | Clear input |
+| #   | Enter value |
+| * | Clear |
   
 #### Flash rotation
 First row indicates current action, second row is used for additional information and keypad input.  
@@ -83,16 +82,23 @@ Keypad button '3' starts flash detection and rotation. Platform rotates when fla
 While flash detection is active it can be stopped by pressing '*'. If platform is turning this may take few tries.  
   
 **Default view**  
-| 1 | - | Cycle left     |  
-| 3 | - | Cycle right    |  
-| # | - | Select / Enter |  
+
+| Button | Selection |
+| ------ | ----------- |
+| 1   | Set angle |
+| 2 | Set speed |
+| 3    | Start rotation |
+| #    | Select/Enter |
+| *    | Exit |
   
-**Angle configuration**  
-| 1 | - | Set angle      |  
-| 2 | - | Set speed      |  
-| 3 | - | Start rotation |  
-| # | - | Select / Enter |  
-| * | - | Clear input    |  
+**Angle/Speed configuration**  
+
+| Button | Selection |
+| ------ | ----------- |
+| #   | Enter value |
+| * | Clear |
   
 **Flash detection active**  
-| * | - | Cancel         |  
+| Button | Selection |
+| ------ | ----------- |
+| *   | Exit |
