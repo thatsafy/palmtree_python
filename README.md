@@ -57,13 +57,15 @@ Keypad button '3' starts rotation.
 Keypad button '*' exits.  
   
 **Default view**  
+
 | Button | Selection |
 | ------ | ----------- |
 | 1   | Cycle left |
 | 2 | Cycle right |
 | #    | Select/Enter |
   
-**Angle/Speed configuration**
+**Angle/Speed configuration**  
+
 | Button | Selection |
 | ------ | ----------- |
 | 1   | Set angle |
