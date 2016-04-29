@@ -268,6 +268,8 @@ def motorTime():
         #if mes == "0000":
             #break
         lineText = "A:" + str(angle) + " - S:" + str(speed)
+        lcdWrite(0,lineText)
+        lcdWrite(1,"* exits")
         ch = keyboard.getch()
         if ch != "":
         # functionality
@@ -284,8 +286,6 @@ def motorTime():
                     mes = keyInput[2]
                     if mes != "":
                         angle = int(mes)
-                        lcdWrite(0,lineText)
-                        lcdWrite(1,"* exits")
                         break
             elif ch == "2":
                 lcdWrite(0,"set speed")
@@ -298,13 +298,10 @@ def motorTime():
                     mes = keyInput[2]
                     if mes != "":
                         speed = int(mes)
-                        lcdWrite(0,lineText)
-                        lcdWrite(1,"* exits")
                         break
                 lastPressed = ""
             elif ch == "3":
                 motor.rotatemotor(angle,speed)
-                lcdWrite(1,"* exits")
             lastPressed = ch
         else:
             lastPressed = ""
@@ -320,25 +317,31 @@ def motorFlash():
     lcdWrite(0,lineText)
     lcdWrite(1,"* to exit")
     while True:
-        lineText = "Angle:" + angle
+        lineText = "Angle:" + str(angle)
+        lcdWrite(0,lineText)
+        lcdWrite(1,"* exits")
         ch = keyboard.getch()
         if ch != "":
             if ch == "*":
                 break
             elif ch == "1":
-                myTaulukko = taulukko
-                lastPressed = ""
-                keyInput = read_keypad(lastPressed,myTaulukko)
-                myTaulukko = keyInput[1]
-                lastPressed = keyInput[0]
-                mes = keyInput[2]
-                if mes != "":
-                    angle = int(mes)
-                    lcdWrite(0,lineText)
-                    lcdWrite(1,"* exits")
-                    break
+                while True:
+                    myTaulukko = taulukko
+                    lastPressed = ""
+                    keyInput = read_keypad(lastPressed,myTaulukko)
+                    myTaulukko = keyInput[1]
+                    lastPressed = keyInput[0]
+                    mes = keyInput[2]
+                    if mes != "":
+                        angle = int(mes)
+                        break
             elif ch == "3":
-                flash.flashDetection(angle)
+                while True:
+                    ch = keyboard.getch()
+                    if ch != "":
+                        if ch == "*":
+                            break
+                    flash.flashDetection(angle)
         else:
             lastPressed = ""
         # functionality
