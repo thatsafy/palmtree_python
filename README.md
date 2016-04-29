@@ -44,9 +44,13 @@ Rotating platform with two modes:
 Main menu can be scrolled through with keypad's buttons '1' and '3'. '#' is used for selection.  
 Menu has two items: manual rotation and flash rotation which user can choose by pressing '#'.  
   
-| 1 | - | Cycle left     |  
-| 3 | - | Cycle right    |  
-| # | - | Select / Enter |  
+**Main menu**
+
+| Button | Selection |
+| ------ | ----------- |
+| 1   | Cycle left |
+| 3 | Cycle right |
+| # | Enter |
   
 #### Manual rotation
 First row indicates current action, second row is used for additional information and keypad input.    
@@ -63,7 +67,6 @@ Keypad button '*' exits.
 | 1   | Set angle |
 | 2 | Set speed |
 | 3    | Start rotation |
-| #    | Select/Enter |
 | *    | Exit |
   
 **Angle/Speed configuration**  
@@ -86,9 +89,7 @@ While flash detection is active it can be stopped by pressing '*'. If platform i
 | Button | Selection |
 | ------ | ----------- |
 | 1   | Set angle |
-| 2 | Set speed |
-| 3    | Start rotation |
-| #    | Select/Enter |
+| 3    | Start flash detection |
 | *    | Exit |
   
 **Angle/Speed configuration**  
