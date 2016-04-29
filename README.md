@@ -70,6 +70,13 @@ Keypad button '*' exits.
 | # | Select / Enter |
 | * | Clear input |
   
+
+| Button | Selection |
+| ------ | ----------- |
+| data   | path to data files to supply the data that will be passed into templates. |
+| engine | engine to be used for processing templates. Handlebars is the default. |
+| ext    | extension to be used for dest files. |
+
 #### Flash rotation
 First row indicates current action, second row is used for additional information and keypad input.  
 Default output is current angle(A).  
