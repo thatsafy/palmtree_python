@@ -34,4 +34,59 @@
   * Rotate ONLY when flash detected, get rid of random turning
 * Integrate all the features to the main functionality
   * menu
+  
+### Manual (final product)
+Rotating platform with two modes:
+* manual rotation with user configurable angle and speed
+* automatic rotation when a camera flash is detected. User can specify angle which platform rotates.
 
+#### Main menu
+Main menu can be scrolled through with keypad's buttons '1' and '3'. '#' is used for selection.
+Menu has two items: manual rotation and flash rotation which user can choose by pressing '#'.
+
+| 1 | - | Cycle left     |
+| 3 | - | Cycle right    |
+| # | - | Select / Enter |
+
+#### Manual rotation
+First row indicates current action, second row is used for additional information and keypad input.
+Default output is current angle(A) and speed(S) used and '*' is used to exit.
+Pressing '1' is used for configuring the angle (format 'XXXX' i.e. 360 degrees is 0360), '#' enters value given.
+Pressing '2' is used for configuring the speed (format 'XXXX' i.e. 35 is 0035), '#' enter value given.
+Keypad button '3' starts rotation.
+Keypad button '*' exits.
+
+**Default view**
+| 1 | - | Cycle left     |
+| 3 | - | Cycle right    |
+| # | - | Select / Enter |
+
+**Angle/Speed configuration**
+| 1 | - | Set angle      |
+| 2 | - | Set speed      |
+| 3 | - | Start rotation |
+| # | - | Select / Enter |
+| * | - | Clear input    |
+
+#### Flash rotation
+First row indicates current action, second row is used for additional information and keypad input.
+Default output is current angle(A).
+Pressing '1' on keypad user can change rotation angle.
+Keypad button '*' exits mode.
+Keypad button '3' starts flash detection and rotation. Platform rotates when flash is detected.
+While flash detection is active it can be stopped by pressing '*'. If platform is turning this may take few tries.
+
+**Default view**
+| 1 | - | Cycle left     |
+| 3 | - | Cycle right    |
+| # | - | Select / Enter |
+
+**Angle configuration**
+| 1 | - | Set angle      |
+| 2 | - | Set speed      |
+| 3 | - | Start rotation |
+| # | - | Select / Enter |
+| * | - | Clear input    |
+
+**Flash detection active**
+| * | - | Cancel         |
