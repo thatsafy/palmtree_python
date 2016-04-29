@@ -313,7 +313,7 @@ def motorFlash():
     taulukko = ["", "", "", ""]
     lastPressed = ""
     angle = 90
-    lineText = "Angle:" + angle
+    lineText = "Angle:" + str(angle)
     lcdWrite(0,lineText)
     lcdWrite(1,"* to exit")
     while True:
@@ -326,6 +326,7 @@ def motorFlash():
                 break
             elif ch == "1":
                 while True:
+                    lcdWrite(0,"Set angle")
                     myTaulukko = taulukko
                     lastPressed = ""
                     keyInput = read_keypad(lastPressed,myTaulukko)
