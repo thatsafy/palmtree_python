@@ -57,26 +57,21 @@ Keypad button '3' starts rotation.
 Keypad button '*' exits.  
   
 **Default view**  
-| 1 | - | Cycle left     |  
-| 3 | - | Cycle right    |  
-| # | - | Select / Enter |  
-  
-**Angle/Speed configuration**  
-| Button | Selection |
-| ------ | --------- |
-| 1 | Set angle |
-| 2 | Set speed |
-| 3 | Start rotation |
-| # | Select / Enter |
-| * | Clear input |
-  
-
 | Button | Selection |
 | ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
+| 1   | Cycle left |
+| 2 | Cycle right |
+| #    | Select/Enter |
+  
+**Angle/Speed configuration**
+| Button | Selection |
+| ------ | ----------- |
+| 1   | Set angle |
+| 2 | Set speed |
+| 3    | Start rotation |
+| #    | Select/Enter |
+| *    | Clear input |
+  
 #### Flash rotation
 First row indicates current action, second row is used for additional information and keypad input.  
 Default output is current angle(A).  
