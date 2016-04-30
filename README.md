@@ -57,7 +57,7 @@ Menu has two items: manual rotation and flash rotation which user can choose by 
   
 #### Manual rotation
 First row indicates current action, second row is used for additional information and keypad input.    
-Default output is current angle(A) and speed(S) used and "*" is used to exit.  
+Default output is current angle(A) and speed(S) used and "\*" is used to exit.  
 Pressing "1" is used for configuring the angle (format "XXXX" i.e. 360 degrees is 0360), "#" enters value given.  
 Pressing "2" is used for configuring the speed (format "XXXX" i.e. 35 is 0035), "#" enter value given.  
 Keypad button "3" starts rotation.  
