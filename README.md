@@ -54,7 +54,7 @@ Menu has two items: manual rotation and flash rotation which user can choose by 
   
 #### Manual rotation
 First row indicates current action, second row is used for additional information and keypad input.    
-Default output is current angle(A) and speed(S) used and "*" is used to exit.  
+Default output is current angle(A) and speed(S) used and "\*" is used to exit.  
 Pressing "1" is used for configuring the angle (format "XXXX" i.e. 360 degrees is 0360), "#" enters value given.  
 Pressing "2" is used for configuring the speed (format "XXXX" i.e. 35 is 0035), "#" enter value given.  
 Keypad button "3" starts rotation.  
@@ -80,7 +80,7 @@ Keypad button "\*" exits.
 First row indicates current action, second row is used for additional information and keypad input.  
 Default output is current angle(A).  
 Pressing "1" on keypad user can change rotation angle.  
-Keypad button "*" exits mode.  
+Keypad button "\*" exits mode.  
 Keypad button "3" starts flash detection and rotation. Platform rotates when flash is detected.  
 While flash detection is active it can be stopped by pressing "\*". If platform is turning this may take few tries.  
   
