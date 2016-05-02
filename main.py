@@ -127,7 +127,7 @@ def read_keypad(last, taulukko):
         last = ""
     return (last, taulukko, logMes)
     
-    # Read keyboard input
+# Read keyboard input, login feature
 def read_keypad_login(last, taulukko):
     last = last
     taulukko = taulukko
@@ -153,6 +153,7 @@ def read_keypad_login(last, taulukko):
                 mes = "Invalid code:"
                 for s in taulukko:
                     if s != "": mes += "" + s
+                taulukko = ["","","",""]
                 lcdWrite(1, mes)
             else:
                 for h in taulukko:
@@ -290,8 +291,8 @@ def motorTime():
                         break
             elif ch == "2":
                 lcdWrite(0,"set speed")
+                myTaulukko = taulukko
                 while True:
-                    myTaulukko = taulukko
                     lastPressed = ""
                     keyInput = read_keypad(lastPressed,myTaulukko)
                     myTaulukko = keyInput[1]
