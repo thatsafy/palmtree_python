@@ -192,6 +192,7 @@ def read_keypad_login(last, taulukko):
 def checkTemp():
     pyb.delay(100)
     taulukko = ["", "", "", ""]
+    myTaulukko = taulukko
     tempList = []
     lightList = []
     sTime = time.time()
@@ -199,7 +200,6 @@ def checkTemp():
     lcdWrite(0,"Waiting values...")
     lcdWrite(1,"0000# to exit")
     while True:
-        myTaulukko = taulukko
         keyInput = read_keypad_login(lastPressed,myTaulukko)
         myTaulukko = keyInput[1]
         lastPressed = keyInput[0]
@@ -278,8 +278,8 @@ def motorTime():
                 break
             elif ch == "1":
                 lcdWrite(0,"Set angle")
+                myTaulukko = taulukko
                 while True:
-                    myTaulukko = taulukko
                     lastPressed = ""
                     keyInput = read_keypad(lastPressed,myTaulukko)
                     myTaulukko = keyInput[1]
@@ -326,9 +326,9 @@ def motorFlash():
             if ch == "*":
                 break
             elif ch == "1":
+                myTaulukko = taulukko
                 while True:
                     lcdWrite(0,"Set angle")
-                    myTaulukko = taulukko
                     lastPressed = ""
                     keyInput = read_keypad(lastPressed,myTaulukko)
                     myTaulukko = keyInput[1]
