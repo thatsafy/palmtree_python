@@ -281,7 +281,6 @@ def motorTime():
                 lcdWrite(0,"Set angle")
                 myTaulukko = taulukko
                 while True:
-                    lastPressed = ""
                     keyInput = read_keypad(lastPressed,myTaulukko)
                     myTaulukko = keyInput[1]
                     lastPressed = keyInput[0]
@@ -293,7 +292,6 @@ def motorTime():
                 lcdWrite(0,"set speed")
                 myTaulukko = taulukko
                 while True:
-                    lastPressed = ""
                     keyInput = read_keypad(lastPressed,myTaulukko)
                     myTaulukko = keyInput[1]
                     lastPressed = keyInput[0]
@@ -301,7 +299,6 @@ def motorTime():
                     if mes != "":
                         speed = int(mes)
                         break
-                lastPressed = ""
             elif ch == "3":
                 motor.rotatemotor(angle,speed)
             lastPressed = ch
