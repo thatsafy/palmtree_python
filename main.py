@@ -287,6 +287,7 @@ def motorTime():
                     mes = keyInput[2]
                     if mes != "":
                         angle = int(mes)
+                        myTaulukko = taulukko
                         break
             elif ch == "2":
                 lcdWrite(0,"set speed")
@@ -298,6 +299,7 @@ def motorTime():
                     mes = keyInput[2]
                     if mes != "":
                         speed = int(mes)
+                        myTaulukko = taulukko
                         break
             elif ch == "3":
                 motor.rotatemotor(angle,speed)
@@ -334,6 +336,7 @@ def motorFlash():
                     mes = keyInput[2]
                     if mes != "":
                         angle = int(mes)
+                        myTaulukko = taulukko
                         break
             elif ch == "3":
                 while True:
