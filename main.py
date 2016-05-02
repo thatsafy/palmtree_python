@@ -81,13 +81,13 @@ def read_keypad(last, taulukko):
             taulukko = ["", "", "", ""]
             logMes = ""
             tuloste = ""
-            logMes = ""
             lcdWrite(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
             logMes = ""
             tuloste = ""
             # If taulukko has space
+            """
             if "" in taulukko:
                 # Write error message to user
                 mes = "Invalid code:"
@@ -95,10 +95,11 @@ def read_keypad(last, taulukko):
                     if s != "": mes += "" + s
                 lcdWrite(1, mes)
             else:
-                for h in taulukko:
-                    logMes += str(h)
-                taulukko = ["","","",""]
-                lcdWrite(1, "Waiting for key!")
+            """
+            for h in taulukko:
+                logMes += str(h)
+            taulukko = ["","","",""]
+            lcdWrite(1, "Waiting for key!")
         # If pressed key is not same as last key pressed, * or #
         elif last != ch:
             # if taulukko has space
