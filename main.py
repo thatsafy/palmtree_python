@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Product version
+# Final Product version
 
 from pyb import UART, delay, Pin, ADC, I2C
 # from binascii import hexlify
@@ -98,13 +98,6 @@ def motorTime():
     lcdWrite(0,lineText)
     lcdWrite(1,"* exits")
     while True:
-        #myTaulukko = taulukko
-        #keyInput = read_keypad(lastPressed,myTaulukko)
-        #myTaulukko = keyInput[1]
-        #lastPressed = keyInput[0]
-        #mes = keyInput[2]
-        #if mes == "0000":
-            #break
         lineText = "A:" + str(angle) + " - S:" + str(speed)
         lcdWrite(0,lineText)
         lcdWrite(1,"* exits")
@@ -184,7 +177,7 @@ def motorFlash():
         #flash.flashDetection()
 
 # Functions
-menuDo = [checkTemp,motorTime,motorFlash]
+menuDo = [motorTime,motorFlash]
 # menu titles
 menu = ["rotate/time", "rotate/flash"]
 # main menu info
