@@ -67,8 +67,31 @@ def rotatemotor(angle, motorStepN, stepDelay = 30):
     Y8.high()
     Y3.high()
     temp = motorStepN
+    for i in range(motorStepN, 9):
+        x = i
+        print(str(x))
+        motorStepN = x
+        x = motorTuple[x]
+        if x[0]:
+            Y4.high()
+        else:
+            Y4.low()
+        if x[1]:
+            Y5.high()
+        else:
+            Y5.low()
+        if x[2]:
+            Y6.high()
+        else:
+            Y6.low()
+        if x[3]:
+            Y7.high()
+        else:
+            Y7.low()
+        pyb.delay(stepDelay)
+    
     for i in range(0,(steps+1)):
-        x = i%8+temp
+        x = i%8
         print(str(x))
         motorStepN = x
         x = motorTuple[x]
