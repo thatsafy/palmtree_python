@@ -67,7 +67,7 @@ def rotatemotor(angle, motorStepN, stepDelay = 30):
     Y8.high()
     Y3.high()
     temp = motorStepN
-    for i in range(motorStepN, 9):
+    for i in range(motorStepN, 8):
         x = i
         print(str(x))
         motorStepN = x
