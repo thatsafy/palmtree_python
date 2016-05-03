@@ -23,7 +23,7 @@ motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1
 
 # Delay between steps (min. 5ms)
 # stepDelay smaller = faster
-def rotatemotor(angle, stepDelay = 30, motorStepN):
+def rotatemotor(angle, motorStepN, stepDelay = 30):
 
     steps = 0
     while angle >= 9:
@@ -66,8 +66,9 @@ def rotatemotor(angle, stepDelay = 30, motorStepN):
     # enable stepper motor jumpers in L298
     Y8.high()
     Y3.high()
+    temp = motorStepN
     for i in range(0,(steps+1)):
-        x = i%8
+        x = i%8+temp
         print(str(x))
         motorStepN = x
         x = motorTuple[x]

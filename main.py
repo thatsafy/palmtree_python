@@ -132,7 +132,7 @@ def motorTime():
                         speed = int(mes)
                         break
             elif ch == "3":
-                motorStepN = motor.rotatemotor(angle,speed, motorStepN)
+                motorStepN = motor.rotatemotor(angle,motorStepN,speed)
             lastPressed = ch
         else:
             lastPressed = ""
