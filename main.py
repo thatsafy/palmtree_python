@@ -10,6 +10,8 @@ import math, char_lcd, time, keyboard, flash, motor
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
 
+motorStepN = 0
+
 # LCD write
 def lcdWrite(row, stri):
     lcd_screen.set_line(row)
@@ -89,6 +91,7 @@ def read_keypad(last, taulukko):
 # rotate motor x angles at y speed
 # * exits, 1 to set angle, 2 set speed, 3 to start
 def motorTime():
+    global motorStepN
     pyb.delay(100)
     angle = 90
     speed = 5
@@ -129,7 +132,7 @@ def motorTime():
                         speed = int(mes)
                         break
             elif ch == "3":
-                motor.rotatemotor(angle,speed)
+                motorStepN = motor.rotatemotor(angle,speed, motorStepN)
             lastPressed = ch
         else:
             lastPressed = ""
