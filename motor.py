@@ -39,21 +39,21 @@ def rotatemotor(angle, stepDelay = 30):
         for x in motorTuple:
             print(x)
             if x[0]:
-                Y7.high()
-            else:
-                Y7.low()
-            if x[1]:
-                Y6.high()
-            else:
-                Y6.low()
-            if x[2]:
-                Y5.high()
-            else:
-                Y5.low()
-            if x[3]:
                 Y4.high()
             else:
                 Y4.low()
+            if x[1]:
+                Y5.high()
+            else:
+                Y5.low()
+            if x[2]:
+                Y6.high()
+            else:
+                Y6.low()
+            if x[3]:
+                Y7.high()
+            else:
+                Y7.low()
             pyb.delay(stepDelay)
     # disable stepper motor jumpers in L298
     Y8.low()
