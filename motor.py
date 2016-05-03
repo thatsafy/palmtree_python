@@ -25,67 +25,67 @@ motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1
 # stepDelay smaller = faster
 def rotatemotor(angle, stepDelay = 30):
 
-	steps = 0
-	while angle >= 9:
-		steps += 10
-		angle -= 9
-	
-	if angle == 8:
-		steps += 9
-		angle -= 8
-		
-	elif angle == 7:
-		steps += 8
-		angle -= 7
-		
-	elif angle == 6:
-		steps += 7
-		angle -= 6
+    steps = 0
+    while angle >= 9:
+        steps += 10
+        angle -= 9
+    
+    if angle == 8:
+        steps += 9
+        angle -= 8
+        
+    elif angle == 7:
+        steps += 8
+        angle -= 7
+        
+    elif angle == 6:
+        steps += 7
+        angle -= 6
 
-	elif angle == 5:
-		steps += 6
-		angle -= 5
-		
-	elif angle == 4:
-		steps += 4
-		angle -= 4
+    elif angle == 5:
+        steps += 6
+        angle -= 5
+        
+    elif angle == 4:
+        steps += 4
+        angle -= 4
 
-	elif angle == 3:
-		steps += 3
-		angle -= 3
-	
-	elif angle == 2:
-		steps += 2
-		angle -= 2
-		
-	elif angle == 1:
-		steps += 1
-		angle -= 1
-		
+    elif angle == 3:
+        steps += 3
+        angle -= 3
+    
+    elif angle == 2:
+        steps += 2
+        angle -= 2
+        
+    elif angle == 1:
+        steps += 1
+        angle -= 1
+        
     stepDelay = stepDelay
     # enable stepper motor jumpers in L298
     Y8.high()
     Y3.high()
     for i in range(0,(steps+1)):
-		x = i%8
-		print(x)
-		if x[0]:
-			Y4.high()
-		else:
-			Y4.low()
-		if x[1]:
-			Y5.high()
-		else:
-			Y5.low()
-		if x[2]:
-			Y6.high()
-		else:
-			Y6.low()
-		if x[3]:
-			Y7.high()
-		else:
-			Y7.low()
-		pyb.delay(stepDelay)
+        x = i%8
+        print(x)
+        if x[0]:
+            Y4.high()
+        else:
+            Y4.low()
+        if x[1]:
+            Y5.high()
+        else:
+            Y5.low()
+        if x[2]:
+            Y6.high()
+        else:
+            Y6.low()
+        if x[3]:
+            Y7.high()
+        else:
+            Y7.low()
+        pyb.delay(stepDelay)
     # disable stepper motor jumpers in L298
     Y8.low()
     Y3.low()
