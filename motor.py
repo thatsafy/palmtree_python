@@ -68,7 +68,8 @@ def rotatemotor(angle, stepDelay = 30):
     Y3.high()
     for i in range(0,(steps+1)):
         x = i%8
-        print(x)
+        print(str(x))
+        x = motorTuple[x]
         if x[0]:
             Y4.high()
         else:
