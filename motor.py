@@ -22,15 +22,17 @@ print("pins ready")
 motorTuple = [(1,0,1,0),(1,0,0,0),(1,0,0,1),(0,0,0,1),(0,1,0,1),(0,1,0,0),(0,1,1,0),(0,0,1,0)]
 
 # Delay between steps (min. 5ms)
-# stepDelay
+# stepDelay smaller = faster
 def rotatemotor(angle, stepDelay = 30):
-    # Angle / step distance / steps
-    if angle < 8:
-        angle = 8
-    angle += 1
+    # angle less than 4 will not move motor
+    if angle < 4:
+        angle = 4
+    # Add 1 to angle
+    angle = angle + 1
+    # Angle / step distance / step
     angle = round(angle/0.9/len(motorTuple))
     stepDelay = stepDelay
-    # enable stepper motor jumppers in L298
+    # enable stepper motor jumpers in L298
     Y8.high()
     Y3.high()
     for i in range(0,angle):
@@ -53,7 +55,7 @@ def rotatemotor(angle, stepDelay = 30):
             else:
                 Y4.low()
             pyb.delay(stepDelay)
-    # disable stepper motor jumppers in L298
+    # disable stepper motor jumpers in L298
     Y8.low()
     Y3.low()
 
@@ -62,4 +64,4 @@ if __name__ == "__main__":
     nappi = pyb.Switch()
     while True:
         if nappi():
-            rotatemotor(360,15)
+            rotatemotor(45,10)
