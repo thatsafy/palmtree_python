@@ -71,7 +71,7 @@ def read_keypad(last, taulukko):
     taulukko = taulukko
     # Keypad loop
     tuloste = ""
-    ch = keyboard.getch()
+    ch = keyboard.getch(i2cLCD)
     logMes = ""
     # When key has been pressed
     if ch != "":
@@ -131,7 +131,7 @@ def read_keypad_login(last, taulukko):
     taulukko = taulukko
     # Keypad loop
     tuloste = ""
-    ch = keyboard.getch()
+    ch = keyboard.getch(i2cLCD)
     logMes = ""
     # When key has been pressed
     if ch != "":
@@ -270,7 +270,7 @@ def motorTime():
         lineText = "A:" + str(angle) + " - S:" + str(speed)
         lcdWrite(0,lineText)
         lcdWrite(1,"* exits")
-        ch = keyboard.getch()
+        ch = keyboard.getch(i2cLCD)
         if ch != "":
         # functionality
             if ch == "*":
@@ -317,7 +317,7 @@ def motorFlash():
         lineText = "Angle:" + str(angle)
         lcdWrite(0,lineText)
         lcdWrite(1,"* exits")
-        ch = keyboard.getch()
+        ch = keyboard.getch(i2cLCD)
         if ch != "":
             if ch == "*":
                 break
@@ -335,7 +335,7 @@ def motorFlash():
                         break
             elif ch == "3":
                 while True:
-                    ch = keyboard.getch()
+                    ch = keyboard.getch(i2cLCD)
                     if ch != "":
                         if ch == "*":
                             break
@@ -360,7 +360,7 @@ menuItem = 0
 while True:
     lcdWrite(0, menu2[0])
     lcdWrite(1, menu[menuItem])
-    ch = keyboard.getch()
+    ch = keyboard.getch(i2cLCD)
     if ch != "":
         if ch == "1":
             menuItem -= 1

@@ -3,10 +3,10 @@
 import time
 from pyb import I2C
 
-i2c = I2C(2, I2C.MASTER, baudrate=20000)
+# i2c = I2C(2, I2C.MASTER, baudrate=20000)
 
-def getch():
-    global i2c
+def getch(i2c):
+    #global i2c
     COLS = [0b11101111, 0b10111111, 0b11111011]
     ROWS = [0b11011111, 0b11110111, 0b11111101, 0b11111110]
     MASKS = [0b00101011, 0b00001000, 0b00000010, 0b00000001]
