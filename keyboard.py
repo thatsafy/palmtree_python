@@ -5,7 +5,8 @@ from pyb import I2C
 
 # i2c = I2C(2, I2C.MASTER, baudrate=20000)
 
-def getch(i2c):
+def getch(i2cg):
+    i2c = i2cg
     #global i2c
     COLS = [0b11101111, 0b10111111, 0b11111011]
     ROWS = [0b11011111, 0b11110111, 0b11111101, 0b11111110]
@@ -15,7 +16,7 @@ def getch(i2c):
             "[237, 191, 251]": '7', "[239, 189, 251]": '8', "[239, 191, 249]": '9',
             "[231, 191, 251]": '*', "[239, 183, 251]": '0', "[239, 191, 243]": '#'}
 
-    I2CADDR = 0x20        # valid range is 0x20 - 0x27    
+    I2CADDR = 0x20        # valid range is 0x20 - 0x27
 
     IODIR = 0x00
     GPIO  = 0x12          # GPIO pin register base address
