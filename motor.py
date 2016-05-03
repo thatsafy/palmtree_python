@@ -90,6 +90,8 @@ def rotatemotor(angle, motorStepN, stepDelay = 30):
             Y7.low()
         pyb.delay(stepDelay)
     
+	steps -= motorStepN
+	
     for i in range(0,(steps+1)):
         x = i%8
         print(str(x))
