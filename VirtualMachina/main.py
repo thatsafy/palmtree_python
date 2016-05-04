@@ -1,13 +1,15 @@
 import random, time, pymysql
 
-def generateTemp():
-        num = random.uniform(10,30)
+
+def generate_temp():
+        num = random.uniform(10, 30)
         t = time.ctime()
         # tuple = http://www.tutorialspoint.com/python/python_tuples.htm
-        values = round(num,2), t
+        values = round(num, 2), t
         return values
 
-def generateLog():
+
+def generate_log():
         people = ["matti", "teppo", "seppo", "maija"]
         person = people[random.randint(0, len(people)-1)]
         t = time.ctime()
@@ -15,10 +17,7 @@ def generateLog():
         return values
 
 while True:
-	print(generateTemp())
-	time.sleep(1)
-	print(generateLog())
-	time.sleep(2)
-	
-	
-	
+    print(generate_temp())
+    time.sleep(1)
+    print(generate_log())
+    time.sleep(2)

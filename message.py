@@ -8,8 +8,13 @@ uart = UART(6, 115200)
 # Temperature
 adc = ADC(Pin('X1'))
 
-tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5'
-        ,2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
+tempDict = {
+    1630: '1630x1754x0x10',
+    1772: '1772x1922x10x10',
+    1922: '1922x2000x20x5',
+    2000: '2000x2080x25x5',
+    2080: '2080x2417x30x10'
+}
 # Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
 
@@ -17,7 +22,8 @@ i2c = I2C(1, I2C.MASTER, baudrate=20000)
 i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
 lcd_screen = char_lcd.HD44780(i2cLCD)
 
-keyboard = keyboard(0x20,1,0)
+keyboard = keyboard(0x20, 1, 0)
+
 
 # Construct and return message
 def message(temp, light):
@@ -27,15 +33,16 @@ def message(temp, light):
     m += str(light)
     """
     m += ":"
-    m += motorAngle()
+    m += motor_angle()
     m += ":"
     m += numpad()
     """
     m += "\n"
     return m
 
+
 # measure temperature
-def measureTemp():
+def measure_temp():
     global tempDict
 
     # x1U = port x1 U (voltage)
@@ -63,8 +70,9 @@ def measureTemp():
     temperature = int(values[2]) + steps * step
     return temperature
 
+
 # Measure light level (lux)
-def measureLight():
+def measure_light():
     while True:
         # Visible & Infrared
         i2c.send(0x43, 0x39)
@@ -95,13 +103,16 @@ def measureLight():
         except ZeroDivisionError:
             continue
         return light
-    
-def motorAngle():
+
+
+def motor_angle():
     return str(360)
+
 
 def numpad():    
     global keyboard
     return keyboard.getch()
+
 
 # Send message through serial
 def send(x, y):
@@ -119,8 +130,8 @@ sTime = time.time()
 # When lists' lengths are 6, calculate averages and send data through serial port
 while True:
     if (time.time() - sTime) >= 10:
-        tempList.append(measureTemp())
-        lightList.append(measureLight())
+        tempList.append(measure_temp())
+        lightList.append(measure_light())
         if len(tempList) > 6:
             tempList.pop(0)
         if len(lightList) > 6:

@@ -12,8 +12,9 @@ lcd_screen = char_lcd.HD44780(i2cLCD)
 
 motorStepN = 0
 
+
 # LCD write
-def lcdWrite(row, stri):
+def lcd_write(row, stri):
     lcd_screen.set_line(row)
     lcd_screen.set_string(stri)
 
@@ -26,7 +27,8 @@ i2cLCD.mem_write(0x00, 0x20, 0x14)
 last = ""
 # Keypad input code
 taulukko = ["", "", "", ""]
-logMes = ""
+log_message = ""
+
 
 # Read keyboard input
 def read_keypad(last, taulukko):
@@ -35,38 +37,39 @@ def read_keypad(last, taulukko):
     # Keypad loop
     tuloste = ""
     ch = keyboard.getch(i2cLCD)
-    logMes = ""
+    log_message = ""
     # When key has been pressed
     if ch != "":
         # If Pressed key is *
         if ch == '*':
             # Reset array and screen
             taulukko = ["", "", "", ""]
-            logMes = ""
+            log_message = ""
             tuloste = ""
-            lcdWrite(1, "Waiting for key!")
+            lcd_write(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
-            logMes = ""
+            log_message = ""
             tuloste = ""
             # If taulukko has space
             if "" in taulukko:
                 # Write error message to user
                 mes = "Invalid code:"
                 for s in taulukko:
-                    if s != "": mes += "" + s
-                lcdWrite(1, mes)
+                    if s != "":
+                        mes += "" + s
+                lcd_write(1, mes)
             else:
                 for h in taulukko:
-                    logMes += str(h)
-                taulukko = ["","","",""]
-                lcdWrite(1, "Waiting for key!")
+                    log_message += str(h)
+                taulukko = ["", "", "", ""]
+                lcd_write(1, "Waiting for key!")
         # If pressed key is not same as last key pressed, * or #
         elif last != ch:
             # if taulukko has space
             if "" in taulukko:
                 # Set pressed key to first empty space in taulukko
-                for i in range(0,4):
+                for i in range(0, 4):
                     if taulukko[i] == "":
                         taulukko[i] = ch
                         break
@@ -78,92 +81,94 @@ def read_keypad(last, taulukko):
                 taulukko[2] = taulukko[3]
                 taulukko[3] = ch
             # After adjustment is done print info to user
-            for i in range(0,4):
+            for i in range(0, 4):
                 tuloste += taulukko[i]
-            lcdWrite(1, tuloste)
+            lcd_write(1, tuloste)
             last = ch
     # When key is not pressed
     else:
         # Reset last key pressed
         last = ""
-    return (last, taulukko, logMes)
+    return (last, taulukko, log_message)
+
 
 # rotate motor x angles at y speed
 # * exits, 1 to set angle, 2 set speed, 3 to start
-def motorTime():
+def motor_time():
     global motorStepN
     pyb.delay(100)
     angle = 90
     speed = 5
     taulukko = ["", "", "", ""]
-    lastPressed = ""
-    lineText = "A:" + str(angle) + " - S:" + str(speed)
-    lcdWrite(0,lineText)
-    lcdWrite(1,"* exits")
+    last_pressed = ""
+    line_text = "A:" + str(angle) + " - S:" + str(speed)
+    lcd_write(0, line_text)
+    lcd_write(1, "* exits")
     while True:
-        lineText = "A:" + str(angle) + " - S:" + str(speed)
-        lcdWrite(0,lineText)
-        lcdWrite(1,"* exits")
+        line_text = "A:" + str(angle) + " - S:" + str(speed)
+        lcd_write(0, line_text)
+        lcd_write(1, "* exits")
         ch = keyboard.getch(i2cLCD)
         if ch != "":
-        # functionality
+            # functionality
             if ch == "*":
                 break
             elif ch == "1":
-                lcdWrite(0,"Set angle")
-                myTaulukko = taulukko
+                lcd_write(0, "Set angle")
+                my_taulukko = taulukko
                 while True:
-                    keyInput = read_keypad(lastPressed,myTaulukko)
-                    myTaulukko = keyInput[1]
-                    lastPressed = keyInput[0]
-                    mes = keyInput[2]
+                    key_input = read_keypad(last_pressed, my_taulukko)
+                    my_taulukko = key_input[1]
+                    last_pressed = key_input[0]
+                    mes = key_input[2]
                     if mes != "":
                         angle = int(mes)
                         break
             elif ch == "2":
-                lcdWrite(0,"set speed")
-                myTaulukko = taulukko
+                lcd_write(0, "set speed")
+                my_taulukko = taulukko
                 while True:
-                    keyInput = read_keypad(lastPressed,myTaulukko)
-                    myTaulukko = keyInput[1]
-                    lastPressed = keyInput[0]
-                    mes = keyInput[2]
+                    key_input = read_keypad(last_pressed, my_taulukko)
+                    my_taulukko = key_input[1]
+                    last_pressed = key_input[0]
+                    mes = key_input[2]
                     if mes != "":
                         speed = int(mes)
                         break
             elif ch == "3":
-                motorStepN = motor.rotatemotor(angle,motorStepN,speed)
-            lastPressed = ch
+                motorStepN = motor.rotate_motor(angle, motorStepN, speed)
+            last_pressed = ch
         else:
-            lastPressed = ""
+            last_pressed = ""
+
 
 # Rotate motor on flash
 # * exits, 1 set angle, 3 to start
-def motorFlash():
+def motor_flash():
     pyb.delay(100)
     taulukko = ["", "", "", ""]
-    lastPressed = ""
+    last_pressed = ""
     angle = 90
-    lineText = "Angle:" + str(angle)
-    lcdWrite(0,lineText)
-    lcdWrite(1,"* to exit")
+    line_text = "Angle:" + str(angle)
+    lcd_write(0, line_text)
+    lcd_write(1, "* to exit")
     while True:
-        lineText = "Angle:" + str(angle)
-        lcdWrite(0,lineText)
-        lcdWrite(1,"* exits")
+        line_text = "Angle:" + str(angle)
+        lcd_write(0, line_text)
+        lcd_write(1, "* exits")
         ch = keyboard.getch(i2cLCD)
         if ch != "":
             if ch == "*":
                 break
             elif ch == "1":
-                myTaulukko = taulukko
+                my_taulukko = taulukko
                 while True:
-                    lcdWrite(0,"Set angle")
-                    lastPressed = ""
-                    keyInput = read_keypad(lastPressed,myTaulukko)
-                    myTaulukko = keyInput[1]
-                    lastPressed = keyInput[0]
-                    mes = keyInput[2]
+                    lcd_write(0, "Set angle")
+                    last_pressed = ""
+                    key_input = read_keypad(last_pressed, my_taulukko)
+                    my_taulukko = key_input[1]
+                    last_pressed = key_input[0]
+                    mes = key_input[2]
                     if mes != "":
                         angle = int(mes)
                         break
@@ -173,14 +178,14 @@ def motorFlash():
                     if ch != "":
                         if ch == "*":
                             break
-                    flash.flashDetection(angle)
+                    flash.flash_detection(angle)
         else:
-            lastPressed = ""
+            last_pressed = ""
         # functionality
-        #flash.flashDetection()
+        # flash.flash_detection()
 
 # Functions
-menuDo = [motorTime,motorFlash]
+menuDo = [motor_time, motor_flash]
 # menu titles
 menu = ["rotate/time", "rotate/flash"]
 # main menu info
@@ -192,8 +197,8 @@ menuItem = 0
 # 1 goes left, 3 goes right, # is select
 # rotates cycle if too far either direction
 while True:
-    lcdWrite(0, menu2[0])
-    lcdWrite(1, menu[menuItem])
+    lcd_write(0, menu2[0])
+    lcd_write(1, menu[menuItem])
     ch = keyboard.getch(i2cLCD)
     if ch != "":
         if ch == "1":
