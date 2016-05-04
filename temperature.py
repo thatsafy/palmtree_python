@@ -5,11 +5,18 @@ from pyb import Pin, ADC
 # Temperature pin
 adc = ADC(Pin('X1'))
 # Values used to calculate temperature
-tempDict = {1630:'1630x1754x0x10',1772:'1772x1922x10x10',1922:'1922x2000x20x5',2000:'2000x2080x25x5',2080:'2080x2417x30x10'}
+tempDict = {
+    1630: '1630x1754x0x10',
+    1772: '1772x1922x10x10',
+    1922: '1922x2000x20x5',
+    2000: '2000x2080x25x5',
+    2080: '2080x2417x30x10'
+}
 
-def measureTemp():
+
+def measure_temp():
     global tempDict
-	
+
     # x1U = port x1 U (voltage)
     x1u = adc.read()/4095 * 3.3
 
@@ -21,7 +28,7 @@ def measureTemp():
 
     # Temperature resistor KTY81/210 resistance
     tr = x1u * r1 / (mpu - x1u)
-	
+
     # Return value from tempDict
     value = ""
     for key in tempDict:

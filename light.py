@@ -5,11 +5,13 @@ from pyb import I2C
 
 # Light sensor
 i2c = I2C(1, I2C.MASTER, baudrate=20000)
-def measureLight():
+
+
+def measure_light():
     # Visible & Infrared
     i2c.send(0x43, 0x39)
     data1 = i2c.recv(1, addr=0x39)[0]
-    # Primarly infrared
+    # Primarily infrared
     i2c.send(0x83, 0x39)
     data2 = i2c.recv(1, addr=0x39)[0]
 
