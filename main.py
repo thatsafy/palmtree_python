@@ -145,8 +145,9 @@ def motor_time():
 # Rotate motor on flash
 # * exits, 1 set angle, 3 to start
 def motor_flash():
+    global motorStepN
     pyb.delay(100)
-    taulukko = ["", "", "", ""]
+    taulukko = ["0", "0", "0", "0"]
     last_pressed = ""
     angle = 90
     line_text = "Angle:" + str(angle)
@@ -162,6 +163,12 @@ def motor_flash():
                 break
             elif ch == "1":
                 my_taulukko = taulukko
+                """
+                defTaulukko = ""
+                for numb in taulukko:
+                    defTaulukko += numb
+                lcd_write(1, numb)
+                """
                 while True:
                     lcd_write(0, "Set angle")
                     last_pressed = ""
@@ -178,7 +185,7 @@ def motor_flash():
                     if ch != "":
                         if ch == "*":
                             break
-                    flash.flash_detection(angle)
+                    flash.flash_detection(motorStepN, angle)
         else:
             last_pressed = ""
         # functionality
