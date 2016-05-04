@@ -3,38 +3,38 @@ import pyb
 import char_lcd,motor
 from pyb import ADC, Pin, I2C
 
-#i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
-#lcd_screen = char_lcd.HD44780(i2cLCD)
+# i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
+# lcd_screen = char_lcd.HD44780(i2cLCD)
 """
 def lcdWrite(row, stri):
     lcd_screen.set_line(row)
     lcd_screen.set_string(stri)
 """
-adc = ADC(Pin('X7'))
+adc = ADC(Pin('X12'))
 
 # x1u = adc.read()
 # lcdWrite(0, "makkara!!!")
 
-lights = [0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0,
-          0,0,0,0,0,0,0,0,0,0]
+lights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 print(lights)
 
@@ -51,7 +51,8 @@ av = 0
 
 # motor.rotatemotor(45)
 
-def flashDetection(angle=90):
+
+def flash_detection(angle=90):
     global av
     global middleLED
     global overLED
@@ -69,16 +70,16 @@ def flashDetection(angle=90):
         underLED.off()
     # Adding light data to list
     if 0 in lights:
-        for i in range(0,200):
+        for i in range(0, 200):
             if lights[i] == 0:
                 lights[i] = x1u
                 break
     else:
-        for i in range (0,199):
+        for i in range (0, 199):
             lights[i] = lights[i+1]
         lights[199] = x1u
         sum = 0
-        for i in range(0,200):
+        for i in range(0, 200):
             sum += lights[i]
         x1u = sum/200
         av = x1u

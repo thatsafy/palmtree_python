@@ -5,9 +5,10 @@ from pyb import I2C
 
 # i2c = I2C(2, I2C.MASTER, baudrate=20000)
 
+
 def getch(i2cg):
     i2c = i2cg
-    #global i2c
+    # global i2c
     COLS = [0b11101111, 0b10111111, 0b11111011]
     ROWS = [0b11011111, 0b11110111, 0b11111101, 0b11111110]
     MASKS = [0b00101011, 0b00001000, 0b00000010, 0b00000001]
@@ -22,8 +23,8 @@ def getch(i2cg):
     GPIO  = 0x12          # GPIO pin register base address
     PULUP = 0x0C          # PullUp enable register base address
 
-    cola = [0,0,0]
-    for col in range(0,3):
+    cola = [0, 0, 0]
+    for col in range(0, 3):
         i2c.mem_write(COLS[col], I2CADDR, IODIR)
         time.sleep(0.01)
         cola[col] = i2c.mem_read(1, I2CADDR, GPIO)[0]
