@@ -23,6 +23,29 @@ Rotating platform with two modes:
 * manual rotation with user configurable angle and speed
 * automatic rotation when a camera flash is detected. User can specify angle which platform rotates.
 
+#### USB-connection
+Device has an USB-connection which powers the PyBoard but also can be used for file transfer for code files or  
+to troubleshoot the device with command line output.  
+**Linux**  
+For troubleshooting/terminal output:  
+Plug in the USB-cable and open a terminal emulator of your choice.  
+To open connection type: sudo screen /dev/ttyACM0  
+In case of screen not installed:  
+*  Debian-based (Ubuntu etc.): sudo apt-get install screen
+*  Red Hat-based (such as Fedora): sudo dnf install screen or sudo yum install screen
+*  For other distribution please refer to the user forums and such.
+With connection now opened you can do a soft reboot with CTRL+D.  
+If above does not work, try pressing CTRL+C twice to stop currently operational program.  
+  
+To transfer files memory stick on the PyBoard needs to be mounted first.  
+Memory stick device/partition name is in format /dev/sdX1.  
+the 'X' can be determined using either lsblk or blkid. If unsure which partition is correct,  
+try unplugging the USB-cable and running previous command(s) and then compare the lists.  
+To mount the memory stick type: sudo mount /dev/sdX1 /mnt/usb (latter is the mount point which can be changed if wanted).  
+If mount point does not exist, create one: sudo mkdir /path/to/mountpoint e.g. sudo mkdir /mnt/usb  
+Now you can start transferring files with tool you prefer. Example command for 'cp':  
+sudo cp file.py /mnt/usb  
+  
 #### Main menu
 Main menu can be scrolled through with keypad"s buttons "1" and "3". "#" is used for selection.  
 Menu has two items: manual rotation and flash rotation which user can choose by pressing "#".  

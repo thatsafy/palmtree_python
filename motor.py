@@ -120,6 +120,7 @@ def rotate_motor(angle, motorStepN, step_delay = 30):
     return motorStepN
     
 # for test purposes, just rename file to 'main.py' for this to run
+# holding PyBoard's usr-switch (the button more close to the center, label 'usr') motor rotates
 if __name__ == "__main__":
     nappi = pyb.Switch()
     while True:
