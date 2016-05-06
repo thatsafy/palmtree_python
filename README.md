@@ -4,19 +4,9 @@
 **[MicroPython PyBoard](https://micropython.org/)**  
 **[Python](https://www.python.org/)**  
 **[Vexta Stepping motor PH266-02-A29](http://www.aasi.net/development/StepperMotors/vextaPH266-02.htm)**  
+**[LN298N Dual Motor Controller](http://www.instructables.com/id/Control-DC-and-stepper-motors-with-L298N-Dual-Moto/)**  
   
-#### Updated 3.5.2016
-  
-### Final product - Features
-* Keyboard input and navigation
-* Stepping motor
-  * Rotates platform
-    * manual rotation
-    * flash detection
-* LCD screen/ouput
-* TODO
-  * fine tune motor rotation
-  * tune flash detection
+#### Updated 6.5.2016
   
 ### Manual (final product)
 Rotating platform with two modes:
