@@ -34,6 +34,7 @@ In case of screen not installed:
 *  Debian-based (Ubuntu etc.): sudo apt-get install screen
 *  Red Hat-based (such as Fedora): sudo dnf install screen or sudo yum install screen
 *  For other distribution please refer to the user forums and such.
+
 With connection now opened you can do a soft reboot with CTRL+D.  
 If above does not work, try pressing CTRL+C twice to stop currently operational program.  
   
