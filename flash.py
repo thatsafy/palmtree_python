@@ -68,7 +68,7 @@ def flash_detection(motorStepN, angle=90):
     ave = 0
     # If detected light is over average and average is not 0
     while True:
-        if av != 0 and 0 not in averages and x1u > av + 50:
+        if av != 0 and x1u > av + 50:
             motorStepN = motor.rotate_motor(angle, motorStepN)
             middleLED.on()
             overLED.on()
