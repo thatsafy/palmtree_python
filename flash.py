@@ -14,11 +14,11 @@ adc = ADC(Pin('X12'))
 
 # x1u = adc.read()
 # lcdWrite(0, "makkara!!!")
-lights[i] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-             0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-             0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+lights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+          0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 """
 lights = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
           0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -66,7 +66,7 @@ def flash_detection(motorStepN, angle=90):
     global lights
     x1u = adc.read()
     # If detected light is over average and average is not 0
-    if av != 0 and x1u > av + 50:
+    if av != 0 and 0 not in averages and x1u > av + 50:
         motorStepN = motor.rotate_motor(angle, motorStepN)
         middleLED.on()
         overLED.on()
