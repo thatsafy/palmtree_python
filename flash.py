@@ -89,7 +89,7 @@ def flash_detection(motorStepN, angle=90):
                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         lcdWrite(0, "Calibrating!")
-        continue
+        break
     # Adding light data to list
     if 0 in lights:
         for i in range(0, 200):
