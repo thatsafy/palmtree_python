@@ -64,10 +64,11 @@ def flash_detection(motorStepN, angle=90):
     global overLED
     global underLED
     global lights
-    x1u = adc.read()
+    #  x1u = adc.read()
     ave = 0
     # If detected light is over average and average is not 0
     while True:
+        x1u = adc.read()
         if av != 0 and x1u > av + 50:
             motorStepN = motor.rotate_motor(angle, motorStepN)
             middleLED.on()
@@ -78,7 +79,8 @@ def flash_detection(motorStepN, angle=90):
             overLED.off()
             underLED.off()
             # lcdWrite(0, "Calibrating!")
-            return
+            av = 0
+            continue
         # Adding light data to list
         if 0 in averages:
             if 0 in lights:
@@ -94,6 +96,7 @@ def flash_detection(motorStepN, angle=90):
                 averages[ave] = a
                 if ave < 9:
                     ave += 1
+                print (lights)
                 lights= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -108,4 +111,4 @@ def flash_detection(motorStepN, angle=90):
                 averages[x] = averages[x+1]
             averages[9] = 0
 
-        print("lights 0:" , lights.count(0), " av:" , av , " averages: " , averages)
+        # print("lights 0:" , lights.count(0), " av:" , av , " averages: " , averages)
