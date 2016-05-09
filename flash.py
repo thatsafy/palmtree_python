@@ -57,6 +57,7 @@ def flash_detection(motorStepN, angle=90):
     global middleLED
     global overLED
     global underLED
+    global lights
     x1u = adc.read()
     # If detected light is over average and average is not 0
     if av != 0 and x1u > av + 50:
