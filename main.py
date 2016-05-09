@@ -190,22 +190,16 @@ def motor_flash():
                     lcd_write(0, "Set angle")
                     last_pressed = ""
                     key_input = read_keypad(last_pressed)
-                    
+
                     last_pressed = key_input[0]
-                    mes = key_input[2]
+                    mes = key_input[1]
                     if mes != "":
                         angle = int(mes)
                         user_input = default_user_input
                         break
             # Start flash detection
             elif ch == "3":
-                while True:
-                    # if '*' pressed exit flash detection
-                    ch = keyboard.getch(i2cLCD)
-                    if ch != "":
-                        if ch == "*":
-                            break
-                    flash.flash_detection(motorStepN, angle)
+                flash.flash_detection(i2cLCD, motorStepN, angle)
         else:
             last_pressed = ""
 

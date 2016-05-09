@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import pyb
-import char_lcd,motor
+import char_lcd,motor, keyboard, time
 from pyb import ADC, Pin, I2C
 
 # i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
@@ -58,7 +58,8 @@ av = 0
 # motor.rotatemotor(45)
 
 # lcdWrite(0, "Calibrating!")
-def flash_detection(motorStepN, angle=90):
+def flash_detection(i2cLCD, motorStepN, angle=90):
+    global averages
     global av
     global middleLED
     global overLED
@@ -67,7 +68,15 @@ def flash_detection(motorStepN, angle=90):
     #  x1u = adc.read()
     ave = 0
     # If detected light is over average and average is not 0
+    startTime = time.time()
     while True:
+        # if '*' pressed exit flash detection
+        if time.time() - startTime >= 0.2:
+            ch = keyboard.getch(i2cLCD)
+            if ch == "0":
+                break
+            else:
+                startTime = time.time()
         x1u = adc.read()
         if av != 0 and x1u > av + 50:
             motorStepN = motor.rotate_motor(angle, motorStepN)
@@ -80,6 +89,7 @@ def flash_detection(motorStepN, angle=90):
             underLED.off()
             # lcdWrite(0, "Calibrating!")
             av = 0
+            averages = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             continue
         # Adding light data to list
         if 0 in averages:
@@ -93,10 +103,10 @@ def flash_detection(motorStepN, angle=90):
                 for x in range(0, 50):
                     sum += lights[x]
                 a = sum/50
-                averages[ave] = a
-                if ave < 9:
-                    ave += 1
-                print (lights)
+                for x in range(0, 10):
+                    if averages[x] == 0:
+                        averages[x] = a
+                # print (lights)
                 lights= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                          0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -111,4 +121,4 @@ def flash_detection(motorStepN, angle=90):
                 averages[x] = averages[x+1]
             averages[9] = 0
 
-        # print("lights 0:" , lights.count(0), " av:" , av , " averages: " , averages)
+        print("av:" , av , " averages: " , averages)
