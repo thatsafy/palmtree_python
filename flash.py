@@ -51,7 +51,7 @@ av = 0
 
 # motor.rotatemotor(45)
 
-lcdWrite(0, "Calibrating!")
+# lcdWrite(0, "Calibrating!")
 def flash_detection(motorStepN, angle=90):
     global av
     global middleLED
@@ -88,7 +88,7 @@ def flash_detection(motorStepN, angle=90):
                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                   0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        lcdWrite(0, "Calibrating!")
+        # lcdWrite(0, "Calibrating!")
         return
     # Adding light data to list
     if 0 in lights:
@@ -107,7 +107,7 @@ def flash_detection(motorStepN, angle=90):
         av = x1u
         averages.append(x1u)
         if len(averages) == 100:
-            lcdWrite(0, "Ready")
+            # lcdWrite(0, "Ready")
             averages[:] = []
         # lcdWrite(1, str(av))
     print(lights.count(0))
