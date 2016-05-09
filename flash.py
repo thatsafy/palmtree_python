@@ -52,7 +52,7 @@ overLED = pyb.LED(1)
 middleLED = pyb.LED(2)
 underLED = pyb.LED(3)
 
-averages = [0,0,0,0,0,0,0,0,0]
+averages = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 av = 0
 
 # motor.rotatemotor(45)
@@ -66,44 +66,45 @@ def flash_detection(motorStepN, angle=90):
     global lights
     x1u = adc.read()
     # If detected light is over average and average is not 0
-    if av != 0 and 0 not in averages and x1u > av + 50:
-        motorStepN = motor.rotate_motor(angle, motorStepN)
-        middleLED.on()
-        overLED.on()
-        underLED.on()
-        pyb.delay(200)
-        middleLED.off()
-        overLED.off()
-        underLED.off()
-        # lcdWrite(0, "Calibrating!")
-        return
-    # Adding light data to list
-    if 0 in averages:
-        if 0 in lights:
-            for i in range(0, 50):
-                if lights[i] == 0:
-                    lights[i] = x1u
-                    break
+    while True:
+        if av != 0 and 0 not in averages and x1u > av + 50:
+            motorStepN = motor.rotate_motor(angle, motorStepN)
+            middleLED.on()
+            overLED.on()
+            underLED.on()
+            pyb.delay(200)
+            middleLED.off()
+            overLED.off()
+            underLED.off()
+            # lcdWrite(0, "Calibrating!")
+            return
+        # Adding light data to list
+        if 0 in averages:
+            if 0 in lights:
+                for i in range(0, 50):
+                    if lights[i] == 0:
+                        lights[i] = x1u
+                        break
+            else:
+                sum = 0
+                for x in range(0, 50):
+                    sum += lights[x]
+                a = sum/50
+                for x in range(0, 10):
+                    if averages[x] == 0:
+                        averages[x] = a
+                lights= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                         0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         else:
             sum = 0
-            for x in range(0, 50):
-                sum += lights[x]
-            a = sum/50
             for x in range(0, 10):
-                if averages[x] == 0:
-                    averages[x] = a
-            lights= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    else:
-        sum = 0
-        for x in range(0, 10):
-            sum += averages[x]
-        av = sum/10
-        for x in range(0, 9):
-            averages[x] = averages[x+1]
-        averages[9] = 0
+                sum += averages[x]
+            av = sum/10
+            for x in range(0, 9):
+                averages[x] = averages[x+1]
+            averages[9] = 0
 
-    print(lights.count(0))
+        print(lights.count(0))
