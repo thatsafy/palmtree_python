@@ -107,4 +107,4 @@ def flash_detection(motorStepN, angle=90):
                 averages[x] = averages[x+1]
             averages[9] = 0
 
-        print(lights.count(0))
+        print("lights 0: " , lights.count(0), " av: " , av)
