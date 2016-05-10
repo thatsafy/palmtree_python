@@ -57,8 +57,7 @@ Connect to device using bottom 'Open' button.
 Currently running program can be restarted with CTRL+C and CTRL+D. CTRL+C is for cancel and CTRL+D is soft reboot.  
   
 File transfer:  
-Files can be transferred via windows explorer and navigating to the memory stick which is connected with USB-cable previously  
-plugged in.  
+Files can be transferred via windows explorer and navigating to the memory stick which is connected with USB-cable previously plugged in.  
   
 #### Main menu
 Main menu can be scrolled through with keypad"s buttons "1" and "3". "#" is used for selection.  
