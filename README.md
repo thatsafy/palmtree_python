@@ -1,6 +1,6 @@
-# Palm Beach Kings
+# 360&deg; Rotating Photo & Video Platform
 ## Raspberry Pi + PyBoard
-## 360&deg; Rotating Photo & Video Platform
+## Palm Beach Kings
 
 **[MicroPython PyBoard](https://micropython.org/)**  
 **[Python](https://www.python.org/)**  
