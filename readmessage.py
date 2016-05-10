@@ -5,7 +5,7 @@ import serial, string, sys, pymysql
 # serial port from which data is read 
 ser = serial.Serial('/dev/ttyAMA0', 115200, timeout = 1)
 # SQL connection
-conn = pymysql.connect(host='palm-beach.czexil0tgoyr.us-east-1.rds.amazonaws.com', user='palm', passwd='palmbeach192', db='data')
+conn = pymysql.connect(host='HOST_ADDRESS', user='USERNAME', passwd='PASSWORD', db='DATABASE_NAME')
 cur = conn.cursor()
 
 # Compile the message from data given
