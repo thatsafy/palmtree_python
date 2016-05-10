@@ -38,7 +38,7 @@ If mount point does not exist, create one: sudo mkdir /path/to/mountpoint e.g. s
 Now you can start transferring files with tool you prefer. Example command for 'cp':  
 sudo cp file.py /mnt/usb  
   
-**Windows**
+**Windows**  
 First to get terminal view:  
 Software recommended to be installed/downloaded before starting:
 * [PuTTY](http://www.putty.org/)
