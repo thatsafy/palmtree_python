@@ -37,7 +37,14 @@ To mount the memory stick type: sudo mount /dev/sdX1 /mnt/usb (latter is the mou
 If mount point does not exist, create one: sudo mkdir /path/to/mountpoint e.g. sudo mkdir /mnt/usb  
 Now you can start transferring files with tool you prefer. Example command for 'cp':  
 sudo cp file.py /mnt/usb  
+**Windows**
+Software recommended to be installed/downloaded before starting:
+* [PuTTY](http://www.putty.org/)
+  * we recommend the standalone executable, no need for installation
 
+First start PuTTY and you should see the basic view.
+![PuTTY Default View](https://www.dropbox.com/s/l4kvhgjkrkeeoc8/putty_default_view.png?dl=0)
+ 
 #### Main menu
 Main menu can be scrolled through with keypad"s buttons "1" and "3". "#" is used for selection.  
 Menu has two items: manual rotation and flash rotation which user can choose by pressing "#".  
