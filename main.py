@@ -126,7 +126,7 @@ def motor_time():
                     pyb.delay(100)
                     key_input = read_keypad(last_pressed)
                     last_pressed = key_input[0]
-                    mes = key_input[2]
+                    mes = key_input[1]
                     if mes != "":
                         angle = int(mes)
                         user_input = ["0","0","0","0"]
@@ -199,6 +199,8 @@ def motor_flash():
                         break
             # Start flash detection
             elif ch == "3":
+                lcd_write(1, "Hold 0 to stop")
+                lcd_write(0, "waiting flash")
                 flash.flash_detection(i2cLCD, motorStepN, angle)
         else:
             last_pressed = ""
