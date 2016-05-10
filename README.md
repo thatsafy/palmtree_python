@@ -43,7 +43,8 @@ Software recommended to be installed/downloaded before starting:
   * we recommend the standalone executable, no need for installation
 
 First start PuTTY and you should see the basic view.  
-![PuTTY Default View](http://i.imgur.com/co7yBa3.png =120x)
+<!--![PuTTY Default View](http://i.imgur.com/co7yBa3.png =120x)-->
+<img src="http://i.imgur.com/co7yBa3.png" width="120px"> 
  
 #### Main menu
 Main menu can be scrolled through with keypad"s buttons "1" and "3". "#" is used for selection.  
