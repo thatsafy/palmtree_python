@@ -7,7 +7,7 @@
 **[Vexta Stepping motor PH266-02-A29](http://www.aasi.net/development/StepperMotors/vextaPH266-02.htm)**  
 **[LN298N Dual Motor Controller](http://www.instructables.com/id/Control-DC-and-stepper-motors-with-L298N-Dual-Moto/)**  
 
-#### Updated 6.5.2016
+#### Updated 10.5.2016
 
 ### Manual (final product)
 Rotating platform with two modes:
@@ -101,4 +101,4 @@ While flash detection is active it can be stopped by pressing "\*". If platform 
 
 | Button | Selection |
 | ------ | ----------- |
-| *   | Exit |
+| 0   | Exit |

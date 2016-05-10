@@ -207,7 +207,7 @@ def motor_flash():
 # Functions
 menuDo = [motor_time, motor_flash]
 # menu titles
-menu = ["rotate/time", "rotate/flash"]
+menu = ["rotate/manual", "rotate/flash"]
 # main menu info
 menu2 = ["<=1 #select 3=>"]
 # initial menu position
