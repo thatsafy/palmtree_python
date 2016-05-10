@@ -44,8 +44,14 @@ Software recommended to be installed/downloaded before starting:
 
 First start PuTTY and you should see the basic view.  
 <!--![PuTTY Default View](http://i.imgur.com/co7yBa3.png =120x)-->
-<img src="http://i.imgur.com/co7yBa3.png" width="240px"> 
- 
+<img src="http://i.imgur.com/co7yBa3.png" width="240px">  
+To get the name of the address open device manager and look for 'Ports (COM & LPT).  
+There get down the name of USB Serial device (example 'USB Serial Device (COM3)).  
+Next in PuTTY in address type devices e.g. COM3 and speed 115200. Connection type 'serial'.  
+(Optional) Save connection in saved sessions first by giving a name and clicking 'Save'.  
+Connect to device using bottom 'Open' button.  
+<img src="http://i.imgur.com/cvIKQQy.png" width="240px">  
+
 #### Main menu
 Main menu can be scrolled through with keypad"s buttons "1" and "3". "#" is used for selection.  
 Menu has two items: manual rotation and flash rotation which user can choose by pressing "#".  
