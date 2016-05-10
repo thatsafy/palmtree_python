@@ -10,6 +10,7 @@
 import pyb
 from pyb import I2C
 
+
 class HD44780(object):
     
     # Enable and register select bits
@@ -36,15 +37,15 @@ class HD44780(object):
         # Initialize i2c
         self.i2c = i2c
         # set all pins to output on port B
-        self.i2c.send(b'\x01\x00',32)
+        self.i2c.send(b'\x01\x00', 32)
 
         # Initialise display
-        self.lcd_byte(0x33,self.LCD_CMD)
-        self.lcd_byte(0x32,self.LCD_CMD)
-        self.lcd_byte(0x28,self.LCD_CMD)
-        self.lcd_byte(0x0C,self.LCD_CMD)
-        self.lcd_byte(0x06,self.LCD_CMD)
-        self.lcd_byte(0x01,self.LCD_CMD)
+        self.lcd_byte(0x33, self.LCD_CMD)
+        self.lcd_byte(0x32, self.LCD_CMD)
+        self.lcd_byte(0x28, self.LCD_CMD)
+        self.lcd_byte(0x0C, self.LCD_CMD)
+        self.lcd_byte(0x06, self.LCD_CMD)
+        self.lcd_byte(0x01, self.LCD_CMD)
 
     def clear(self):
         # Clear the display
@@ -62,8 +63,8 @@ class HD44780(object):
             short = self.LCD_WIDTH - m_length
             blanks=str()
             for i in range(short):
-                blanks+=' '
-            message+=blanks
+                blanks += ' '
+            message += blanks
         for i in range(self.LCD_WIDTH):
             self.lcd_byte(ord(message[i]), self.LCD_CHR)
 
@@ -102,9 +103,9 @@ class HD44780(object):
     def pin_action(self, bits, mode, enable):
         # Pin high/low functions, set as function for portability
         if mode:
-            bits = bits | self.RS
+            bits |= self.RS
         if enable:
-            bits = bits | self.ENABLE
+            bits |= self.ENABLE
         # write to io expander
         cmd = bytearray(2)
         cmd[0] = 0x15
