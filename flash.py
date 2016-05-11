@@ -48,9 +48,9 @@ print(lights)
 # 1 = Red
 # 2 = Green
 # 3 = Yellow
-overLED = pyb.LED(1)
-middleLED = pyb.LED(2)
-underLED = pyb.LED(3)
+over_led = pyb.LED(1)
+middle_led = pyb.LED(2)
+under_led = pyb.LED(3)
 
 averages = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 av = 0
@@ -58,12 +58,12 @@ av = 0
 # motor.rotatemotor(45)
 
 # lcdWrite(0, "Calibrating!")
-def flash_detection(i2cLCD, motorStepN, angle=90):
+def flash_detection(i2cLCD, motor_step_n, angle=90):
     global averages
     global av
-    global middleLED
-    global overLED
-    global underLED
+    global middle_led
+    global over_led
+    global under_led
     global lights
     #  x1u = adc.read()
     ave = 0
@@ -79,14 +79,14 @@ def flash_detection(i2cLCD, motorStepN, angle=90):
                 startTime = time.time()
         x1u = adc.read()
         if av != 0 and x1u > av + 50:
-            motorStepN = motor.rotate_motor(angle, motorStepN)
-            middleLED.on()
-            overLED.on()
-            underLED.on()
+            motor_step_n = motor.rotate_motor(angle, motor_step_n)
+            middle_led.on()
+            over_led.on()
+            under_led.on()
             pyb.delay(200)
-            middleLED.off()
-            overLED.off()
-            underLED.off()
+            middle_led.off()
+            over_led.off()
+            under_led.off()
             # lcdWrite(0, "Calibrating!")
             av = 0
             averages = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]

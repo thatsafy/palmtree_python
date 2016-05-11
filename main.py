@@ -7,10 +7,10 @@ from pyb import UART, delay, Pin, ADC, I2C
 import math, char_lcd, time, keyboard, flash, motor
 
 # LCD I2C Init (keypad uses this too)
-i2cLCD = I2C(2, I2C.MASTER, baudrate=20000)
-lcd_screen = char_lcd.HD44780(i2cLCD)
+i2c_lcd = I2C(2, I2C.MASTER, baudrate=20000)
+lcd_screen = char_lcd.HD44780(i2c_lcd)
 
-motorStepN = 0
+motor_step_n = 0
 
 # LCD write
 def lcd_write(row, stri):
@@ -18,9 +18,9 @@ def lcd_write(row, stri):
     lcd_screen.set_string(stri)
 
 # Initialize keys
-i2cLCD.mem_write(0xFF, 0x20, 0x0C)
-i2cLCD.mem_write(0xFF, 0x20, 0x00)
-i2cLCD.mem_write(0x00, 0x20, 0x14)
+i2c_lcd.mem_write(0xFF, 0x20, 0x0C)
+i2c_lcd.mem_write(0xFF, 0x20, 0x00)
+i2c_lcd.mem_write(0x00, 0x20, 0x14)
 
 # Keypads last pressed key
 last = ""
@@ -35,7 +35,7 @@ def read_keypad(last):
     last = last
     # Keypad loop
     tuloste = ""
-    ch = keyboard.getch(i2cLCD)
+    ch = keyboard.getch(i2c_lcd)
     log_message = ""
     # When key has been pressed
     if ch != "":
@@ -94,7 +94,7 @@ def read_keypad(last):
 # rotate motor x angles at y speed
 # * exits, 1 to set angle, 2 set speed, 3 to start
 def motor_time():
-    global motorStepN
+    global motor_step_n
     global user_input
     pyb.delay(100)
     angle = 90
@@ -112,7 +112,7 @@ def motor_time():
         angle_text = "A:" + str(angle) + " | S:" + str(speed)
         lcd_write(0, angle_text)
         lcd_write(1, "* exits")
-        ch = keyboard.getch(i2cLCD)
+        ch = keyboard.getch(i2c_lcd)
         if ch != "":
             # if '* pressed exit mode
             if ch == "*":
@@ -148,7 +148,7 @@ def motor_time():
                         break
             # start rotation
             elif ch == "3":
-                motorStepN = motor.rotate_motor(angle, motorStepN, speed)
+                motor_step_n = motor.rotate_motor(angle, motor_step_n, speed)
             last_pressed = ch
         else:
             last_pressed = ""
@@ -157,7 +157,7 @@ def motor_time():
 # Rotate motor on flash
 # * exits, 1 set angle, 3 to start
 def motor_flash():
-    global motorStepN
+    global motor_step_n
     global user_input
     pyb.delay(100)
     default_user_input = ["0", "0", "0", "0"]
@@ -175,7 +175,7 @@ def motor_flash():
         angle_text = "Angle:" + str(angle)
         lcd_write(0, angle_text)
         lcd_write(1, "* exits")
-        ch = keyboard.getch(i2cLCD)
+        ch = keyboard.getch(i2c_lcd)
         if ch != "":
             # Exit mode
             if ch == "*":
@@ -201,41 +201,41 @@ def motor_flash():
             elif ch == "3":
                 lcd_write(1, "Hold 0 to stop")
                 lcd_write(0, "waiting flash")
-                flash.flash_detection(i2cLCD, motorStepN, angle)
+                flash.flash_detection(i2c_lcd, motor_step_n, angle)
         else:
             last_pressed = ""
 
 
 # Functions
-menuDo = [motor_time, motor_flash]
+menu_do = [motor_time, motor_flash]
 # menu titles
 menu = ["rotate/manual", "rotate/flash"]
 # main menu info
 menu2 = ["<=1 #select 3=>"]
 # initial menu position
-menuItem = 0
+menu_item = 0
 
 # Initial rotation
-motor.rotate_motor(9, motorStepN, 10)
+motor.rotate_motor(9, motor_step_n, 10)
 
 # Main loop
 # 1 goes left, 3 goes right, # is select
 # rotates cycle if too far either direction
 while True:
     lcd_write(0, menu2[0])
-    lcd_write(1, menu[menuItem])
-    ch = keyboard.getch(i2cLCD)
+    lcd_write(1, menu[menu_item])
+    ch = keyboard.getch(i2c_lcd)
     if ch != "":
         if ch == "1":
-            menuItem -= 1
+            menu_item -= 1
         elif ch == "3":
-            menuItem += 1
+            menu_item += 1
         if ch == '#':
-            menuDo[menuItem]()
-        if menuItem >= len(menu):
-            menuItem = 0
-        if menuItem < 0:
-            menuItem = len(menu) - 1
+            menu_do[menu_item]()
+        if menu_item >= len(menu):
+            menu_item = 0
+        if menu_item < 0:
+            menu_item = len(menu) - 1
         last = ch
     else:
         last = ""

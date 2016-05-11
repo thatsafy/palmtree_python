@@ -15,16 +15,16 @@ print("pins ready")
 
 # full steps
 # 1 step = 1.8 degrees
-# motorTuple = [(1,0,1,0),(1,0,0,1),(0,1,0,1),(0,1,1,0)]
+# motor_tuple = [(1,0,1,0),(1,0,0,1),(0,1,0,1),(0,1,1,0)]
 
 # full steps
 # ½ step = 0.9 degrees
-motorTuple = [(1, 0, 1, 0), (1, 0, 0, 0), (1, 0, 0, 1), (0, 0, 0, 1), (0, 1, 0, 1), (0, 1, 0, 0), (0, 1, 1, 0), (0, 0, 1, 0)]
+motor_tuple = [(1, 0, 1, 0), (1, 0, 0, 0), (1, 0, 0, 1), (0, 0, 0, 1), (0, 1, 0, 1), (0, 1, 0, 0), (0, 1, 1, 0), (0, 0, 1, 0)]
 
 
 # Delay between steps (min. 5ms)
 # step_delay smaller = faster
-def rotate_motor(angle, motorStepN, step_delay = 30):
+def rotate_motor(angle, motor_step_n, step_delay = 30):
 
     steps = 0
     while angle >= 9:
@@ -67,11 +67,11 @@ def rotate_motor(angle, motorStepN, step_delay = 30):
     # enable stepper motor jumpers in L298
     Y8.high()
     Y3.high()
-    if motorStepN != 0:
-        for i in range(motorStepN, 8):
+    if motor_step_n != 0:
+        for i in range(motor_step_n, 8):
             x = i
             print(str(x))
-            x = motorTuple[x]
+            x = motor_tuple[x]
             if x[0]:
                 Y4.high()
             else:
@@ -90,13 +90,13 @@ def rotate_motor(angle, motorStepN, step_delay = 30):
                 Y7.low()
             pyb.delay(step_delay)
         
-        steps -= motorStepN
+        steps -= motor_step_n
         
     for i in range(0, (steps+1)):
         x = i % 8
         print(str(x))
-        motorStepN = x
-        x = motorTuple[x]
+        motor_step_n = x
+        x = motor_tuple[x]
         if x[0]:
             Y4.high()
         else:
@@ -117,12 +117,12 @@ def rotate_motor(angle, motorStepN, step_delay = 30):
     # disable stepper motor jumpers in L298
     Y8.low()
     Y3.low()
-    return motorStepN
+    return motor_step_n
     
 # for test purposes, just rename file to 'main.py' for this to run
 # holding PyBoard's usr-switch (the button more close to the center, label 'usr') motor rotates
 if __name__ == "__main__":
-    nappi = pyb.Switch()
+    btn = pyb.Switch()
     while True:
-        if nappi():
+        if btn():
             rotate_motor(45, 10)
