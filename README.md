@@ -6,7 +6,9 @@
 **[Python](https://www.python.org/)**  
 **[Vexta Stepping motor PH266-02-A29](http://www.aasi.net/development/StepperMotors/vextaPH266-02.htm)**  
 **[LN298N Dual Motor Controller](http://tronixlabs.com.au/robotics/motor-controllers/l298n-dual-motor-controller-module-2a-australia/)**  
-
+  
+<img src="http://i.imgur.com/1ZYc8RX.png" width="320px">
+  
 #### Updated 10.5.2016
 
 ### Manual (final product)
