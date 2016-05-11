@@ -122,4 +122,4 @@ While flash detection is active it can be stopped by pressing "\*". If platform 
 
 | Button | Selection |
 | ------ | ----------- |
-| 0   | Exit |
+| 0   | Stop |
