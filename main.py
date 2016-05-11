@@ -34,7 +34,7 @@ def read_keypad(last):
     global user_input
     last = last
     # Keypad loop
-    tuloste = ""
+    lcd_message = ""
     ch = keyboard.getch(i2c_lcd)
     log_message = ""
     # When key has been pressed
@@ -44,12 +44,12 @@ def read_keypad(last):
             # Reset array and screen
             user_input = ["0", "0", "0", "0"]
             log_message = ""
-            tuloste = ""
+            lcd_message = ""
             lcd_write(1, "Waiting for key!")
         # If pressed key is #
         elif ch == '#':
             log_message = ""
-            tuloste = ""
+            lcd_message = ""
             # If user_input has space
             if "" in user_input:
                 # Write error message to user
@@ -81,8 +81,8 @@ def read_keypad(last):
                 user_input[3] = ch
             # After adjustment is done print info to user
             for i in range(0, 4):
-                tuloste += user_input[i]
-            lcd_write(1, tuloste)
+                lcd_message += user_input[i]
+            lcd_write(1, lcd_message)
             last = ch
     # When key is not pressed
     else:
