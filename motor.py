@@ -17,7 +17,7 @@ print("pins ready")
 # 1 step = 1.8 degrees
 # motor_tuple = [(1,0,1,0),(1,0,0,1),(0,1,0,1),(0,1,1,0)]
 
-# full steps
+# half steps
 # ½ step = 0.9 degrees
 motor_tuple = [(1, 0, 1, 0), (1, 0, 0, 0), (1, 0, 0, 1), (0, 0, 0, 1), (0, 1, 0, 1), (0, 1, 0, 0), (0, 1, 1, 0), (0, 0, 1, 0)]
 
